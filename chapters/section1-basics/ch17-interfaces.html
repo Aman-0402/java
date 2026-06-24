@@ -99,6 +99,17 @@ public class Duck implements Flyable, Swimmable {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public interface Flyable { void fly(); }</code> and <code>public interface Swimmable { void swim(); }</code> — each interface declares a single capability as an abstract method with no body</li>
+    <li><code>public class Duck implements Flyable, Swimmable</code> — a class can implement multiple interfaces separated by commas; this is Java's answer to multiple inheritance</li>
+    <li><code>@Override public void fly()</code> and <code>@Override public void swim()</code> — <code>Duck</code> must provide bodies for every method from every interface it implements; missing any causes a compile error</li>
+    <li><code>Flyable f = new Duck("Daffy");</code> — a <code>Duck</code> object can be referenced through an interface type; only methods declared in <code>Flyable</code> are accessible through <code>f</code></li>
+    <li><code>Swimmable s = new Duck("Scrooge");</code> — the same object could equally be referenced as <code>Swimmable</code>; the actual object type determines which method body runs</li>
+  </ul>
+</div>
+
   <p><strong>Output:</strong></p>
   <pre><code>Donald flaps its wings and glides.
 Donald paddles across the pond.
@@ -134,6 +145,16 @@ public class Robot implements Greetable {
     // greet() is inherited from the interface for free
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>default void greet()</code> — the <code>default</code> keyword (Java 8+) provides a method body inside the interface; implementing classes inherit this behaviour without having to write their own version</li>
+    <li><code>String getName();</code> — this is still an abstract method; every implementing class must provide it; the default <code>greet()</code> calls <code>getName()</code>, which will resolve to the implementing class's version at runtime</li>
+    <li><code>public class Robot implements Greetable</code> — <code>Robot</code> only needs to implement <code>getName()</code>; it gets <code>greet()</code> for free from the interface</li>
+    <li>If a class wants a different greeting, it can override <code>greet()</code> — default methods are optional overrides, not mandatory implementations</li>
+  </ul>
+</div>
 
   <h2>Interface vs Abstract Class — When to Use Which</h2>
   <table class="comparison-table">

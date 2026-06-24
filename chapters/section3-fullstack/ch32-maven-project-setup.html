@@ -85,6 +85,20 @@
 &lt;/project&gt;
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>&lt;groupId&gt;com.example&lt;/groupId&gt;</code> — your organisation namespace, written as a reversed domain name</li>
+    <li><code>&lt;artifactId&gt;todo-api&lt;/artifactId&gt;</code> — the name of this specific project/module</li>
+    <li><code>&lt;parent&gt;spring-boot-starter-parent&lt;/parent&gt;</code> — inherits Spring Boot's managed dependency versions so you don't need to specify version numbers for most Spring libraries</li>
+    <li><code>&lt;java.version&gt;17&lt;/java.version&gt;</code> — tells the Maven compiler plugin which Java version to target</li>
+    <li><code>spring-boot-starter-web</code> — pulls in Spring MVC, Jackson (JSON), and an embedded Tomcat server</li>
+    <li><code>spring-boot-starter-data-jpa</code> — includes Hibernate ORM and Spring Data to map Java classes to database tables</li>
+    <li><code>&lt;scope&gt;runtime&lt;/scope&gt;</code> on H2 — the H2 JAR is only needed at runtime, not during compilation</li>
+    <li><code>spring-boot-maven-plugin</code> — packages your app as a self-contained "fat JAR" that includes all dependencies</li>
+  </ul>
+</div>
+
   <div class="callout info">
     ℹ️ The <code>&lt;parent&gt;</code> section is key. By inheriting from <code>spring-boot-starter-parent</code>, you get sensible defaults for Java version, plugin configuration, and dependency version management — without specifying version numbers for most Spring libraries yourself.
   </div>
@@ -128,6 +142,19 @@
 └── mvnw / mvnw.cmd                           # Maven wrapper (no Maven install needed)
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>src/main/java</code> — all application source code goes here; Maven compiles everything in this tree</li>
+    <li><code>TodoApiApplication.java</code> — the class containing <code>main()</code>; this is where Spring Boot starts</li>
+    <li><code>application.properties</code> — key-value config file; Spring Boot reads it automatically on startup</li>
+    <li><code>static/</code> — files here are served directly by the web server (HTML, CSS, images) with no processing</li>
+    <li><code>src/test/java</code> — test classes mirror the main source tree; Maven runs these during <code>mvn test</code></li>
+    <li><code>pom.xml</code> — the single source of truth for dependencies, plugins, and build settings</li>
+    <li><code>mvnw / mvnw.cmd</code> — the Maven wrapper scripts let anyone run Maven without installing it globally</li>
+  </ul>
+</div>
+
   <p>The most important locations:</p>
   <ul>
     <li><code>src/main/java</code> — all your Java source code lives here.</li>
@@ -163,6 +190,19 @@ mvn clean package
 ./mvnw spring-boot:run        # Linux/Mac
 mvnw.cmd spring-boot:run      # Windows
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>mvn compile</code> — translates <code>.java</code> source files into <code>.class</code> bytecode; fails fast on syntax errors</li>
+    <li><code>mvn test</code> — compiles and then runs all JUnit tests; build fails if any test fails</li>
+    <li><code>mvn package</code> — runs compile + test + packages everything into a JAR file in the <code>target/</code> directory</li>
+    <li><code>mvn spring-boot:run</code> — compiles and starts the embedded Tomcat server in one step; most common during development</li>
+    <li><code>mvn clean</code> — deletes the <code>target/</code> directory entirely; fixes mysterious build-cache bugs</li>
+    <li><code>mvn clean package</code> — full safe rebuild from scratch; use before deploying</li>
+    <li><code>./mvnw</code> — uses the bundled Maven wrapper so teammates don't need Maven installed globally</li>
+  </ul>
+</div>
 
   <div class="callout real-world">🌍 <strong>Real World:</strong> Every major Java framework (Spring, Hibernate, Apache Kafka, Elasticsearch) distributes through Maven Central. When Netflix writes new Java microservices, they use Maven/Gradle to pull in hundreds of dependencies. Without Maven, managing those dependencies manually would take days per project.</div>
 

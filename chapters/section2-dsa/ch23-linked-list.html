@@ -106,6 +106,18 @@ The last node's next pointer is null (end of list).
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>Node head</code> — the only field the list needs; every other node is reachable by following <code>next</code> pointers from here</li>
+    <li><code>while (current.next != null)</code> in <code>add()</code> — walks to the last node before attaching the new one; makes <code>add()</code> O(n)</li>
+    <li><code>current = current.next</code> — the standard linked-list traversal idiom; advances the pointer one node forward each iteration</li>
+    <li><code>if (head.data == data) { head = head.next; }</code> in <code>delete()</code> — special case because deleting the head only requires updating the <code>head</code> reference, not a previous node's <code>next</code></li>
+    <li><code>current.next = current.next.next</code> — unlinks a node by making the previous node point past it; the removed node becomes unreachable and is garbage collected</li>
+    <li>Traversal stops when <code>current == null</code> (past the last node), not when <code>current.next == null</code> (at the last node) — the choice depends on whether you need to look ahead</li>
+  </ul>
+</div>
+
   <h2>Step-by-Step: delete(20) on the list [10 → 20 → 30]</h2>
 <pre>
 Before: head → [10|●] → [20|●] → [30|null]

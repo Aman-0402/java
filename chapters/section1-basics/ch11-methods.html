@@ -32,6 +32,16 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>static void greet()</code> — declares a method that belongs to the class (static), returns nothing (void), and is named greet</li>
+    <li><code>System.out.println(...)</code> — the single action this method performs every time it is called</li>
+    <li><code>greet();</code> — calling the method by name followed by parentheses; the parentheses are required even when passing no arguments</li>
+    <li><code>greet(); greet(); greet();</code> — the same method is called three times without rewriting its body, demonstrating the core benefit of methods: code reuse</li>
+  </ul>
+</div>
+
   <h2>Return Types</h2>
   <p>A method can either return a value back to the caller, or return nothing. The return type is declared before the method name:</p>
   <ul>
@@ -70,6 +80,18 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>static void printDivider()</code> — a void method; it performs an action (printing) but gives nothing back to the caller</li>
+    <li><code>static double calculateArea(double width, double height)</code> — declares that this method will compute and hand back a <code>double</code> value</li>
+    <li><code>return area;</code> — sends the computed result back to the call site; execution of the method stops here</li>
+    <li><code>double roomArea = calculateArea(5.5, 4.0);</code> — the returned value is captured in a variable for later use</li>
+    <li><code>static String buildGreeting(String name)</code> — shows that return types are not limited to numbers; any type, including <code>String</code>, can be returned</li>
+    <li><code>return "Hello, " + name + "!";</code> — a return statement can contain an expression; Java evaluates it first, then returns the result</li>
+  </ul>
+</div>
+
   <div class="callout tip">💡 Once a <code>return</code> statement executes, the method immediately stops. Any code after <code>return</code> in the same block is unreachable and will cause a compiler warning. Use this intentionally to exit a method early when needed.</div>
 
   <div class="callout history">📜 <strong>History:</strong> The concept of "subroutines" — what we now call methods or functions — was invented by Alan Turing in 1945. He called them "abbreviated code definitions." They've been central to programming for over 80 years, predating almost every modern language feature.</div>
@@ -95,6 +117,16 @@
         System.out.println("Area: " + calculateArea(w, h));  // Area: 20.0
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>static double calculateArea(double width, double height)</code> — <code>width</code> and <code>height</code> are <em>parameters</em>: named placeholders defined in the method signature</li>
+    <li><code>calculateArea(5.5, 3.0)</code> — <code>5.5</code> and <code>3.0</code> are the <em>arguments</em>: the actual values supplied at the call site</li>
+    <li><code>double area = calculateArea(5.5, 3.0);</code> — the returned double is stored immediately in a variable</li>
+    <li><code>double w = 8.0; calculateArea(w, h)</code> — variables can also be passed as arguments; their current values are copied into the parameters</li>
+  </ul>
+</div>
 
   <h2>Method Overloading</h2>
   <p>Java allows multiple methods with the same name, as long as they have different parameter lists. This is called <em>overloading</em>. Java picks the right version based on what arguments you pass.</p>
@@ -122,6 +154,17 @@
         System.out.println(add(1.5, 2.5));      // calls version 3 -> 4.0
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>static int add(int a, int b)</code> / <code>static int add(int a, int b, int c)</code> / <code>static double add(double a, double b)</code> — three methods share the same name; Java distinguishes them by parameter count and types</li>
+    <li><code>add(3, 4)</code> — Java matches two <code>int</code> arguments to version 1 at compile time</li>
+    <li><code>add(1, 2, 3)</code> — three <code>int</code> arguments → version 2</li>
+    <li><code>add(1.5, 2.5)</code> — two <code>double</code> arguments → version 3; note the return type alone cannot distinguish overloads</li>
+    <li>Method selection happens at <em>compile time</em> based on the argument types, not at runtime</li>
+  </ul>
+</div>
 
   <div class="callout info">ℹ️ Overloading is different from having different method names. <code>addInts</code> and <code>addDoubles</code> would also work — but overloading with the same name <code>add</code> is cleaner and more intuitive for the caller.</div>
 
@@ -182,6 +225,17 @@
         printReport(4.0, 4.0);
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>static double area(double width, double height)</code> — a focused single-purpose helper; doing one thing makes it easy to test in isolation</li>
+    <li><code>static boolean isSquare(double width, double height)</code> — returns a boolean directly from the comparison expression <code>width == height</code>, no need for an <code>if</code> statement</li>
+    <li><code>static void printReport(...)</code> — an orchestrator method that calls three other methods; this shows how large tasks decompose into smaller, named steps</li>
+    <li><code>System.out.printf("  Area      : %.2f%n", area(width, height));</code> — a method call (<code>area(...)</code>) is used directly as an argument to <code>printf</code>; the return value is consumed inline</li>
+    <li><code>printReport(5.0, 3.0);</code> — calling the report method twice with different values demonstrates how one method replaces repeating an entire block of output logic</li>
+  </ul>
+</div>
 
   <p>Output:</p>
   <pre><code>Rectangle 5.0 x 3.0

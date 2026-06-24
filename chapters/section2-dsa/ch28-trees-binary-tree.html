@@ -235,6 +235,19 @@ In-order traversal of BST above:
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>root = insertRecursive(root, value)</code> — the public <code>insert</code> reassigns <code>root</code> to whatever the recursive helper returns; this pattern cleanly handles the empty-tree case</li>
+    <li><code>if (current == null) return new Node(value)</code> — base case for insert; when recursion reaches an empty slot, a new node is created and returned up the call chain to be attached</li>
+    <li><code>current.left = insertRecursive(current.left, value)</code> — the returned node (new or unchanged) is always re-linked to its parent, keeping the tree intact even when only a distant leaf changes</li>
+    <li><code>if (current == null) return false</code> in search — hitting a null pointer means the path in the BST that would contain the target is empty; the value is not in the tree</li>
+    <li><code>inOrderRecursive(current.left)</code> before printing — recursing left first means smaller values are visited before the current node, producing ascending order</li>
+    <li><code>inOrderRecursive(current.right)</code> after printing — recursing right after the current node ensures larger values appear last</li>
+    <li>In-order traversal of any BST always yields values in sorted ascending order — a consequence of the BST ordering rule</li>
+  </ul>
+</div>
+
   <div class="callout fact">🔍 <strong>Fun Fact:</strong> The HTML of every web page is stored as a tree called the DOM (Document Object Model). Your browser parses HTML into a tree of nodes (<code>&lt;html&gt;</code> → <code>&lt;body&gt;</code> → <code>&lt;div&gt;</code> → <code>&lt;p&gt;</code>). When JavaScript changes a webpage, it's modifying tree nodes. Java's XML parsers work the same way.</div>
 
   <div class="callout tip">

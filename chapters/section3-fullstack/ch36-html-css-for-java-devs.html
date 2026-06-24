@@ -42,6 +42,19 @@
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>&lt;!DOCTYPE html&gt;</code> — tells the browser this is an HTML5 document; without it, browsers enter "quirks mode" with inconsistent rendering</li>
+    <li><code>&lt;head&gt;</code> — metadata section; content here is not displayed on the page but configures how it loads (title, charset, stylesheets)</li>
+    <li><code>&lt;meta charset="UTF-8"&gt;</code> — sets character encoding so special characters (accents, emoji) display correctly</li>
+    <li><code>&lt;link rel="stylesheet" href="style.css"&gt;</code> — loads an external CSS file; the browser downloads it and applies styles before rendering the page</li>
+    <li><code>&lt;body&gt;</code> — everything visible on the page goes here; all React components ultimately render inside a <code>&lt;body&gt;</code> tag</li>
+    <li><code>&lt;a href="https://example.com"&gt;</code> — the <code>href</code> attribute tells the browser where to navigate when the link is clicked</li>
+    <li><code>&lt;img src="logo.png" alt="My Logo"&gt;</code> — self-closing tag; <code>alt</code> is shown when the image fails to load and is read by screen readers</li>
+  </ul>
+</div>
+
   <p>
     <strong>Attributes</strong> are like method parameters — they give extra information to a tag.
     <code>href</code> on an <code>&lt;a&gt;</code> tag says "where to go", just like passing a URL argument to a method.
@@ -108,6 +121,18 @@ h1 {
   text-align: center;
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>h1 { color: navy; }</code> — type selector; targets every <code>&lt;h1&gt;</code> element on the page</li>
+    <li><code>.card { ... }</code> — class selector (dot prefix); targets any element with <code>class="card"</code>; the most common selector in real CSS</li>
+    <li><code>#main-title { ... }</code> — ID selector (hash prefix); targets the single element with <code>id="main-title"</code>; IDs must be unique per page</li>
+    <li><code>font-size: 2rem</code> — <code>rem</code> is relative to the root font size (usually 16px), so <code>2rem = 32px</code>; scales with user accessibility settings</li>
+    <li><code>border-radius: 8px</code> — rounds the corners of the element's border box, giving it a card-like appearance</li>
+    <li><code>box-shadow: 0 2px 8px rgba(0,0,0,0.1)</code> — adds a subtle drop shadow; <code>rgba</code> sets color with alpha transparency (0.1 = 10% opaque)</li>
+  </ul>
+</div>
+
   <h2>The CSS Box Model</h2>
   <p>
     Every HTML element is a rectangular <strong>box</strong>. Understanding the box model is fundamental.
@@ -169,6 +194,18 @@ With flex-direction: column:
   align-items: center;       /* vertical center */
   min-height: 100vh;
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>display: flex</code> — turns the element into a flex container; its direct children become flex items that lay out in a row by default</li>
+    <li><code>justify-content: space-between</code> — distributes children along the main axis (horizontal in a row), pushing the first to the left edge and the last to the right</li>
+    <li><code>align-items: center</code> — aligns children along the cross axis (vertical in a row), centering them vertically within the container</li>
+    <li><code>justify-content: center</code> on <code>.page</code> — horizontally centers the card within the full-page flex container</li>
+    <li><code>min-height: 100vh</code> — sets a minimum height equal to the full viewport height (<code>vh</code> = viewport height); ensures the flex container is tall enough to center content vertically</li>
+    <li>Flexbox replaces floats and table hacks that developers used before 2015; it is now the standard for 1D layout in modern CSS</li>
+  </ul>
+</div>
 
   <h2>Putting It Together — A Styled Card</h2>
   <p>Here is a complete minimal example: a styled course card in plain HTML and CSS. This is exactly the kind of UI that React will build programmatically.</p>

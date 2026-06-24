@@ -45,6 +45,17 @@
     public void setCompleted(boolean completed) { this.completed = completed; }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>private Long id</code> — uses the wrapper type <code>Long</code> (not primitive <code>long</code>) so it can be <code>null</code> before the database assigns an ID</li>
+    <li><code>public Todo() {}</code> — no-argument constructor required by Jackson so it can deserialize incoming JSON into a <code>Todo</code> object</li>
+    <li><code>public Todo(Long id, String title, boolean completed)</code> — convenience constructor for creating objects in code without chaining setters</li>
+    <li>Getters and setters follow JavaBean conventions — Jackson uses them to serialize Java fields to JSON keys and back</li>
+    <li><code>boolean isCompleted()</code> — note the <code>is</code> prefix for boolean getters; Jackson maps this to the JSON key <code>"completed"</code></li>
+  </ul>
+</div>
+
   <h2>Full CRUD Controller</h2>
   <pre><code class="language-java">import org.springframework.web.bind.annotation.*;
 import java.util.*;
@@ -93,6 +104,20 @@ public class TodoController {
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>@RestController</code> — every method's return value is automatically serialized to JSON by Jackson and written to the HTTP response body</li>
+    <li><code>@RequestMapping("/api/todos")</code> — sets the base URL path for all methods in this class, so <code>@GetMapping</code> becomes <code>GET /api/todos</code></li>
+    <li><code>@CrossOrigin(origins = "*")</code> — adds CORS headers so browsers on different ports (like React on 3000) can call this API</li>
+    <li><code>@PathVariable Long id</code> — extracts the <code>{id}</code> segment from the URL (e.g. <code>/api/todos/5</code> gives <code>id = 5</code>)</li>
+    <li><code>@RequestBody Todo todo</code> — Jackson deserializes the JSON request body into a <code>Todo</code> object automatically</li>
+    <li><code>todos.stream().filter(...).findFirst()</code> — searches the in-memory list for a todo matching the given ID</li>
+    <li><code>todos.removeIf(t -> t.getId().equals(id))</code> — lambda-based list removal; note <code>.equals()</code> instead of <code>==</code> for object comparison</li>
+    <li><code>private Long nextId = 1L</code> — manual ID counter since there is no database to auto-increment; replaced in Ch 35 by <code>@GeneratedValue</code></li>
+  </ul>
+</div>
+
   <div class="callout fact">🔍 <strong>Fun Fact:</strong> Twitter's REST API receives over 500 million API calls per day. Every tweet, follow, and like is a REST API call. Twitter's API was so influential that it established conventions (JSON responses, resource URLs like <code>/users/:id/tweets</code>) that most modern REST APIs still follow.</div>
 
   <div class="callout tip">
@@ -119,6 +144,18 @@ curl -X PUT http://localhost:8080/api/todos/1 \
 
 # Delete
 curl -X DELETE http://localhost:8080/api/todos/1</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>curl -X POST</code> — specifies the HTTP method; without <code>-X</code>, curl defaults to GET</li>
+    <li><code>-H "Content-Type: application/json"</code> — tells the server the request body is JSON; Spring Boot requires this header to invoke <code>@RequestBody</code> deserialization</li>
+    <li><code>-d '{"title":"Buy milk","completed":false}'</code> — the JSON body sent to the server; matches the fields of the <code>Todo</code> class</li>
+    <li><code>curl http://localhost:8080/api/todos</code> — plain GET request; curl uses GET by default when no <code>-X</code> flag is provided</li>
+    <li><code>curl -X PUT ... -d '{"completed":true}'</code> — full replacement update; all fields must be provided since PUT replaces the entire resource</li>
+    <li><code>curl -X DELETE http://localhost:8080/api/todos/1</code> — the <code>1</code> in the URL is extracted by <code>@PathVariable</code> in the controller</li>
+  </ul>
+</div>
 
   <div class="callout real-world">🌍 <strong>Real World:</strong> When you order food on Zomato/Swiggy, at least 10 REST API calls happen: authentication check, restaurant list fetch, menu fetch, cart update, payment processing, order creation, restaurant notification, delivery assignment, location tracking, and notification push. Every tap triggers a REST call to a Spring Boot (or similar) backend.</div>
 

@@ -93,6 +93,18 @@ public class JwtUtil {
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>Keys.hmacShaKeyFor(SECRET.getBytes())</code> — creates a cryptographic signing key from the secret string; HMAC-SHA256 requires a key of at least 256 bits (32 characters)</li>
+    <li><code>private static final long EXPIRY = 1000 * 60 * 60 * 24</code> — token lifetime in milliseconds; <code>1000ms × 60s × 60min × 24h = 24 hours</code></li>
+    <li><code>Jwts.builder().subject(username).issuedAt(...).expiration(...).signWith(KEY).compact()</code> — builder chain that constructs the JWT; <code>compact()</code> serializes it to the dot-separated string</li>
+    <li><code>Jwts.parser().verifyWith(KEY).build().parseSignedClaims(token)</code> — validates the token's signature against the same secret key; throws an exception if tampered or expired</li>
+    <li><code>.getPayload().getSubject()</code> — extracts the <code>sub</code> claim from the payload, which holds the username set during token creation</li>
+    <li><code>isValid()</code> — wraps parsing in a try-catch; returns <code>false</code> for expired, tampered, or malformed tokens instead of throwing</li>
+  </ul>
+</div>
+
   <h2>Step 3: Login Endpoint</h2>
   <pre><code class="language-java">@RestController
 @CrossOrigin(origins = "*")

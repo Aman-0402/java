@@ -44,6 +44,17 @@ cd my-app
 npm install
 npm run dev</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>npx create-react-app my-app</code> — <code>npx</code> runs a package without installing it globally; CRA scaffolds the full React project structure</li>
+    <li><code>npm create vite@latest my-app -- --template react</code> — creates a Vite-powered React project; the <code>--</code> separates npm flags from Vite's own flags</li>
+    <li><code>npm install</code> — downloads all dependencies listed in <code>package.json</code> into <code>node_modules/</code>; required after cloning or creating a Vite project</li>
+    <li><code>npm start</code> (CRA) / <code>npm run dev</code> (Vite) — starts the development server with hot module replacement so changes appear in the browser instantly</li>
+    <li>CRA serves at <code>localhost:3000</code>; Vite serves at <code>localhost:5173</code> by default</li>
+  </ul>
+</div>
+
   <p>
     Either option opens a browser at <code>http://localhost:3000</code> (CRA) or <code>http://localhost:5173</code> (Vite)
     with a starter React app. Your Spring Boot backend will run separately on port 8080.
@@ -174,6 +185,18 @@ function Counter() {
   );
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>import { useState } from 'react'</code> — named import of the useState hook; hooks are functions that give functional components access to React features</li>
+    <li><code>const [count, setCount] = useState(0)</code> — array destructuring; <code>count</code> holds the current value, <code>setCount</code> is the function to update it</li>
+    <li><code>useState(0)</code> — the argument is the initial value; <code>count</code> starts at <code>0</code> when the component first renders</li>
+    <li><code>onClick={() =&gt; setCount(count + 1)}</code> — attaches a click handler using an arrow function; calling <code>setCount</code> schedules a re-render with the new value</li>
+    <li><code>{count}</code> in JSX — curly braces embed any JavaScript expression into the JSX output; React re-renders this whenever <code>count</code> changes</li>
+    <li>Never write <code>count = count + 1</code> directly — React would not know to re-render; always use the setter function</li>
+  </ul>
+</div>
+
   <p>The pattern is always the same:</p>
   <pre><code class="language-javascript">const [stateName, setStateName] = useState(initialValue);</code></pre>
 
@@ -213,6 +236,19 @@ function CourseList() {
     &lt;/ul&gt;
   );
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>import { useState, useEffect } from 'react'</code> — two hooks imported together; <code>useEffect</code> handles side effects like API calls</li>
+    <li><code>useState([])</code> — initializes <code>courses</code> as an empty array; React renders the component immediately with this value before data arrives</li>
+    <li><code>useState(true)</code> — <code>loading</code> starts as <code>true</code> so a loading message shows before the fetch completes</li>
+    <li><code>useEffect(() =&gt; { fetch(...) }, [])</code> — runs the callback after the first render; the empty array <code>[]</code> dependency list means "run only once on mount"</li>
+    <li><code>fetch('http://localhost:8080/api/courses')</code> — calls the Spring Boot backend; returns a Promise that resolves with the HTTP response</li>
+    <li><code>.then(response =&gt; response.json())</code> — parses the JSON response body; this second step is needed because <code>fetch</code> returns the response object, not the data directly</li>
+    <li><code>courses.map(course =&gt; &lt;li key={course.id}&gt;)</code> — transforms the array into JSX list items; the <code>key</code> prop must be unique so React can track each element</li>
+  </ul>
+</div>
 
   <p>The second argument to <code>useEffect</code> — the <strong>dependency array</strong> — controls when the effect re-runs:</p>
   <ul>

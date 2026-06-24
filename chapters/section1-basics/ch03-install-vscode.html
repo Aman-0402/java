@@ -53,6 +53,18 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public class HelloWorld</code> — declares a class named HelloWorld; the filename must match this name exactly (HelloWorld.java)</li>
+    <li><code>public static void main(String[] args)</code> — the entry point every Java program needs; JVM calls this method to start execution</li>
+    <li><code>static</code> — means the JVM can call this method without creating a HelloWorld object first</li>
+    <li><code>void</code> — means this method returns nothing when it finishes</li>
+    <li><code>System.out.println(...)</code> — prints the text inside the quotes to the terminal and moves to a new line</li>
+    <li><code>"Hello from VS Code!"</code> — a String literal (text between double quotes) that gets printed as output</li>
+  </ul>
+</div>
+
   <p>Now you have two ways to run it:</p>
 
   <h3>Option A — The Run Button (easiest)</h3>
@@ -67,6 +79,16 @@ javac HelloWorld.java
 
 // Step 2 — Run the compiled class
 java HelloWorld</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>javac HelloWorld.java</code> — invokes the Java compiler; reads your source file and produces a HelloWorld.class bytecode file</li>
+    <li><code>java HelloWorld</code> — starts the JVM and tells it to run the class named HelloWorld (no .class extension needed)</li>
+    <li>The two-step process (compile then run) is what makes Java platform-independent — the .class bytecode runs on any JVM</li>
+    <li>If you see an error at the <code>javac</code> step, it is a syntax problem in your code; if the error is at the <code>java</code> step, it is a runtime problem</li>
+  </ul>
+</div>
 
   <p>You should see <code>Hello from VS Code!</code> printed in the terminal.</p>
 

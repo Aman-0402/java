@@ -104,6 +104,18 @@ public class Graph {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>Map&lt;Integer, List&lt;Integer&gt;&gt; adjacencyList</code> — the core data structure; each key is a vertex and its value is the list of vertices it is directly connected to</li>
+    <li><code>adjacencyList.putIfAbsent(u, new ArrayList&lt;&gt;())</code> — safely initializes a vertex's neighbour list only if it does not already exist; prevents overwriting an existing list when called multiple times</li>
+    <li><code>adjacencyList.get(u).add(v)</code> — adds v to u's neighbour list (one direction of the edge)</li>
+    <li><code>adjacencyList.get(v).add(u)</code> — adds u to v's neighbour list; both lines together create an undirected edge; remove this line for a directed (one-way) edge</li>
+    <li><code>getOrDefault(vertex, new ArrayList&lt;&gt;())</code> — returns an empty list for vertices with no neighbours rather than <code>null</code>, preventing a <code>NullPointerException</code> when callers iterate over the result</li>
+    <li><code>adjacencyList.keySet()</code> — returns all vertex identifiers; used to loop over all vertices when counting components or running traversals from every unvisited node</li>
+  </ul>
+</div>
+
   <h2>BFS — Breadth-First Search</h2>
   <p>
     BFS explores the graph <strong>level by level</strong>, starting from a source vertex. It visits all neighbours of the starting vertex first, then all neighbours of those neighbours, and so on — like ripples spreading outward from a stone dropped in water.

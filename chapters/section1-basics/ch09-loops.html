@@ -36,6 +36,18 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>for (int i = 0; i &lt; 5; i++)</code> — three-part header: initialise (<code>int i = 0</code>), condition (<code>i &lt; 5</code>), update (<code>i++</code>)</li>
+    <li><code>int i = 0</code> — the initialiser runs once before the loop starts; <code>i</code> is scoped to the loop and not accessible outside</li>
+    <li><code>i &lt; 5</code> — checked before every iteration; when it becomes <code>false</code> (i reaches 5), the loop exits</li>
+    <li><code>i++</code> — the update expression runs after each iteration body; increments <code>i</code> by 1</li>
+    <li><code>n--</code> in the countdown loop — decrements <code>n</code> by 1 each iteration, counting from 10 down to 1</li>
+    <li><code>even += 2</code> — increments by 2 instead of 1, producing only even numbers; the update expression can be any valid statement</li>
+  </ul>
+</div>
+
   <div class="callout tip">💡 The variable <code>i</code> in a <code>for</code> loop is called the <em>loop counter</em> or <em>index</em>. By convention, short names like <code>i</code>, <code>j</code>, <code>k</code> are perfectly fine inside loops — everyone reading Java code knows what they mean.</div>
 
   <div class="callout history">📜 <strong>History:</strong> The <code>for</code> loop syntax (<code>for (init; condition; update)</code>) was adopted directly from C (1972). James Gosling kept it intentionally familiar so that C and C++ developers could learn Java quickly. This single decision accelerated Java's adoption massively during the late 1990s developer boom.</div>
@@ -115,6 +127,18 @@ public class DoWhileDemo {
         // Output: 2 4 6 8 10
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>break</code> — immediately exits the innermost loop; execution continues with the statement after the loop's closing brace</li>
+    <li><code>if (i == 7) { ... break; }</code> — the <code>if</code> check must come before the <code>System.out.print</code> so 7 itself is never printed</li>
+    <li><code>continue</code> — skips the rest of the current loop body and jumps directly to the update expression (<code>i++</code>), then checks the condition again</li>
+    <li><code>i % 2 != 0</code> — true when <code>i</code> is odd (remainder is 1); <code>continue</code> then skips the print, so odd numbers are never printed</li>
+    <li><code>System.out.println()</code> with no argument — prints an empty line (just a newline), used here to separate the two loop outputs</li>
+    <li>Both <code>break</code> and <code>continue</code> only affect the innermost loop when used inside nested loops</li>
+  </ul>
+</div>
 
   <h2>The For-Each Loop (Preview)</h2>
   <p>Java also has a <code>for-each</code> loop (officially called the <em>enhanced for loop</em>) designed for reading through collections and arrays. You will use it extensively in the next chapter on arrays. Here is a quick preview:</p>

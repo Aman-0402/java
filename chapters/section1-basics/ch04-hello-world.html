@@ -14,6 +14,19 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public class HelloWorld</code> — defines a class (a blueprint/container); every Java file must have exactly one public class matching the filename</li>
+    <li><code>public static void main(String[] args)</code> — the exact method signature the JVM searches for as the program's entry point; all five words are required</li>
+    <li><code>static</code> — lets the JVM call <code>main</code> without first creating a <code>HelloWorld</code> object; without it the program won't start</li>
+    <li><code>void</code> — declares that <code>main</code> returns no value; the JVM does not expect one back</li>
+    <li><code>String[] args</code> — an array of strings the user can pass on the command line (e.g. <code>java HelloWorld foo bar</code>); beginners rarely use this but it must still be present</li>
+    <li><code>System.out.println("Hello, World!")</code> — sends the text to standard output; the semicolon at the end is mandatory on every Java statement</li>
+    <li>The outer <code>{ }</code> wraps the class body; the inner <code>{ }</code> wraps the method body — every opening brace must have a matching closing brace</li>
+  </ul>
+</div>
+
   <h2>What is a Class?</h2>
   <p>Imagine a class as a blueprint. A house blueprint is not a house — it describes how a house should be built. Similarly, a Java class is a blueprint that describes a piece of your program. Every piece of Java code must live inside a class. Right now, your entire program is one class called <code>HelloWorld</code>.</p>
   <p>The keyword <code>public</code> before <code>class</code> means "anyone can see and use this class." You will learn more about <code>public</code> vs <code>private</code> in the Object-Oriented chapters. For now, just always write <code>public class</code>.</p>
@@ -60,6 +73,17 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>System.out.println("Line 1")</code> — prints the text and appends a newline character <code>\n</code>, so the next output starts on a fresh line</li>
+    <li><code>System.out.print("No ")</code> — prints the text without any newline; the cursor stays at the end of the same line</li>
+    <li>The trailing space inside <code>"No "</code> is intentional — without it "No" and "newline!" would print with no gap between them</li>
+    <li><code>// prints then moves to next line</code> — double-slash starts a single-line comment; Java ignores everything after <code>//</code> to the end of the line</li>
+    <li>Both <code>print</code> and <code>println</code> belong to <code>System.out</code>, which is a <code>PrintStream</code> connected to the terminal</li>
+  </ul>
+</div>
+
   <p>Output:</p>
   <pre><code>Line 1
 Line 2
@@ -80,6 +104,17 @@ public class HelloWorld {
         System.out.println("Hello, World!");
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>javac HelloWorld.java</code> — the compiler command; <code>javac</code> stands for "Java compiler"; it produces <code>HelloWorld.class</code></li>
+    <li><code>HelloWorld.class</code> — the resulting bytecode file; this is platform-neutral and runs on any operating system with a JVM installed</li>
+    <li><code>java HelloWorld</code> — the runtime command; starts the JVM and loads <code>HelloWorld.class</code> (omit the <code>.class</code> extension here)</li>
+    <li>The JVM reads bytecode and translates it to machine code for your specific OS at runtime — this is "Write Once, Run Anywhere"</li>
+    <li>Comments starting with <code>//</code> explain the shell commands; they are inside a Java code block here for display purposes only</li>
+  </ul>
+</div>
 
   <div class="callout tip">💡 This two-step process is why Java programs run on any operating system without change. The <code>.class</code> bytecode is the same on Windows, macOS, and Linux. The JVM on each platform handles the differences — that is what "Write Once, Run Anywhere" means.</div>
 

@@ -63,6 +63,18 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>String grade;</code> — declares the variable without assigning; Java requires it to be assigned in every branch before use</li>
+    <li><code>if (score >= 90)</code> — the first condition checked; if true, <code>grade = "A"</code> runs and all other <code>else if</code> branches are skipped</li>
+    <li><code>else if (score >= 80)</code> — only reached when the previous condition was false; because we already know score is below 90, this effectively tests 80–89</li>
+    <li>Each subsequent <code>else if</code> implicitly inherits the negation of all previous conditions — no need to write <code>score >= 70 && score &lt; 80</code></li>
+    <li><code>else</code> at the end — the catch-all; runs only when every preceding condition was false (score below 60)</li>
+    <li><code>score + " -> Grade: " + grade</code> — Java converts the <code>int</code> score to a String automatically when concatenated with <code>+</code></li>
+  </ul>
+</div>
+
   <div class="callout tip">💡 Conditions are checked top to bottom. Once one matches, Java skips the rest. So you don't need to write <code>score >= 70 && score &lt; 80</code> — just <code>score >= 70</code> is enough because if score were 80 or above, a previous condition would have already matched.</div>
 
   <h2>Nested <code>if</code> Statements</h2>
@@ -120,6 +132,18 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>switch (day)</code> — evaluates the expression <code>day</code> once and jumps to the matching <code>case</code> label</li>
+    <li><code>case 3:</code> — since <code>day</code> is 3, execution jumps here and prints "Wednesday — middle of the week"</li>
+    <li><code>break;</code> — exits the switch block; without it, execution would "fall through" and run the next case's code too</li>
+    <li><code>case 6:</code> immediately followed by <code>case 7:</code> — intentional fall-through; both cases share the same code block, printing "Weekend!"</li>
+    <li><code>default:</code> — runs when no case matches; equivalent to the final <code>else</code> in an if-else chain; optional but recommended</li>
+    <li>Switch works on <code>int</code>, <code>String</code>, <code>char</code>, and enum types; it does NOT work on <code>double</code> or <code>boolean</code></li>
+  </ul>
+</div>
+
   <div class="callout warning">⚠️ Do not forget <code>break</code> at the end of each case! Without it, Java will "fall through" and execute the next case's code too, which is almost never what you want. This is one of the most famous bugs in Java history.</div>
 
   <div class="callout fact">🔍 <strong>Fun Fact:</strong> The most famous real-world bug caused by a missing <code>break</code> in a switch: Apple's "goto fail" SSL security bug in 2014. A missing statement in Apple's iOS code caused HTTPS security checks to be bypassed silently, leaving millions of iPhones vulnerable to network attacks for months before it was discovered.</div>
@@ -141,6 +165,18 @@
         // Output: Day 6 is a: Weekend
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>String type = switch (day) { ... }</code> — switch expression (Java 14+) returns a value directly, unlike the switch statement which only executes side effects</li>
+    <li><code>case 1, 2, 3, 4, 5 -></code> — multiple values in one case separated by commas; no fall-through needed</li>
+    <li><code>-></code> (arrow syntax) — replaces the old <code>case X: ... break;</code> pattern; automatically prevents fall-through</li>
+    <li><code>"Weekday"</code> after the arrow — the value that gets returned/assigned when this case matches</li>
+    <li><code>default -> "Unknown"</code> — mandatory in switch expressions when not all possible values are covered</li>
+    <li>The semicolon <code>;</code> after the closing <code>}</code> — required because this is an expression used in an assignment statement</li>
+  </ul>
+</div>
 
   <div class="callout tip">💡 The switch expression (with <code>-></code>) is cleaner and less error-prone than the traditional switch statement (with <code>break</code>). If you are using Java 14 or newer, prefer the arrow syntax.</div>
 

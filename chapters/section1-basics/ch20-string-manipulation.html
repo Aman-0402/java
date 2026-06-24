@@ -81,6 +81,18 @@ System.out.println(greeting);      // HELLO
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>String s = "  Hello, World!  ";</code> — declared with leading and trailing spaces to demonstrate trimming; all subsequent method calls return new strings, never modifying <code>s</code></li>
+    <li><code>s.length()</code> — counts every character including spaces; the result is 18, not 13</li>
+    <li><code>s.trim()</code> — returns a new string with leading and trailing whitespace removed; the original <code>s</code> is unchanged</li>
+    <li><code>trimmed.substring(7, 12)</code> — extracts characters from index 7 (inclusive) to 12 (exclusive); indices are zero-based</li>
+    <li><code>csv.split(",")</code> — splits the string at each comma delimiter and returns a <code>String[]</code> array; the delimiter itself is not included in any element</li>
+    <li><code>"Java".toCharArray()</code> — converts a string into a primitive <code>char[]</code>, useful when you need to process individual characters in a loop</li>
+  </ul>
+</div>
+
   <h2>equals() vs == for Strings</h2>
   <p>
     This is one of the most common Java traps. The <code>==</code> operator checks whether two
@@ -149,6 +161,19 @@ for (int i = 0; i < 1000; i++) {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>StringBuilder sb = new StringBuilder();</code> — creates a single mutable character buffer; unlike <code>String</code>, appending does not create a new object each time</li>
+    <li><code>sb.append("Item ").append(i).append("\n");</code> — method chaining: each <code>append()</code> returns the same <code>sb</code> object, so calls can be chained in one statement</li>
+    <li><code>sb.insert(0, "--- List ---\n")</code> — inserts text at a specific position; index 0 means the very beginning</li>
+    <li><code>sb.delete(0, 13)</code> — removes characters from index 0 up to (but not including) index 13</li>
+    <li><code>sb.reverse()</code> — reverses all characters in place; no new object is created</li>
+    <li><code>sb.toString()</code> — converts the mutable buffer back to an immutable <code>String</code> for output or storage; call this once when building is complete</li>
+    <li><code>name.replace(0, 5, "Goodbye")</code> — replaces characters from index 0 to 4 with the new string; the replacement can be a different length than what it replaces</li>
+  </ul>
+</div>
 
   <h2>Useful String Conversions</h2>
   <pre><code class="language-java">// int to String

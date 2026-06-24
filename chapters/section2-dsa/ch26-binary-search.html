@@ -123,6 +123,20 @@ Step 2:  low=4, high=6
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>int low = 0; int high = arr.length - 1</code> — the two pointers define the current search window; they move toward each other until they cross</li>
+    <li><code>while (low &lt;= high)</code> — the loop continues as long as there is at least one element left to check; when <code>low &gt; high</code> the window is empty</li>
+    <li><code>int mid = low + (high - low) / 2</code> — computes the midpoint without overflow; equivalent to <code>(low + high) / 2</code> but safe for large indices</li>
+    <li><code>return mid</code> — target found; returns its index directly without finishing the loop</li>
+    <li><code>low = mid + 1</code> — element at mid is too small; everything up to and including mid can be safely discarded</li>
+    <li><code>high = mid - 1</code> — element at mid is too large; everything from mid onward can be safely discarded</li>
+    <li><code>return -1</code> — loop exhausted the search space without a match; -1 is the conventional "not found" sentinel</li>
+    <li>Each iteration eliminates half the remaining candidates, making this O(log n) — 7 elements need at most 3 iterations; a million elements need at most 20</li>
+  </ul>
+</div>
+
   <h2>Java Implementation — Recursive</h2>
   <pre><code class="language-java">public class BinarySearchRecursive {
 

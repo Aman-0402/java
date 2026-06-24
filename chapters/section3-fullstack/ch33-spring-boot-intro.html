@@ -29,6 +29,17 @@ public class TodoApiApplication {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>@SpringBootApplication</code> — a composite annotation combining <code>@SpringBootConfiguration</code>, <code>@EnableAutoConfiguration</code>, and <code>@ComponentScan</code></li>
+    <li><code>@EnableAutoConfiguration</code> — detects libraries on the classpath (e.g. Spring Web) and automatically sets up their infrastructure (e.g. Tomcat server)</li>
+    <li><code>@ComponentScan</code> — scans this package and all sub-packages for Spring-managed classes like <code>@RestController</code> and <code>@Service</code></li>
+    <li><code>SpringApplication.run(TodoApiApplication.class, args)</code> — bootstraps the entire Spring context, starts the embedded server, and loads all auto-configuration</li>
+    <li><code>public static void main(String[] args)</code> — standard Java entry point; Spring Boot apps start just like any ordinary Java program</li>
+  </ul>
+</div>
+
   <p>The <code>@SpringBootApplication</code> annotation is actually a shortcut for three annotations combined:</p>
   <ul>
     <li><code>@SpringBootConfiguration</code> — marks this class as a configuration source.</li>
@@ -69,6 +80,17 @@ public class HelloController {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>@RestController</code> — marks this class as a REST controller; combines <code>@Controller</code> + <code>@ResponseBody</code> so every method's return value is written directly to the HTTP response</li>
+    <li><code>@GetMapping("/hello")</code> — registers this method to handle HTTP GET requests at the path <code>/hello</code></li>
+    <li><code>public String hello()</code> — returns a plain string; Spring Boot writes it as the response body with <code>Content-Type: text/plain</code></li>
+    <li>No XML config needed — Spring Boot's component scan detects <code>@RestController</code> and registers the route automatically</li>
+    <li>The embedded Tomcat server (started by <code>@SpringBootApplication</code>) listens on port 8080 and routes the request to this method</li>
+  </ul>
+</div>
 
   <p>That is all you need. Spring Boot will:</p>
   <ol>
@@ -123,6 +145,18 @@ spring.datasource.password=
 # Enable the H2 web console at /h2-console
 spring.h2.console.enabled=true
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>server.port=8080</code> — overrides the default port; change to any free port when 8080 is in use</li>
+    <li><code>spring.application.name=todo-api</code> — sets the application name shown in logs and used by Spring Cloud service discovery</li>
+    <li><code>spring.jpa.show-sql=true</code> — prints the SQL Hibernate generates to the console; invaluable for debugging data issues during development</li>
+    <li><code>spring.datasource.url=jdbc:h2:mem:testdb</code> — connects to an in-memory H2 database named <code>testdb</code>; data resets on every restart</li>
+    <li><code>spring.datasource.username=sa</code> — H2's default admin username (<code>sa</code> = system administrator)</li>
+    <li><code>spring.h2.console.enabled=true</code> — exposes a browser-based SQL console at <code>/h2-console</code> for inspecting tables during development</li>
+  </ul>
+</div>
 
   <div class="callout real-world">🌍 <strong>Real World:</strong> Netflix uses Spring Boot for hundreds of microservices. Each service (authentication, recommendations, billing, streaming) is a separate Spring Boot application. Spring Boot's built-in health checks and metrics (<code>/actuator/health</code>) are how Netflix monitors that all 700+ services are running 24/7.</div>
 

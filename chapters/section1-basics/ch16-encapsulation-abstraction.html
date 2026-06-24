@@ -86,6 +86,17 @@ p.age = -50;    // Invalid age — no protection!
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>private String owner; private double balance;</code> — <code>private</code> hides these fields; no code outside <code>BankAccount</code> can read or write them directly</li>
+    <li><code>public String getOwner()</code> — a getter provides read-only access; there is no <code>setOwner()</code>, so the owner can never be changed after construction</li>
+    <li><code>public void deposit(double amount)</code> — instead of a setter that blindly assigns, a domain-specific method validates input (<code>amount > 0</code>) before modifying the field</li>
+    <li><code>public void withdraw(double amount)</code> — enforces the business rule that you cannot withdraw more than the current balance; a plain setter could not express this rule</li>
+    <li><code>// acc.balance = 999999; // compile error — private!</code> — demonstrates that direct field access is blocked at compile time, not just at runtime</li>
+  </ul>
+</div>
+
   <p><strong>Output:</strong></p>
   <pre><code>Alice's balance: $1300.0
 </code></pre>
@@ -174,6 +185,17 @@ public class Main {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public abstract class Shape</code> — the <code>abstract</code> keyword prevents <code>Shape</code> from being instantiated directly; it exists only to be extended</li>
+    <li><code>public abstract double area();</code> — an abstract method has no body (no curly braces); subclasses are <em>required</em> to provide an implementation or the compiler refuses to compile them</li>
+    <li><code>public void printArea()</code> — a concrete (non-abstract) method inside the abstract class; it calls <code>area()</code> even though <code>Shape</code> itself has no implementation for it — the correct subclass version is resolved at runtime</li>
+    <li><code>public class Circle extends Shape { @Override public double area() { return Math.PI * radius * radius; } }</code> — <code>Circle</code> fulfils its contract by providing the formula for a circle's area</li>
+    <li><code>Shape c = new Circle(5);</code> — the reference type is <code>Shape</code>; this is valid because <code>Circle</code> is a <code>Shape</code>; calling <code>c.printArea()</code> triggers <code>Circle.area()</code> via dynamic dispatch</li>
+  </ul>
+</div>
 
   <h2>Encapsulation vs Abstraction — The Difference</h2>
   <p>

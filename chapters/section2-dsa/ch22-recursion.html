@@ -52,6 +52,18 @@ factorial(4) is called:
 System.out.println(factorial(5)); // 120
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>if (n == 0) return 1</code> — base case; factorial(0) is mathematically defined as 1 and stops the recursion</li>
+    <li><code>return n * factorial(n - 1)</code> — recursive case; multiplies the current value by the factorial of the next smaller number</li>
+    <li>Each call pushes a new stack frame onto the call stack; frames only start returning once the base case is reached</li>
+    <li>For <code>factorial(5)</code> the call chain is: 5×(4×(3×(2×(1×1)))) — the multiplication happens as frames unwind</li>
+    <li>The input shrinks by 1 each call (<code>n - 1</code>), guaranteeing the base case is eventually reached for any non-negative integer</li>
+    <li>Time complexity is O(n) — one stack frame per integer from n down to 0</li>
+  </ul>
+</div>
+
   <h3>Step-by-Step Trace for factorial(4)</h3>
 <pre>
 factorial(4)
@@ -165,6 +177,18 @@ int safeFactorial(int n) {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>countdown</code> prints <code>n</code> before the recursive call — so numbers appear in descending order (5, 4, 3…) during the descent, not the unwind</li>
+    <li><code>if (n &lt;= 0)</code> — guards against negative inputs as well as zero, preventing runaway recursion</li>
+    <li><code>factorial</code> uses <code>n &lt;= 0</code> instead of <code>n == 0</code> for the same defensive reason</li>
+    <li><code>fibonacci(n - 1) + fibonacci(n - 2)</code> — two recursive calls per invocation; the call tree doubles in size with each level, giving O(2ⁿ) time</li>
+    <li><code>fibonacci</code> has two base cases (<code>n == 0</code> and <code>n == 1</code>) because the recurrence requires two previous values</li>
+    <li>All three methods demonstrate the same pattern: identify the simplest case and return it, then express the bigger problem in terms of itself</li>
+  </ul>
+</div>
 
   <div class="callout real-world">🌍 <strong>Real World:</strong> Git uses recursion to traverse your project's directory tree. When you run <code>git add .</code>, Git recursively walks every folder and subfolder to find changed files. File system traversal — one of the most common operations in software — is inherently recursive.</div>
 

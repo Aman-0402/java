@@ -48,6 +48,16 @@ public class Dog extends Animal {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public class Animal { String name; ... }</code> — the parent (superclass) defines fields and methods that all animals share</li>
+    <li><code>public class Dog extends Animal</code> — the <code>extends</code> keyword makes <code>Dog</code> a subclass; it automatically inherits <code>name</code>, <code>eat()</code>, and <code>breathe()</code> without rewriting them</li>
+    <li><code>String breed;</code> — <code>Dog</code> adds its own field on top of what it inherited; subclasses can extend the parent's data model</li>
+    <li><code>System.out.println(name + " says: Woof!");</code> — <code>bark()</code> uses <code>name</code>, a field defined in <code>Animal</code>, directly; inherited members are accessible as if they were declared in the subclass itself</li>
+  </ul>
+</div>
+
   <p>
     <code>Dog</code> now has <code>name</code>, <code>eat()</code>, <code>breathe()</code>, and
     <code>bark()</code> — even though only <code>bark()</code> was written in <code>Dog</code>.
@@ -92,6 +102,17 @@ public class Dog extends Animal {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public Animal(String name) { this.name = name; }</code> — the parent class defines a constructor that initialises the <code>name</code> field</li>
+    <li><code>public Dog(String name, String breed) { super(name); ... }</code> — <code>super(name)</code> calls the parent's constructor first, initialising the inherited <code>name</code> field; this must be the very first statement in the child constructor</li>
+    <li><code>this.breed = breed;</code> — after the parent is initialised, the child sets its own additional field</li>
+    <li><code>d.eat();</code> — even though <code>eat()</code> is not defined in <code>Dog</code>, it is accessible because <code>Dog extends Animal</code> inherits it</li>
+    <li><code>d.bark();</code> — a method that belongs only to <code>Dog</code>, not to <code>Animal</code></li>
+  </ul>
+</div>
+
   <p><strong>Output:</strong></p>
   <pre><code>Rex is eating.
 Rex (Labrador) says: Woof!
@@ -124,6 +145,16 @@ public class Cat extends Animal {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public void speak() { System.out.println("..."); }</code> — the parent provides a generic default implementation</li>
+    <li><code>@Override</code> — an annotation that tells the compiler this method intentionally replaces the parent's version; if the method signature doesn't match any parent method, the compiler reports an error, catching typos early</li>
+    <li><code>public void speak() { System.out.println("Woof!"); }</code> in <code>Dog</code> — the subclass replaces the parent's body with its own; this is method overriding</li>
+    <li>Both <code>Dog</code> and <code>Cat</code> override <code>speak()</code> independently; each provides its own behaviour while sharing the same method name from the parent contract</li>
+  </ul>
+</div>
 
   <h2>Calling the Parent Method with <code>super.method()</code></h2>
   <p>

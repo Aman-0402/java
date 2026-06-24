@@ -24,6 +24,17 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>a + b</code>, <code>a - b</code>, <code>a * b</code> — standard addition, subtraction, multiplication; result is an <code>int</code> when both operands are <code>int</code></li>
+    <li><code>a / b</code> gives <code>3</code>, not <code>3.4</code> — when both operands are integers, Java truncates the decimal part (integer division)</li>
+    <li><code>a % b</code> gives <code>2</code> — the modulus (remainder) operator; 17 divided by 5 is 3 with a remainder of 2</li>
+    <li>The comments <code>// 22</code>, <code>// 3</code> etc. show the expected output inline — this is a common pattern for making example code self-documenting</li>
+    <li>All five operators follow standard mathematical precedence: <code>*</code>, <code>/</code>, <code>%</code> before <code>+</code>, <code>-</code> (use parentheses to override)</li>
+  </ul>
+</div>
+
   <h3>The Integer Division Gotcha</h3>
   <p>When you divide two <code>int</code> values, Java throws away the decimal part and returns only the whole number. This surprises almost every beginner.</p>
 
@@ -38,6 +49,17 @@
         System.out.println(result);     // prints 3.5
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>x / y</code> where both are <code>int</code> — Java discards the decimal, so 7 ÷ 2 = 3 (not 3.5)</li>
+    <li><code>(double) x</code> — a cast; explicitly converts the integer value of <code>x</code> to a <code>double</code> before the division happens</li>
+    <li>Once one operand is <code>double</code>, Java promotes the other operand to <code>double</code> too, giving a decimal result</li>
+    <li><code>double result = (double) x / y</code> — the cast applies only to <code>x</code>, not the whole expression; operator precedence makes this evaluate as <code>((double) x) / y</code></li>
+    <li>An alternative fix is to write <code>7.0 / 2</code> — a double literal — which also forces decimal division</li>
+  </ul>
+</div>
 
   <div class="callout warning">⚠️ <code>7 / 2</code> in Java gives <code>3</code>, not <code>3.5</code>. If you need decimal results, make at least one of the numbers a <code>double</code>, either by declaring it as <code>double</code> or by writing <code>(double) x</code> to cast it.</div>
 
@@ -120,6 +142,18 @@
         System.out.println("Can enter: " + canEnter); // Can enter: true
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>&&</code> (AND) — evaluates to <code>true</code> only when both sides are <code>true</code>; if the left side is <code>false</code>, the right side is not even evaluated (short-circuit)</li>
+    <li><code>||</code> (OR) — evaluates to <code>true</code> when at least one side is <code>true</code>; if the left side is <code>true</code>, the right side is skipped (short-circuit)</li>
+    <li><code>!</code> (NOT) — unary operator that flips the boolean value; <code>!true</code> becomes <code>false</code> and vice versa</li>
+    <li><code>age >= 18 && hasTicket</code> — combines a comparison (<code>>=</code>) with a boolean variable; the result is stored in <code>canEnter</code></li>
+    <li>Short-circuit evaluation means <code>&&</code> stops at the first <code>false</code> and <code>||</code> stops at the first <code>true</code> — useful for avoiding null pointer errors</li>
+    <li>Logical operators always produce a <code>boolean</code> result, which can be stored in a variable or used directly in an <code>if</code> condition</li>
+  </ul>
+</div>
 
   <h2>The Ternary Operator</h2>
   <p>The ternary operator is a compact way to write a simple if-else decision in a single line. The name "ternary" means it takes three parts: a condition, a value if true, and a value if false.</p>

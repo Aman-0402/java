@@ -71,6 +71,19 @@ function TodoList() {
 
 export default TodoList;</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>const [error, setError] = useState(null)</code> — dedicated error state; <code>null</code> means no error yet; set to the error message string if the fetch fails</li>
+    <li><code>fetch('http://localhost:8080/api/todos')</code> — calls the Spring Boot REST API; the browser sends an HTTP GET request to port 8080</li>
+    <li><code>if (!res.ok) throw new Error('Server error: ' + res.status)</code> — checks that the response was successful (status 200–299) before parsing; prevents silent failures on 404/500 responses</li>
+    <li><code>.then(data =&gt; { setTodos(data); setLoading(false); })</code> — updates both state variables in sequence; React batches the two <code>setState</code> calls into a single re-render</li>
+    <li><code>.catch(err =&gt; { setError(err.message); setLoading(false); })</code> — catches both network errors (offline) and thrown errors from the <code>!res.ok</code> check above</li>
+    <li><code>{todo.completed ? '✅' : '⬜'}</code> — JSX ternary expression; renders different content based on the <code>completed</code> boolean field from the backend JSON</li>
+    <li><code>export default TodoList</code> — makes the component importable by other files using <code>import TodoList from './TodoList'</code></li>
+  </ul>
+</div>
+
   <h2>Step 3: Create a Todo from React</h2>
   <pre><code class="language-javascript">function AddTodo({ onAdd }) {
   const [title, setTitle] = useState('');
@@ -98,6 +111,20 @@ export default TodoList;</code></pre>
     &lt;/form&gt;
   );
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>const handleSubmit = async (e) =&gt; { e.preventDefault(); ... }</code> — <code>async</code> enables <code>await</code> inside; <code>e.preventDefault()</code> stops the form from doing a full page reload</li>
+    <li><code>method: 'POST'</code> — tells <code>fetch</code> to use an HTTP POST request instead of the default GET</li>
+    <li><code>headers: { 'Content-Type': 'application/json' }</code> — required header so Spring Boot knows to deserialize the body with <code>@RequestBody</code></li>
+    <li><code>body: JSON.stringify({ title, completed: false })</code> — converts the JavaScript object to a JSON string for the request body</li>
+    <li><code>const newTodo = await res.json()</code> — parses the JSON response; the backend returns the saved entity with its assigned ID</li>
+    <li><code>onAdd(newTodo)</code> — calls the callback prop to pass the new todo up to the parent component for list update</li>
+    <li><code>setTitle('')</code> — clears the input field after successful submission</li>
+    <li><code>onChange={e =&gt; setTitle(e.target.value)}</code> — controlled input: every keystroke updates React state, keeping the input in sync with <code>title</code></li>
+  </ul>
+</div>
 
   <div class="callout warning">
     ⚠️ Always check <code>res.ok</code> before calling <code>res.json()</code>. If the server returns a 404 or 500 error, calling <code>res.json()</code> on an error response can throw confusing errors.

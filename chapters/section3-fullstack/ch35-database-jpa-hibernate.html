@@ -37,6 +37,17 @@ spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 spring.h2.console.enabled=true
 spring.jpa.show-sql=true</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>spring.datasource.url=jdbc:h2:mem:tododb</code> — connects to an in-memory H2 database named <code>tododb</code>; <code>mem:</code> means it lives only in RAM and resets on restart</li>
+    <li><code>spring.datasource.driver-class-name=org.h2.Driver</code> — tells Spring which JDBC driver to load; swap to <code>com.mysql.cj.jdbc.Driver</code> for MySQL</li>
+    <li><code>spring.jpa.database-platform=org.hibernate.dialect.H2Dialect</code> — tells Hibernate which SQL dialect to generate; different databases use slightly different SQL syntax</li>
+    <li><code>spring.h2.console.enabled=true</code> — exposes a web-based SQL browser at <code>/h2-console</code> so you can inspect tables without an external tool</li>
+    <li><code>spring.jpa.show-sql=true</code> — prints every SQL statement Hibernate executes to the console; essential for debugging unexpected queries</li>
+  </ul>
+</div>
+
   <div class="callout fact">🔍 <strong>Fun Fact:</strong> Hibernate generates SQL at runtime, which means you can switch from MySQL to PostgreSQL to Oracle by changing one line in <code>application.properties</code>. This database independence is hugely valuable for enterprises. 87% of Java enterprise applications use JPA/Hibernate for database access.</div>
 
   <div class="callout tip">
@@ -71,6 +82,18 @@ public class Todo {
     public void setCompleted(boolean completed) { this.completed = completed; }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>@Entity</code> — tells Hibernate this class maps to a database table; Hibernate creates the table on startup if it doesn't exist</li>
+    <li><code>@Table(name = "todos")</code> — explicitly sets the table name; without it Hibernate defaults to the class name (<code>TODO</code>)</li>
+    <li><code>@Id</code> — marks this field as the primary key column in the database table</li>
+    <li><code>@GeneratedValue(strategy = GenerationType.IDENTITY)</code> — lets the database auto-increment the ID (1, 2, 3…) on each insert; you never set <code>id</code> manually</li>
+    <li><code>@Column(nullable = false)</code> — adds a <code>NOT NULL</code> constraint to the <code>title</code> column; saving a todo without a title throws a database error</li>
+    <li><code>public Todo() {}</code> — JPA requires a no-argument constructor so Hibernate can instantiate entities when loading rows from the database</li>
+  </ul>
+</div>
+
   <h2>Step 4: Create the Repository</h2>
   <p>Create an interface that extends <code>JpaRepository</code>. You get 15+ free CRUD methods without writing a single line of SQL:</p>
   <pre><code class="language-java">import org.springframework.data.jpa.repository.JpaRepository;
@@ -78,6 +101,18 @@ public class Todo {
 public interface TodoRepository extends JpaRepository&lt;Todo, Long&gt; {
     // findAll(), findById(), save(), deleteById() — all free!
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>extends JpaRepository&lt;Todo, Long&gt;</code> — first type parameter is the entity class, second is the primary key type; Spring generates the implementation at runtime</li>
+    <li>No method bodies are needed — Spring Data JPA creates a proxy class that implements all CRUD operations automatically</li>
+    <li><code>findAll()</code> — generates and runs <code>SELECT * FROM todos</code></li>
+    <li><code>findById(id)</code> — returns an <code>Optional&lt;Todo&gt;</code>; empty if the row doesn't exist</li>
+    <li><code>save(todo)</code> — runs <code>INSERT</code> for new entities and <code>UPDATE</code> for existing ones (detected via the ID field)</li>
+    <li><code>deleteById(id)</code> — runs <code>DELETE FROM todos WHERE id = ?</code></li>
+  </ul>
+</div>
 
   <h2>Step 5: Update the Controller</h2>
   <pre><code class="language-java">import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +148,18 @@ public class TodoController {
         todoRepository.deleteById(id);
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>@Autowired private TodoRepository todoRepository</code> — Spring injects a ready-to-use repository instance; no <code>new TodoRepository()</code> needed</li>
+    <li><code>todoRepository.findAll()</code> — replaces the manual <code>List</code> and generates a <code>SELECT * FROM todos</code> query</li>
+    <li><code>todoRepository.save(todo)</code> on POST — inserts a new row; Hibernate sets the auto-incremented <code>id</code> on the returned object</li>
+    <li><code>updated.setId(id)</code> on PUT — sets the ID from the URL path before calling <code>save()</code>; Hibernate detects the existing ID and issues an <code>UPDATE</code> instead of <code>INSERT</code></li>
+    <li><code>todoRepository.deleteById(id)</code> — issues <code>DELETE FROM todos WHERE id = ?</code>; throws <code>EmptyResultDataAccessException</code> if the ID doesn't exist</li>
+    <li><code>public void delete()</code> — returns nothing (HTTP 200 with empty body); a better practice is to return <code>ResponseEntity&lt;Void&gt;</code> with a 204 No Content status</li>
+  </ul>
+</div>
 
   <div class="callout real-world">🌍 <strong>Real World:</strong> eBay's product catalog — 1.5 billion listings — is stored in a database accessed through JPA. Each product is an <code>@Entity</code> class with <code>@Column</code> fields. When you search eBay, Hibernate translates your search into SQL, retrieves entities, and returns them as Java objects. The same ORM pattern you learned in this chapter powers one of the world's largest databases.</div>
 

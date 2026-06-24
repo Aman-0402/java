@@ -61,6 +61,18 @@ System.out.println("Remaining: " + stack); // [10]
 System.out.println("Empty? " + stack.isEmpty()); // false
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;()</code> — declares the variable as the <code>Deque</code> interface; <code>ArrayDeque</code> is the preferred stack implementation over the legacy <code>Stack</code> class</li>
+    <li><code>stack.push(10)</code> — adds to the front (head) of the deque; <code>ArrayDeque.push()</code> is equivalent to <code>addFirst()</code></li>
+    <li><code>stack.peek()</code> — returns the head element without removing it; returns <code>null</code> on empty (unlike <code>element()</code> which throws)</li>
+    <li><code>stack.pop()</code> — removes and returns the head element (LIFO); most recently pushed item comes out first</li>
+    <li>After pushing 10, 20, 30, the top is 30 — so <code>pop()</code> returns 30, then 20, in reverse push order</li>
+    <li><code>stack.isEmpty()</code> — essential guard before calling <code>pop()</code> or <code>peek()</code> to avoid <code>NoSuchElementException</code></li>
+  </ul>
+</div>
+
   <div class="callout tip">💡 Always declare the variable as <code>Deque&lt;T&gt;</code> (the interface) rather than <code>ArrayDeque&lt;T&gt;</code> (the implementation). This makes it easy to swap implementations later and signals to readers that only stack operations are intended.</div>
 
   <div class="callout fact">🔍 <strong>Fun Fact:</strong> Every time you call a method in Java, a new "stack frame" is pushed onto the JVM's call stack. This is why <code>StackOverflowError</code> happens with deep recursion — the stack runs out of space. The default JVM stack size is ~512KB, fitting roughly 5,000–10,000 method calls.</div>
@@ -139,6 +151,19 @@ public class BracketMatcher {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>for (char c : s.toCharArray())</code> — iterates character by character; each character is either an opener, a closer, or something else (ignored)</li>
+    <li><code>stack.push(c)</code> — every opening bracket is pushed; the stack records what we still need to close, in the order we must close them</li>
+    <li><code>if (stack.isEmpty()) return false</code> — a closing bracket with nothing on the stack means there is no matching opener — immediately invalid</li>
+    <li><code>char top = stack.pop()</code> — pops the most recently opened bracket; this must match the current closing bracket for the nesting to be correct</li>
+    <li><code>if (c == ')' &amp;&amp; top != '(') return false</code> — mismatched pair (e.g., <code>{]</code>); the types must correspond exactly</li>
+    <li><code>return stack.isEmpty()</code> — after the full string, any leftover openers on the stack mean unclosed brackets — only an empty stack means fully valid</li>
+    <li>Time complexity is O(n) — each character is pushed or popped at most once</li>
+  </ul>
+</div>
 
   <div class="callout real-world">🌍 <strong>Real World:</strong> Undo/Redo in every text editor (VS Code, Word, Photoshop) uses two stacks: an undo stack and a redo stack. Every action you take gets pushed to the undo stack. When you press Ctrl+Z, the action is popped from undo and pushed to redo. You use this data structure dozens of times daily.</div>
 

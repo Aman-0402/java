@@ -70,6 +70,17 @@ public class Car {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>Car car1 = new Car();</code> — <code>new</code> allocates memory on the heap for a fresh <code>Car</code> object; <code>car1</code> is a reference variable that points to it</li>
+    <li><code>Car car2 = new Car();</code> — creates a completely independent second object from the same blueprint; changing <code>car1</code>'s fields does not affect <code>car2</code></li>
+    <li><code>car1.make = "Toyota";</code> — dot notation accesses the field named <code>make</code> that belongs to the object referenced by <code>car1</code></li>
+    <li><code>String make; String model; int year;</code> — fields declared at class level (not inside any method) belong to each individual object instance</li>
+    <li><code>car1.make + " " + car1.model + " (" + car1.year + ")"</code> — reading multiple fields from the same object in one expression using repeated dot notation</li>
+  </ul>
+</div>
+
   <p>
     <strong>Output:</strong>
   </p>
@@ -115,6 +126,17 @@ public class Car {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public class Car { String make; String model; int year; ... }</code> — the class declaration acts as a blueprint; fields listed here are owned by every object created from it</li>
+    <li><code>Car myCar = new Car();</code> — instantiates one object; the type on the left (<code>Car</code>) tells Java what the reference can point to</li>
+    <li><code>myCar.make = "Ford";</code> — sets the <code>make</code> field on <em>this specific object</em>; another <code>Car</code> object would have its own separate <code>make</code> field</li>
+    <li><code>public static void main(String[] args)</code> — placing <code>main</code> inside the same class is a common practice for self-contained demos; in real projects the class and the launcher are usually separate files</li>
+    <li><code>System.out.println("Make  : " + myCar.make);</code> — retrieves a field's value through dot notation and prints it; the object must be created with <code>new</code> before this is valid</li>
+  </ul>
+</div>
 
   <div class="callout real-world">🌍 <strong>Real World:</strong> The game Minecraft is written in Java. Every block, every mob (creeper, zombie, skeleton), every item is a Java class. There are over 300 entity classes in Minecraft's codebase — and OOP is what makes managing all that complexity possible.</div>
 

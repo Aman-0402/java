@@ -61,6 +61,19 @@ public class Main {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>ArrayList&lt;String&gt; fruits = new ArrayList&lt;&gt;();</code> — the diamond <code>&lt;&gt;</code> on the right lets Java infer the type from the left side; the list starts empty and will grow automatically</li>
+    <li><code>fruits.add("Apple");</code> — appends an element to the end; the list resizes its internal array automatically if needed</li>
+    <li><code>fruits.add("Apple");</code> (second time) — <code>ArrayList</code> allows duplicate values; both "Apple" entries are stored</li>
+    <li><code>fruits.size()</code> — returns the current number of elements; unlike arrays, this reflects the live count, not a fixed capacity</li>
+    <li><code>fruits.get(0)</code> — retrieves the element at index 0 (zero-based), just like an array</li>
+    <li><code>fruits.remove("Banana");</code> — removes the first occurrence of the matching object; elements shift left to fill the gap</li>
+    <li><code>for (String fruit : fruits)</code> — the enhanced for-each loop iterates over all remaining elements in insertion order</li>
+  </ul>
+</div>
+
   <p><strong>Output:</strong></p>
   <pre><code>Size: 4
 First: Apple
@@ -102,6 +115,18 @@ public class Main {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>HashMap&lt;String, Integer&gt; scores = new HashMap&lt;&gt;();</code> — the first type parameter is the key type, the second is the value type; keys must be unique</li>
+    <li><code>scores.put("Alice", 95);</code> — inserts a key-value pair; if the key already exists, the old value is replaced</li>
+    <li><code>scores.get("Alice")</code> — looks up the value by key in O(1) average time using a hash function; returns <code>null</code> if the key is not found</li>
+    <li><code>scores.containsKey("Dave")</code> — checks for key existence without retrieving the value; returns a boolean</li>
+    <li><code>scores.entrySet()</code> — returns a <code>Set</code> of <code>Map.Entry</code> objects, each holding one key-value pair</li>
+    <li><code>entry.getKey()</code> and <code>entry.getValue()</code> — extract the key and value from each entry during iteration</li>
+  </ul>
+</div>
+
   <p><strong>Output:</strong></p>
   <pre><code>Alice's score: 95
 Has Dave? false
@@ -141,6 +166,17 @@ public class Main {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>HashSet&lt;String&gt; tags = new HashSet&lt;&gt;();</code> — a set that uses hashing internally; guarantees uniqueness of elements</li>
+    <li><code>tags.add("java"); tags.add("java");</code> — the second <code>add</code> is silently ignored; the set already contains "java", so its size stays the same</li>
+    <li><code>tags.size()</code> — returns 3, not 4, because the duplicate was rejected</li>
+    <li><code>System.out.println(tags);</code> — prints the set's contents; the order may differ on each run because <code>HashSet</code> does not preserve insertion order</li>
+    <li><code>tags.contains("java")</code> — membership check in O(1) average time; far faster than searching an <code>ArrayList</code> for large collections</li>
+  </ul>
+</div>
 
   <h2>LinkedList — Brief Overview</h2>
   <p>

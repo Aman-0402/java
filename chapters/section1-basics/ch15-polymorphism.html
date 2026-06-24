@@ -50,6 +50,17 @@
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public int add(int a, int b)</code>, <code>public int add(int a, int b, int c)</code>, <code>public double add(double a, double b)</code> — three methods share the name <code>add</code> but differ in parameter count and types; Java picks the right one at compile time</li>
+    <li><code>calc.add(2, 3)</code> — two <code>int</code> arguments match the first signature → returns <code>5</code></li>
+    <li><code>calc.add(1, 2, 3)</code> — three <code>int</code> arguments match the second signature → returns <code>6</code></li>
+    <li><code>calc.add(1.5, 2.5)</code> — two <code>double</code> literals match the third signature → returns <code>4.0</code></li>
+    <li>This is <em>compile-time</em> polymorphism: the decision of which method to call is made by the compiler, not at runtime</li>
+  </ul>
+</div>
+
   <h3>2. Runtime Polymorphism — Method Overriding</h3>
   <p>
     <strong>Method overriding</strong> (from Chapter 14) produces runtime polymorphism. Java decides
@@ -109,6 +120,17 @@ public class Main {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>Shape[] shapes = { new Circle(), new Rectangle(), new Triangle() };</code> — an array typed as the parent class (<code>Shape</code>) holds child objects; this is called <em>upcasting</em> and is always safe</li>
+    <li><code>for (Shape s : shapes)</code> — the loop variable is typed as <code>Shape</code>, but at runtime each element is actually a <code>Circle</code>, <code>Rectangle</code>, or <code>Triangle</code></li>
+    <li><code>s.draw();</code> — the same method call on each iteration; Java's JVM checks the <em>actual</em> object type at runtime and invokes the correct overriding <code>draw()</code> — this is <em>dynamic dispatch</em></li>
+    <li><code>@Override public void draw()</code> in each subclass — each subclass replaces the parent's generic <code>draw()</code> with its own specific output</li>
+    <li>Adding a new shape (e.g., <code>Pentagon</code>) requires no changes to the loop — the polymorphic call handles it automatically</li>
+  </ul>
+</div>
 
   <p><strong>Output:</strong></p>
   <pre><code>Drawing a circle ⬤

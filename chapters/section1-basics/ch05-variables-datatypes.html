@@ -28,6 +28,18 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>int age = 25</code> — declares an integer variable named <code>age</code> and assigns the value 25 in one statement</li>
+    <li><code>double price = 9.99</code> — stores a decimal number; <code>double</code> gives 64-bit floating-point precision</li>
+    <li><code>boolean isStudent = true</code> — can only ever hold <code>true</code> or <code>false</code>; used for yes/no flags and conditions</li>
+    <li><code>char grade = 'A'</code> — stores exactly one character; char literals use single quotes, never double quotes</li>
+    <li><code>String name = "Alice"</code> — unlike the others, <code>String</code> is a class (reference type), not a primitive; double quotes are required</li>
+    <li><code>"Name: " + name</code> — the <code>+</code> operator concatenates (joins) a String literal with the variable's value before printing</li>
+  </ul>
+</div>
+
   <h2>Primitive Data Types</h2>
   <p>A <em>primitive type</em> stores a simple, raw value directly. Java has eight primitive types, but you will use these four most often as a beginner:</p>
 
@@ -69,6 +81,17 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>firstName + " " + lastName</code> — concatenates three strings: the first name, a space, and the last name, producing "Bob Smith"</li>
+    <li><code>fullName.length()</code> — calls the <code>length()</code> method on the String object; returns the number of characters (8 for "Bob Smith")</li>
+    <li><code>fullName.toUpperCase()</code> — returns a new String with all letters converted to uppercase; Strings are immutable so the original is unchanged</li>
+    <li>The dot <code>.</code> in <code>fullName.length()</code> is the member-access operator — used to call methods on an object</li>
+    <li>Unlike array's <code>length</code> property, String's <code>length()</code> is a method — it requires parentheses <code>()</code></li>
+  </ul>
+</div>
+
   <h2>Declaring vs Assigning vs Reassigning</h2>
   <p><em>Declaring</em> means creating the box (telling Java the type and name). <em>Assigning</em> means putting a value in the box. <em>Reassigning</em> means replacing the value with a new one.</p>
 
@@ -101,6 +124,18 @@
         System.out.println(city + ": " + temperature + " degrees");
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>var score = 95</code> — Java looks at the assigned value (95) and infers the type is <code>int</code>; the type is locked in at compile time</li>
+    <li><code>var temperature = 36.6</code> — decimal literals default to <code>double</code> in Java, so this variable becomes a <code>double</code></li>
+    <li><code>var city = "London"</code> — text in double quotes is always a <code>String</code>, so Java infers <code>String</code></li>
+    <li><code>var</code> is only allowed for local variables (inside methods); you cannot use it for class fields or method parameters</li>
+    <li>Type inference does not change Java's static typing — you still cannot assign a number to <code>city</code> after it has been inferred as <code>String</code></li>
+    <li><code>city + ": " + temperature</code> — mixing a String with a double causes Java to automatically convert the double to its String representation</li>
+  </ul>
+</div>
 
   <div class="callout info">ℹ️ <code>var</code> does NOT make Java loosely typed. The type is still fixed at the moment you declare the variable — Java just figures it out for you so you don't have to type it. You cannot change the type later (e.g., store a <code>String</code> in a variable that started as an <code>int</code>).</div>
 

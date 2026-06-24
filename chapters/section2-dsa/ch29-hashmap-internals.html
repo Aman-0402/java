@@ -166,6 +166,19 @@ public class Student {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>@Override public boolean equals(Object obj)</code> — defines logical equality; two <code>Student</code> objects are equal if they share the same <code>id</code>, regardless of being different objects in memory</li>
+    <li><code>if (this == obj) return true</code> — fast path: the same object reference is trivially equal to itself</li>
+    <li><code>if (!(obj instanceof Student)) return false</code> — guards against comparing a <code>Student</code> with a completely different type</li>
+    <li><code>return Objects.hash(id)</code> — generates a hash based only on the fields used in <code>equals()</code>; using <code>id</code> here means two students with the same id will hash to the same bucket</li>
+    <li><code>grades.get(s2)</code> — works correctly because HashMap first calls <code>s2.hashCode()</code> to find the bucket, then calls <code>s2.equals(s1)</code> to confirm the match; both methods are consistent so the lookup succeeds</li>
+    <li>Without overriding, the default <code>hashCode()</code> is based on object identity (memory address), so <code>s1</code> and <code>s2</code> would hash to different buckets and <code>get(s2)</code> would return <code>null</code></li>
+    <li>The contract rule: if <code>a.equals(b)</code> is <code>true</code>, then <code>a.hashCode() == b.hashCode()</code> must also be <code>true</code> — violating this breaks all hash-based collections</li>
+  </ul>
+</div>
+
   <div class="callout real-world">🌍 <strong>Real World:</strong> DNS resolution (converting "google.com" to an IP address) uses a giant distributed hash table. Your computer caches DNS results in a local HashMap (<code>domain → IP</code>). When you type a URL, Java's <code>InetAddress.getByName()</code> checks this cache first — a HashMap lookup that takes nanoseconds before making a network request that takes milliseconds.</div>
 
   <div class="callout warning">
@@ -212,6 +225,18 @@ public class HashMapDemo {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>wordCount.getOrDefault(word, 0)</code> — returns the current count for <code>word</code>, or <code>0</code> if the key does not yet exist; this avoids a <code>NullPointerException</code> on the very first occurrence of each word</li>
+    <li><code>wordCount.put(word, ... + 1)</code> — either inserts a new entry with count 1 (first occurrence) or overwrites the existing count with an incremented value</li>
+    <li>This is the standard frequency-counting idiom in Java; the equivalent with <code>merge()</code> is <code>wordCount.merge(word, 1, Integer::sum)</code></li>
+    <li><code>wordCount.entrySet()</code> — returns a <code>Set</code> of <code>Map.Entry</code> objects, each holding one key-value pair; this is the most efficient way to iterate both keys and values simultaneously</li>
+    <li><code>entry.getKey()</code> and <code>entry.getValue()</code> — retrieve the key and value from each map entry without a second lookup</li>
+    <li>HashMap iteration order is not guaranteed to match insertion order — use <code>LinkedHashMap</code> if you need insertion-order iteration</li>
+  </ul>
+</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

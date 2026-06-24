@@ -38,6 +38,20 @@ int binarySearch(int[] arr, int target) {
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>int left = 0, right = arr.length - 1</code> — initializes the search window to cover the entire array</li>
+    <li><code>while (left &lt;= right)</code> — loop continues as long as the search space has at least one element</li>
+    <li><code>int mid = left + (right - left) / 2</code> — safe mid-point calculation that avoids integer overflow (avoids <code>(left+right)/2</code> which can overflow)</li>
+    <li><code>if (arr[mid] == target) return mid</code> — found the target; return its index immediately</li>
+    <li><code>left = mid + 1</code> — target must be in the right half; discard everything up to and including mid</li>
+    <li><code>right = mid - 1</code> — target must be in the left half; discard everything from mid onward</li>
+    <li><code>return -1</code> — loop ended without a match; target is not in the array</li>
+    <li>Each iteration halves the search space, so the loop runs at most log₂(n) times — that is why this is O(log n)</li>
+  </ul>
+</div>
+
   <h2>O(n) — Linear Time</h2>
   <p>Work grows in direct proportion to input size. To find the maximum value in an unsorted list you must look at every element once. Double the list, double the work.</p>
 
@@ -68,6 +82,18 @@ void bubbleSort(int[] arr) {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>for (int i = 0; i &lt; n - 1; i++)</code> — outer loop runs n-1 passes; after each pass one more element is in its final position at the right end</li>
+    <li><code>for (int j = 0; j &lt; n - i - 1; j++)</code> — inner loop only checks unsorted elements; <code>n - i - 1</code> shrinks on each pass because the last <code>i</code> elements are already sorted</li>
+    <li><code>if (arr[j] &gt; arr[j + 1])</code> — compares each pair of adjacent elements</li>
+    <li><code>int temp = arr[j]; arr[j] = arr[j+1]; arr[j+1] = temp</code> — classic three-variable swap; the larger element "bubbles" one position to the right</li>
+    <li>The nested loops together perform roughly n²/2 comparisons — hence O(n²)</li>
+    <li>After pass 1 the largest element is at the end; after pass 2 the second-largest is in place, and so on</li>
+  </ul>
+</div>
 
   <div class="callout fact">🔍 <strong>Fun Fact:</strong> Google's original PageRank algorithm ran in O(n log n) time. If they had used an O(n²) algorithm, ranking 1 billion pages would have taken 1,000x longer. Choosing the right Big O complexity is why Google Search returns results in milliseconds, not hours.</div>
 

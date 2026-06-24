@@ -19,6 +19,20 @@
     }
 }</code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>System.out.println</code> — prints text and automatically appends a newline; the cursor moves to the next line</li>
+    <li><code>System.out.print</code> — prints text with no newline; subsequent output continues on the same line</li>
+    <li><code>\n</code> inside a string — an escape sequence representing a newline character; manually moves output to the next line</li>
+    <li><code>System.out.printf</code> — prints a formatted string using format specifiers as placeholders</li>
+    <li><code>%s</code> — placeholder for a String argument; replaced by <code>"Alice"</code> at runtime</li>
+    <li><code>%d</code> — placeholder for a decimal integer; replaced by <code>22</code></li>
+    <li><code>%.2f</code> — placeholder for a floating-point number rounded to 2 decimal places; 95.678 becomes 95.68</li>
+    <li><code>%n</code> — portable newline in printf (preferred over <code>\n</code> inside printf because it adapts to the OS line ending)</li>
+  </ul>
+</div>
+
   <div class="callout info">ℹ️ <code>printf</code> stands for "print formatted." The placeholders work like this: <code>%s</code> = String, <code>%d</code> = integer, <code>%f</code> = decimal (add <code>.2</code> before <code>f</code> to show 2 decimal places). <code>%n</code> is a portable newline.</div>
 
   <div class="callout fact">🔍 <strong>Fun Fact:</strong> <code>System.out</code> is a <code>PrintStream</code> object — one of the oldest classes in Java, unchanged since 1996. When you type <code>System.out.println()</code>, you are using a class that is literally older than Google (founded 1998) and older than the first iPhone (2007).</div>
@@ -48,6 +62,18 @@ public class ScannerIntro {
         scanner.close(); // good practice: close when done
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>import java.util.Scanner</code> — tells Java where to find the Scanner class; must appear before the class declaration at the top of the file</li>
+    <li><code>new Scanner(System.in)</code> — creates a Scanner object; <code>System.in</code> is the standard input stream (the keyboard)</li>
+    <li><code>scanner.nextLine()</code> — pauses the program and waits for the user to type a full line and press Enter; returns everything typed as a String</li>
+    <li><code>System.out.print("Enter your name: ")</code> — uses <code>print</code> (not <code>println</code>) so the cursor stays on the same line as the prompt, waiting for user input</li>
+    <li><code>scanner.close()</code> — releases the underlying input stream resource; always close Scanner when finished, especially when reading files</li>
+    <li><code>"Hello, " + name + "!"</code> — concatenates the greeting with the user's input to build the response string</li>
+  </ul>
+</div>
 
   <h2>Reading Different Data Types</h2>
   <p>Scanner has different methods for reading different types of data:</p>
@@ -139,6 +165,18 @@ public class NameAndAge {
         sc.close();
     }
 }</code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>sc.nextInt()</code> — reads one integer from the keyboard but leaves the newline character (from pressing Enter) still in the input buffer</li>
+    <li><code>sc.nextLine()</code> immediately after <code>nextInt()</code> — this extra call consumes the leftover newline so it does not interfere with the next real input</li>
+    <li>The second <code>sc.nextLine()</code> — now that the buffer is clean, this correctly waits for the user to type their full name</li>
+    <li><code>(age + 10)</code> inside the println — parentheses force arithmetic addition first; without them <code>"be " + age + 10</code> would concatenate strings, giving "be 2210"</li>
+    <li><code>"-----------------------------"</code> — a visual separator printed to make the output easier to read; just a string literal</li>
+    <li>This pattern (nextInt → nextLine → nextLine) is the standard fix for the most common Scanner beginner bug</li>
+  </ul>
+</div>
 
   <p>Sample run:</p>
   <pre><code>Enter your age: 22

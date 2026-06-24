@@ -67,6 +67,16 @@ car1.year  = 2022;
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public Person(String name, int age)</code> — a constructor has the same name as the class and no return type (not even <code>void</code>); it runs automatically when <code>new Person(...)</code> is called</li>
+    <li><code>this.name = name;</code> — <code>this.name</code> refers to the object's field; plain <code>name</code> refers to the constructor parameter; without <code>this.</code> the parameter would be assigned to itself, leaving the field unchanged</li>
+    <li><code>this.age = age;</code> — same pattern for the integer field; both fields are set in one constructor call, so the object is fully initialised the moment it is created</li>
+    <li>No <code>return</code> statement — constructors never return a value; Java implicitly returns the newly created object reference to the caller of <code>new</code></li>
+  </ul>
+</div>
+
   <h2>The <code>this</code> Keyword</h2>
   <p>
     When a parameter has the same name as a field, Java needs a way to tell them apart.
@@ -128,6 +138,18 @@ car1.year  = 2022;
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public Person()</code> — a no-argument constructor that sets safe defaults; once you write any constructor yourself, Java's implicit default is gone, so this must be written explicitly</li>
+    <li><code>public Person(String name)</code> — accepts only a name; <code>age</code> defaults to 0 inside the body, showing partial initialisation</li>
+    <li><code>public Person(String name, int age)</code> — the most specific version; all three constructors coexist because they have different parameter lists (constructor overloading)</li>
+    <li><code>Person p1 = new Person();</code> — Java picks the no-arg constructor because no arguments are passed</li>
+    <li><code>Person p2 = new Person("Alice");</code> — one <code>String</code> argument → Java selects the second constructor</li>
+    <li><code>Person p3 = new Person("Bob", 30);</code> — a <code>String</code> and an <code>int</code> → Java selects the third constructor</li>
+  </ul>
+</div>
 
   <p><strong>Output:</strong></p>
   <pre><code>Unknown — 0

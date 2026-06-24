@@ -51,6 +51,17 @@
 }
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>try { int result = 10 / 0; }</code> — the risky code lives inside the <code>try</code> block; dividing by zero throws an <code>ArithmeticException</code> at runtime</li>
+    <li><code>System.out.println(result);</code> — this line is never reached because the exception is thrown on the previous line; execution jumps immediately to the matching <code>catch</code></li>
+    <li><code>catch (ArithmeticException e)</code> — catches only this specific exception type; <code>e</code> is the exception object that holds details about what went wrong</li>
+    <li><code>e.getMessage()</code> — returns the exception's description string (here, <code>"/ by zero"</code>); useful for displaying human-readable error information</li>
+    <li><code>finally { System.out.println("This always runs."); }</code> — the <code>finally</code> block executes whether or not an exception occurred; commonly used to close files or database connections</li>
+  </ul>
+</div>
+
   <p><strong>Output:</strong></p>
   <pre><code>Cannot divide by zero: / by zero
 This always runs.
@@ -129,6 +140,18 @@ This always runs.
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>public static void validateAge(int age) throws IllegalArgumentException</code> — the <code>throws</code> clause in the signature advertises to callers that this method may throw this exception type</li>
+    <li><code>if (age &lt; 0 || age &gt; 150) { throw new IllegalArgumentException("Invalid age: " + age); }</code> — <code>throw</code> manually creates and launches an exception object; execution of <code>validateAge</code> stops immediately</li>
+    <li><code>new IllegalArgumentException("Invalid age: " + age)</code> — the string passed here becomes the exception's message, retrievable via <code>e.getMessage()</code> in the catch block</li>
+    <li><code>validateAge(25);</code> — passes validation, no exception; execution continues normally to the next line</li>
+    <li><code>validateAge(-5);</code> — fails validation, an exception is thrown; the JVM unwinds the call stack and lands in the <code>catch</code> block</li>
+    <li><code>System.out.println("Error: " + e.getMessage());</code> — prints <code>"Error: Invalid age: -5"</code> using the message baked into the exception at the throw site</li>
+  </ul>
+</div>
 
   <p><strong>Output:</strong></p>
   <pre><code>Age 25 is valid.

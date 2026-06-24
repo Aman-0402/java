@@ -59,6 +59,18 @@ System.out.println("Remaining: " + queue); // [Carol]
 System.out.println("Size: " + queue.size()); // 1
 </code></pre>
 
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>Queue&lt;String&gt; queue = new LinkedList&lt;&gt;()</code> — declares the variable as the <code>Queue</code> interface; <code>LinkedList</code> is a common implementation but <code>ArrayDeque</code> is faster for pure queue use</li>
+    <li><code>queue.offer("Alice")</code> — adds to the back (tail) of the queue; preferred over <code>add()</code> because it returns <code>false</code> instead of throwing on capacity-bounded queues</li>
+    <li><code>queue.peek()</code> — returns the front (head) element without removing it; returns <code>null</code> if the queue is empty (safe, no exception)</li>
+    <li><code>queue.poll()</code> — removes and returns the front element (FIFO order); returns <code>null</code> on empty instead of throwing</li>
+    <li>The first item offered (<code>"Alice"</code>) is the first item polled — this FIFO ordering is the core contract of a queue</li>
+    <li><code>queue.size()</code> — returns the number of elements currently in the queue; useful to check before entering a processing loop</li>
+  </ul>
+</div>
+
   <div class="callout tip">💡 Prefer <code>offer()</code> over <code>add()</code> and <code>poll()</code> over <code>remove()</code>. The <code>offer</code>/<code>poll</code>/<code>peek</code> methods return special values (<code>false</code> or <code>null</code>) on failure, while <code>add</code>/<code>remove</code> throw exceptions — the special-value versions are usually easier to work with in loops.</div>
 
   <div class="callout fact">🔍 <strong>Fun Fact:</strong> Queues are fundamental to operating systems. When you open 5 apps at once, the OS puts their requests in a queue. The CPU processes one request at a time (or a few in parallel on multi-core), and the queue ensures no request is lost and all are eventually processed.</div>
@@ -120,6 +132,17 @@ public class TicketQueue {
     }
 }
 </code></pre>
+
+<div class="code-explanation">
+  <h4>🔍 How This Code Works</h4>
+  <ul>
+    <li><code>for (String name : arrivals) { counter.offer(name); }</code> — fills the queue in arrival order; each <code>offer</code> appends to the tail</li>
+    <li><code>while (!counter.isEmpty())</code> — processes customers until the queue is drained; checking <code>isEmpty()</code> before <code>poll()</code> prevents a <code>null</code> result</li>
+    <li><code>String customer = counter.poll()</code> — removes and returns the head element; the first person who arrived is served first (FIFO)</li>
+    <li><code>if (!counter.isEmpty()) { System.out.println("  Next up: " + counter.peek()); }</code> — safely previews the next customer without removing them; the <code>isEmpty()</code> guard avoids printing "Next up: null" after the last customer</li>
+    <li>The simulation shows that queue operations are O(1) — serving a customer and peeking at the next one are constant-time regardless of queue size</li>
+  </ul>
+</div>
 
   <h3>Expected Output</h3>
 <pre>
