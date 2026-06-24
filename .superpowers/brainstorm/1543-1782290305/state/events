@@ -1,5 +1,0 @@
-{"type":"click","text":"A\n    \n      🌙 Dark Mode Toggle\n      Switch between warm paper and dark theme. Good for night study sessions.","choice":"darkmode","id":null,"timestamp":1782290505099}
-{"type":"click","text":"D\n    \n      🔍 Search\n      Search across all chapters by keyword. Jump directly to the topic.","choice":"search","id":null,"timestamp":1782290508541}
-{"type":"click","text":"B\n    \n      ✅ Progress Tracking\n      Mark chapters as complete. Show % progress in sidebar. Saved in localStorage — no login needed.","choice":"progress","id":null,"timestamp":1782290511602}
-{"type":"click","text":"B\n    \n      ✅ Progress Tracking\n      Mark chapters as complete. Show % progress in sidebar. Saved in localStorage — no login needed.","choice":"progress","id":null,"timestamp":1782290512087}
-{"type":"click","text":"C\n    \n      📋 Copy Code Button\n      One-click copy on every code block. Students paste directly into their IDE.","choice":"copycode","id":null,"timestamp":1782290515102}
