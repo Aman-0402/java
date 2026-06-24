@@ -1,0 +1,80 @@
+<h2>Ebook Layout Style</h2>
+<p class="subtitle">Which reading experience fits best for a Java learning ebook?</p>
+
+<div class="cards">
+  <div class="card" data-choice="sidebar" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1e1e2e;padding:12px;border-radius:6px;font-family:monospace;">
+      <div style="display:flex;gap:8px;height:140px;">
+        <div style="width:38%;background:#2a2a3e;border-radius:4px;padding:8px;">
+          <div style="color:#7c7cff;font-size:10px;font-weight:bold;margin-bottom:8px;">📚 CHAPTERS</div>
+          <div style="color:#aaa;font-size:9px;line-height:18px;">
+            <div style="color:#fff;background:#4444aa;padding:2px 4px;border-radius:2px;">▶ 1. Setup Java</div>
+            <div style="padding:2px 4px;">2. Variables</div>
+            <div style="padding:2px 4px;">3. Loops</div>
+            <div style="padding:2px 4px;">4. OOP</div>
+            <div style="padding:2px 4px;">5. Arrays</div>
+            <div style="padding:2px 4px;">6. DSA Intro</div>
+          </div>
+        </div>
+        <div style="flex:1;background:#16213e;border-radius:4px;padding:8px;">
+          <div style="color:#7c7cff;font-size:10px;font-weight:bold;margin-bottom:6px;">Chapter 1: Setup Java</div>
+          <div style="color:#ccc;font-size:8px;line-height:14px;margin-bottom:6px;">Install JDK 21, set PATH, write your first Hello World program in VS Code.</div>
+          <div style="background:#0d1117;border-radius:3px;padding:4px;color:#79c0ff;font-size:8px;">
+            System.out.println("Hello!");</div>
+          <div style="display:flex;justify-content:flex-end;margin-top:8px;">
+            <div style="background:#4444aa;color:#fff;font-size:8px;padding:2px 8px;border-radius:10px;">Next →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Sidebar + Chapter View</h3>
+      <p>Persistent sidebar navigation. One chapter at a time. Prev/Next buttons. Feels like VS Code docs or a tutorial platform.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="scroll" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f0f1a;padding:12px;border-radius:6px;font-family:monospace;">
+      <div style="height:140px;background:#16213e;border-radius:4px;padding:8px;overflow:hidden;">
+        <div style="color:#7c7cff;font-size:9px;font-weight:bold;margin-bottom:4px;">📘 Java Mastery Ebook</div>
+        <div style="display:flex;gap:4px;margin-bottom:6px;flex-wrap:wrap;">
+          <span style="background:#2a2a3e;color:#aaa;font-size:7px;padding:1px 5px;border-radius:10px;">Setup</span>
+          <span style="background:#4444aa;color:#fff;font-size:7px;padding:1px 5px;border-radius:10px;">Variables</span>
+          <span style="background:#2a2a3e;color:#aaa;font-size:7px;padding:1px 5px;border-radius:10px;">OOP</span>
+          <span style="background:#2a2a3e;color:#aaa;font-size:7px;padding:1px 5px;border-radius:10px;">DSA</span>
+        </div>
+        <div style="color:#7c7cff;font-size:9px;font-weight:bold;border-left:3px solid #4444aa;padding-left:6px;margin-bottom:4px;">Chapter 2: Variables</div>
+        <div style="color:#ccc;font-size:7px;line-height:13px;margin-bottom:4px;">Variables store data. Java is strongly typed...</div>
+        <div style="background:#0d1117;border-radius:2px;padding:3px;color:#79c0ff;font-size:7px;margin-bottom:4px;">int age = 25;</div>
+        <div style="color:#888;font-size:7px;border-top:1px solid #333;padding-top:4px;">─── Chapter 3: Loops ───</div>
+        <div style="color:#ccc;font-size:7px;line-height:13px;">Loops repeat code blocks. for, while, do-while...</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Tab Nav + Long Scroll</h3>
+      <p>Topic tabs at top. Content scrolls continuously within each topic section. Good for readers who skim.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="book" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1200;padding:12px;border-radius:6px;font-family:monospace;">
+      <div style="height:140px;display:flex;gap:4px;">
+        <div style="width:12px;background:#8B4513;border-radius:2px;"></div>
+        <div style="flex:1;background:#fdf6e3;border-radius:4px;padding:8px;">
+          <div style="color:#333;font-size:9px;font-weight:bold;margin-bottom:4px;border-bottom:1px solid #ddd;padding-bottom:3px;">Chapter 1: Installing Java</div>
+          <div style="color:#555;font-size:7px;line-height:13px;margin-bottom:4px;">Java Development Kit (JDK) is what you need to write and run Java programs. Let's install it step by step.</div>
+          <div style="background:#f0f0e0;border-left:3px solid #999;padding:3px;color:#333;font-size:7px;margin-bottom:4px;">💡 JDK includes compiler (javac) + runtime (java)</div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;">
+            <div style="color:#999;font-size:7px;">← Back</div>
+            <div style="color:#8B4513;font-size:7px;font-weight:bold;">Page 3 / 124</div>
+            <div style="color:#999;font-size:7px;">Next →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Book / Page Flip Style</h3>
+      <p>Light background, page-number style. Traditional reading feel. Best for students who treat it like a real textbook.</p>
+    </div>
+  </div>
+</div>
