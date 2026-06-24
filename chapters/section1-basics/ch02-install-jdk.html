@@ -1,1 +1,82 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 2: Install JDK 21</h1>
+    <p class="chapter-intro">Set up your Java development environment from scratch — after this chapter you can compile and run Java programs on your computer.</p>
+  </div>
 
+  <h2>What is JDK?</h2>
+  <p>JDK stands for <strong>Java Development Kit</strong>. It is the complete toolkit you need to write Java programs. It contains:</p>
+  <ul>
+    <li><code>javac</code> — the <strong>compiler</strong> that turns your <code>.java</code> files into bytecode</li>
+    <li><code>java</code> — the <strong>runtime</strong> that runs your compiled programs</li>
+    <li>Standard libraries — thousands of built-in tools Java gives you for free</li>
+  </ul>
+
+  <div class="callout tip">
+    💡 <strong>Always install the JDK</strong>, not just the JRE. JRE (Java Runtime Environment) can only <em>run</em> programs — it cannot <em>compile</em> them. You need both compiler and runtime to develop Java. The JDK includes both.
+  </div>
+
+  <h2>Which Version to Install?</h2>
+  <p>Install <strong>JDK 21</strong>. It is the current <strong>LTS (Long-Term Support)</strong> version — it receives security updates for years and is used in production by most companies. Avoid non-LTS versions for learning.</p>
+
+  <div class="callout info">
+    ℹ️ LTS versions: 8, 11, 17, 21. Always pick the latest LTS. At the time of writing, that is <strong>JDK 21</strong>.
+  </div>
+
+  <h2>Step 1: Download JDK 21</h2>
+  <ol>
+    <li>Go to <strong>adoptium.net</strong> — this is Eclipse Temurin, a free and open-source JDK.</li>
+    <li>Select: <strong>Version 21 (LTS)</strong></li>
+    <li>Your OS should auto-detect. Click <strong>Download Temurin 21</strong>.</li>
+  </ol>
+
+  <div class="callout info">
+    ℹ️ Adoptium (Temurin) is recommended — it is free, open source, and has no commercial licence restrictions. Oracle's JDK is also fine but has a commercial licence for production use.
+  </div>
+
+  <h2>Step 2: Install</h2>
+  <p><strong>Windows:</strong> Run the <code>.msi</code> installer. Follow the wizard. When asked, check <strong>"Set JAVA_HOME variable"</strong> if that option appears — it saves you a manual step later.</p>
+  <p><strong>Mac:</strong> Run the <code>.pkg</code> installer. Follow the wizard. Done.</p>
+  <p><strong>Linux (Ubuntu/Debian):</strong> Run these commands in your terminal:</p>
+  <pre><code class="language-bash">sudo apt update
+sudo apt install temurin-21-jdk</code></pre>
+
+  <h2>Step 3: Verify the Installation</h2>
+  <p>Open <strong>Terminal</strong> (Mac/Linux) or <strong>Command Prompt / PowerShell</strong> (Windows) and run:</p>
+  <pre><code class="language-bash">java -version</code></pre>
+  <p>You should see something like:</p>
+  <pre><code class="language-bash">openjdk version "21.0.3" 2024-04-16
+OpenJDK Runtime Environment Temurin-21.0.3+9</code></pre>
+  <p>Also verify the compiler:</p>
+  <pre><code class="language-bash">javac -version</code></pre>
+  <p>Expected output:</p>
+  <pre><code class="language-bash">javac 21.0.3</code></pre>
+
+  <div class="callout warning">
+    ⚠️ If you get <strong>"java is not recognized"</strong> or <strong>"command not found"</strong>, Java is installed but not in your system PATH. See the fix below.
+  </div>
+
+  <h2>Fixing PATH on Windows</h2>
+  <p>If <code>java -version</code> fails on Windows:</p>
+  <ol>
+    <li>Search for <strong>"Environment Variables"</strong> in the Start menu → click <em>Edit the system environment variables</em></li>
+    <li>Click <strong>Environment Variables</strong> button</li>
+    <li>Under <em>System variables</em>, find <strong>Path</strong> → click <strong>Edit</strong></li>
+    <li>Click <strong>New</strong> → add the path to your JDK's <code>bin</code> folder, for example: <code>C:\Program Files\Eclipse Adoptium\jdk-21\bin</code></li>
+    <li>Click OK on all dialogs, then restart your terminal</li>
+  </ol>
+
+  <h2>Set JAVA_HOME (Recommended)</h2>
+  <p>Some tools like Maven and Spring Boot need the <code>JAVA_HOME</code> environment variable to find your JDK.</p>
+  <p><strong>Windows:</strong> In Environment Variables, add a new System variable: Name = <code>JAVA_HOME</code>, Value = <code>C:\Program Files\Eclipse Adoptium\jdk-21</code> (no <code>\bin</code> at the end).</p>
+  <p><strong>Mac/Linux:</strong> Add these lines to your <code>~/.bashrc</code> or <code>~/.zshrc</code> file:</p>
+  <pre><code class="language-bash">export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+export PATH=$JAVA_HOME/bin:$PATH</code></pre>
+  <p>Then run <code>source ~/.zshrc</code> (or <code>~/.bashrc</code>) to apply the changes.</p>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Open your terminal and run <code>java -version</code>. Confirm you see version 21. Then run <code>javac -version</code>. Both commands must succeed before moving to the next chapter. If either fails, fix the PATH and try again.</p>
+  </div>
+</article>
