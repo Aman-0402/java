@@ -155,4 +155,61 @@ public Map&lt;String, String&gt; info() {
     </ol>
     <p>Run the app with <code>mvn spring-boot:run</code> and test both endpoints in your browser. Then change the port to <code>9090</code> in <code>application.properties</code>, restart, and confirm both endpoints work at the new port.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Create a Spring Boot app with one <code>@GetMapping("/hello")</code> endpoint that returns "Hello, Spring Boot!". Run it and test in the browser at localhost:8080/hello.</li>
+      <li>Add a second endpoint <code>@GetMapping("/greet/{name}")</code> that accepts a name as a path variable and returns "Hello, [name]!". Test with your own name.</li>
+      <li>What is the difference between <code>@RestController</code> and <code>@Controller</code>? When would you use each?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What does <code>@SpringBootApplication</code> annotation do?</p>
+      <ul>
+        <li>A) Creates the main window</li>
+        <li>B) Combines @Configuration, @EnableAutoConfiguration, and @ComponentScan</li>
+        <li>C) Starts a new thread</li>
+        <li>D) Connects to the database</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Combines @Configuration, @EnableAutoConfiguration, and @ComponentScan — This single annotation enables Spring Boot's auto-configuration, component scanning, and marks the class as a configuration source.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What embedded server does Spring Boot use by default?</p>
+      <ul>
+        <li>A) JBoss</li>
+        <li>B) GlassFish</li>
+        <li>C) Tomcat</li>
+        <li>D) Nginx</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Tomcat — Spring Boot embeds Tomcat by default. No separate server installation needed — the server is bundled inside the JAR.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. Which annotation marks a class as a Spring REST controller?</p>
+      <ul>
+        <li>A) @Service</li>
+        <li>B) @Repository</li>
+        <li>C) @RestController</li>
+        <li>D) @Component</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) @RestController — <code>@RestController</code> = <code>@Controller</code> + <code>@ResponseBody</code>. All methods return data (JSON) directly, not view names.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What port does Spring Boot start on by default?</p>
+      <ul>
+        <li>A) 3000</li>
+        <li>B) 80</li>
+        <li>C) 443</li>
+        <li>D) 8080</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ D) 8080 — Spring Boot's embedded Tomcat starts on port 8080 by default. Change it in <code>application.properties</code>: <code>server.port=9090</code>.</p></details>
+    </div>
+  </div>
 </article>

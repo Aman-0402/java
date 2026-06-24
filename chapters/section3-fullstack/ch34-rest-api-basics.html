@@ -130,4 +130,61 @@ curl -X DELETE http://localhost:8080/api/todos/1</code></pre>
     <h3>✅ Try It</h3>
     <p>Run the app (<code>mvn spring-boot:run</code>). Create 3 todos, update one, delete one, then GET all to confirm. Use curl or Postman.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Build a complete CRUD REST API for a <code>Product</code> (id, name, price). Use an in-memory list. Test all 5 endpoints with Postman or curl.</li>
+      <li>What HTTP status codes should each CRUD operation return? (GET all = ?, GET by id not found = ?, POST = ?, DELETE = ?)</li>
+      <li>What is the difference between PUT and PATCH HTTP methods? When would you use PATCH?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. Which HTTP method is used to CREATE a new resource?</p>
+      <ul>
+        <li>A) GET</li>
+        <li>B) PUT</li>
+        <li>C) POST</li>
+        <li>D) PATCH</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) POST — POST creates a new resource. The server assigns the ID. GET retrieves, PUT updates (full replace), DELETE removes.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What annotation maps a method to HTTP GET requests in Spring Boot?</p>
+      <ul>
+        <li>A) @RequestMapping(GET)</li>
+        <li>B) @GetRoute</li>
+        <li>C) @GetMapping</li>
+        <li>D) @HttpGet</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) @GetMapping — Spring shortcut annotations: <code>@GetMapping</code>, <code>@PostMapping</code>, <code>@PutMapping</code>, <code>@DeleteMapping</code>.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What does <code>@RequestBody</code> do?</p>
+      <ul>
+        <li>A) Reads data from the URL path</li>
+        <li>B) Reads data from query parameters</li>
+        <li>C) Deserializes the HTTP request body (JSON) into a Java object</li>
+        <li>D) Sends data to the client</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Deserializes the HTTP request body (JSON) into a Java object — Spring Boot uses Jackson to automatically convert incoming JSON to your Java class.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What does <code>@PathVariable</code> extract?</p>
+      <ul>
+        <li>A) The request body</li>
+        <li>B) Query parameters after ?</li>
+        <li>C) A value from the URL path like /api/todos/{id}</li>
+        <li>D) HTTP headers</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) A value from the URL path like /api/todos/{id} — <code>@GetMapping("/{id}") public Todo get(@PathVariable Long id)</code> extracts the <code>{id}</code> from the URL.</p></details>
+    </div>
+  </div>
 </article>

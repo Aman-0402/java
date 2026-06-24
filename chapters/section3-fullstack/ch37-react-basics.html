@@ -264,4 +264,61 @@ export default App;</code></pre>
       <li>Use <code>useEffect</code> to log the count to the browser console every time it changes. (Hint: put <code>count</code> in the dependency array.)</li>
     </ol>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Create a React component <code>Counter</code> with a button that increments a count. Use <code>useState</code> to track the count.</li>
+      <li>Create a <code>TodoList</code> component that renders a hardcoded array of todos using <code>map()</code>. Each item should have a unique <code>key</code> prop.</li>
+      <li>What is the difference between props and state? Give an example of when to use each.</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What does <code>useState</code> return?</p>
+      <ul>
+        <li>A) The initial value only</li>
+        <li>B) An array with the current state value and a setter function</li>
+        <li>C) A promise</li>
+        <li>D) A ref object</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) An array with the current state value and a setter function — <code>const [count, setCount] = useState(0)</code> gives you <code>count</code> (current value) and <code>setCount</code> (function to update it).</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What triggers a React component to re-render?</p>
+      <ul>
+        <li>A) Any function call</li>
+        <li>B) Timer events only</li>
+        <li>C) State or props changing</li>
+        <li>D) CSS changes</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) State or props changing — React re-renders a component when its state (via <code>useState</code>) or its props change. Pure JavaScript variable changes don't trigger re-renders.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. Why must list items have a <code>key</code> prop in React?</p>
+      <ul>
+        <li>A) For CSS styling</li>
+        <li>B) React uses keys to efficiently identify which items changed, were added, or removed</li>
+        <li>C) For accessibility</li>
+        <li>D) It's optional — just a warning</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) React uses keys to efficiently identify which items changed, were added, or removed — Without keys, React re-renders all list items on any change. With unique keys, only changed items re-render.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is the Virtual DOM?</p>
+      <ul>
+        <li>A) A hidden browser window</li>
+        <li>B) A JavaScript representation of the real DOM that React uses to calculate minimal updates</li>
+        <li>C) A faster version of HTML</li>
+        <li>D) A React database</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A JavaScript representation of the real DOM that React uses to calculate minimal updates — React compares old vs. new Virtual DOM (diffing) and only updates the parts of the real DOM that changed.</p></details>
+    </div>
+  </div>
 </article>

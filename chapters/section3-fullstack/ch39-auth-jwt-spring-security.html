@@ -155,4 +155,61 @@ const getTodos = async () => {
     <h3>✅ Try It</h3>
     <p>Add the JWT utility class to your project. Call <code>POST /api/login</code> with Postman (body: <code>{"username":"user","password":"password"}</code>). Copy the returned token and decode it at <strong>jwt.io</strong> to see the payload contents.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Using the <code>JwtUtil</code> class from this chapter, generate a token for username "alice" and print it. Then decode it at jwt.io to inspect the payload.</li>
+      <li>Modify the login endpoint to check credentials against a database (using a hardcoded user in the H2 database). Only return a token if credentials match.</li>
+      <li>What are the security risks of storing JWT in <code>localStorage</code>? What is the safer alternative and why?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What does JWT stand for?</p>
+      <ul>
+        <li>A) Java Web Token</li>
+        <li>B) JSON Web Tool</li>
+        <li>C) JSON Web Token</li>
+        <li>D) JavaScript Web Transfer</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) JSON Web Token — A JWT is a compact, URL-safe token containing a JSON payload that can be verified via a digital signature.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What are the three parts of a JWT separated by dots?</p>
+      <ul>
+        <li>A) Username, password, expiry</li>
+        <li>B) Header, Payload, Signature</li>
+        <li>C) ID, data, checksum</li>
+        <li>D) Type, version, content</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Header, Payload, Signature — Header contains algorithm info, Payload contains claims (user data), Signature verifies authenticity.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. How does a server validate a JWT without hitting the database?</p>
+      <ul>
+        <li>A) It can't — database lookup is always required</li>
+        <li>B) It decrypts the token with a private key</li>
+        <li>C) It re-computes the signature using the secret key and compares with the token's signature</li>
+        <li>D) It calls the auth server</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) It re-computes the signature using the secret key and compares with the token's signature — If the signatures match, the token is valid and hasn't been tampered with. No database needed.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What HTTP header is used to send a JWT to the server?</p>
+      <ul>
+        <li>A) X-Auth-Token</li>
+        <li>B) Cookie</li>
+        <li>C) Authorization: Bearer [token]</li>
+        <li>D) JWT-Token</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Authorization: Bearer [token] — The standard format is <code>Authorization: Bearer eyJhbGci...</code>. The server extracts and validates the token from this header.</p></details>
+    </div>
+  </div>
 </article>

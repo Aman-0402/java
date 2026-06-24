@@ -147,4 +147,61 @@ export default App;</code></pre>
     <h3>✅ Try It</h3>
     <p>Run Spring Boot on port 8080 and React on port 3000 simultaneously. Open React in the browser, add a todo via the input, and verify it appears in the list. Then check <code>http://localhost:8080/api/todos</code> to confirm the data was saved to the backend.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Build a React component that fetches all todos from <code>http://localhost:8080/api/todos</code> on mount and displays them in a <code>&lt;ul&gt;</code>. Handle loading and error states.</li>
+      <li>Add a form to your TodoList component that POSTs a new todo to the backend when submitted. Update the list without reloading the page.</li>
+      <li>What is CORS and why does it block your React app from calling the Spring Boot API? How do you fix it?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. Which React hook is used to fetch data when a component mounts?</p>
+      <ul>
+        <li>A) useState</li>
+        <li>B) useRef</li>
+        <li>C) useEffect</li>
+        <li>D) useFetch</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) useEffect — <code>useEffect(() =&gt; { fetch(...) }, [])</code> runs after the component renders. Empty array <code>[]</code> means "run once on mount".</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What does <code>res.ok</code> check in a fetch response?</p>
+      <ul>
+        <li>A) If the response has a body</li>
+        <li>B) If the HTTP status code is in the 200-299 range (success)</li>
+        <li>C) If the response is cached</li>
+        <li>D) If the server is online</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) If the HTTP status code is in the 200-299 range (success) — Always check <code>res.ok</code> before calling <code>res.json()</code>. A 404 or 500 response still returns a response object; <code>res.ok</code> is false.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What is CORS?</p>
+      <ul>
+        <li>A) A React security module</li>
+        <li>B) Cross-Origin Resource Sharing — a browser policy controlling which domains can call your API</li>
+        <li>C) A type of REST endpoint</li>
+        <li>D) A Java annotation</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Cross-Origin Resource Sharing — a browser policy controlling which domains can call your API — Without CORS headers, browsers block JavaScript requests to a different origin (domain/port) to prevent cross-site attacks.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. In Spring Boot, which annotation allows cross-origin requests to a controller?</p>
+      <ul>
+        <li>A) @AllowOrigin</li>
+        <li>B) @CORS</li>
+        <li>C) @CrossOrigin</li>
+        <li>D) @EnableCors</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) @CrossOrigin — <code>@CrossOrigin(origins = "http://localhost:3000")</code> adds the necessary <code>Access-Control-Allow-Origin</code> header to responses.</p></details>
+    </div>
+  </div>
 </article>

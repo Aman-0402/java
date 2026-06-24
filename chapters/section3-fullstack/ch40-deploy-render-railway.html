@@ -119,4 +119,61 @@ java -jar target/your-app-name-0.0.1-SNAPSHOT.jar</code></pre>
     <h3>✅ Final Challenge</h3>
     <p>Deploy your Todo app (Spring Boot + React) to Render and Netlify. Share the live URL with a friend. If it works for them — you are a full-stack Java developer.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Package your Spring Boot app as a JAR with <code>mvn package -DskipTests</code>. Verify the JAR runs locally with <code>java -jar target/*.jar</code> before deploying.</li>
+      <li>What environment variables should you NEVER hardcode in your application? List at least 3 and explain why.</li>
+      <li>After deploying to Render, your Spring Boot app cold-starts slowly. What is causing this and how could you reduce startup time?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. Why should database credentials never be hardcoded in source code?</p>
+      <ul>
+        <li>A) It makes the code slower</li>
+        <li>B) Source code is often in version control (GitHub) — credentials become publicly visible and can be exploited</li>
+        <li>C) Java doesn't allow string literals for passwords</li>
+        <li>D) It increases compilation time</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Source code is often in version control (GitHub) — credentials become publicly visible and can be exploited — Always use environment variables for secrets. Render, Railway, and all cloud platforms provide a secure way to set env vars.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What command packages a Spring Boot app into a runnable JAR?</p>
+      <ul>
+        <li>A) mvn jar:create</li>
+        <li>B) mvn compile</li>
+        <li>C) mvn package -DskipTests</li>
+        <li>D) java -build</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) mvn package -DskipTests — This runs compile → test → package phases. <code>-DskipTests</code> skips tests to speed up the build. The JAR goes to <code>target/</code>.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What does <code>spring.jpa.hibernate.ddl-auto=update</code> do in production?</p>
+      <ul>
+        <li>A) Deletes all tables on startup</li>
+        <li>B) Recreates the database from scratch</li>
+        <li>C) Updates the schema to match entities without dropping existing data</li>
+        <li>D) Disables the database</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Updates the schema to match entities without dropping existing data — <code>update</code> adds new tables/columns but doesn't delete existing data. Use with caution in production; prefer database migrations.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is the purpose of a <code>.env</code> file?</p>
+      <ul>
+        <li>A) A compiled environment</li>
+        <li>B) A file storing environment variables (secrets, config) that should NOT be committed to git</li>
+        <li>C) An environment test file</li>
+        <li>D) A deployment script</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A file storing environment variables (secrets, config) that should NOT be committed to git — Add <code>.env</code> to <code>.gitignore</code>. Use it locally; set the same variables directly in Render/Railway's dashboard for production.</p></details>
+    </div>
+  </div>
 </article>

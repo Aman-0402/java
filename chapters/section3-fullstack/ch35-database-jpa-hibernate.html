@@ -133,4 +133,61 @@ public class TodoController {
     <h3>✅ Try It</h3>
     <p>Add the H2 dependency, annotate your <code>Todo</code> class, create the repository, update your controller. Run the app, create some todos via Postman, then visit <code>http://localhost:8080/h2-console</code> and run <code>SELECT * FROM TODOS</code> to see the data in the database.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Annotate a <code>Product</code> class as a JPA entity with <code>@Entity</code>, <code>@Id</code>, and <code>@GeneratedValue</code>. Create a <code>ProductRepository extends JpaRepository</code>. Add a <code>findByName(String name)</code> method — notice you don't implement it.</li>
+      <li>Explore the H2 console at <code>http://localhost:8080/h2-console</code>. Insert a record via the console, then retrieve it via your API. Confirm the data matches.</li>
+      <li>What is the difference between <code>spring.jpa.hibernate.ddl-auto=create</code> and <code>update</code>? Which would you use in production and why?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What does <code>@Entity</code> annotation do?</p>
+      <ul>
+        <li>A) Marks a class as a controller</li>
+        <li>B) Marks a Java class as a database table (JPA entity)</li>
+        <li>C) Makes all fields private</li>
+        <li>D) Enables database transactions</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Marks a Java class as a database table (JPA entity) — Hibernate reads <code>@Entity</code> and creates/maps a corresponding database table for the class.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What does <code>JpaRepository&lt;Todo, Long&gt;</code> provide?</p>
+      <ul>
+        <li>A) A database connection</li>
+        <li>B) SQL queries you must implement</li>
+        <li>C) 15+ ready-made CRUD methods including findAll, findById, save, deleteById</li>
+        <li>D) A REST controller</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) 15+ ready-made CRUD methods including findAll, findById, save, deleteById — Spring Data JPA generates implementations for all these methods automatically at runtime.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What does <code>@GeneratedValue(strategy = GenerationType.IDENTITY)</code> do?</p>
+      <ul>
+        <li>A) Creates a random UUID</li>
+        <li>B) Lets you set the ID manually</li>
+        <li>C) Auto-increments the primary key (1, 2, 3...)</li>
+        <li>D) Copies the ID from another table</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Auto-increments the primary key (1, 2, 3...) — IDENTITY delegates ID generation to the database (using AUTO_INCREMENT in MySQL or SERIAL in PostgreSQL).</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is ORM?</p>
+      <ul>
+        <li>A) Object Resource Management</li>
+        <li>B) A security protocol</li>
+        <li>C) Object-Relational Mapping — maps Java objects to database tables automatically</li>
+        <li>D) A type of SQL query</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Object-Relational Mapping — maps Java objects to database tables automatically — ORM eliminates the need to write most SQL manually, mapping <code>@Entity</code> classes to tables and fields to columns.</p></details>
+    </div>
+  </div>
 </article>

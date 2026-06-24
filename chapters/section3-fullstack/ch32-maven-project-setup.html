@@ -180,4 +180,61 @@ mvnw.cmd spring-boot:run      # Windows
     <pre><code class="language-bash">mvn spring-boot:run</code></pre>
     <p>Wait for the line <code>Started TodoApiApplication in X.XXX seconds</code> to appear. Then open your browser to <code>http://localhost:8080</code>. You should see a "Whitelabel Error Page" — this means the server is running but has no routes yet. That is expected. You just ran a Spring Boot app! Stop it with Ctrl+C.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Create a new Maven project using Spring Initializr (start.spring.io). Add the Spring Web dependency and run it. What URL does the embedded server start on?</li>
+      <li>Add the <code>spring-boot-starter-data-jpa</code> and <code>h2</code> dependencies to <code>pom.xml</code>. What error do you get if you start the app without configuring a datasource?</li>
+      <li>What is the difference between <code>&lt;dependency&gt;</code> scope <code>runtime</code>, <code>compile</code>, and <code>test</code>? Give one example of each.</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What is the purpose of <code>pom.xml</code> in a Maven project?</p>
+      <ul>
+        <li>A) It's the main Java file</li>
+        <li>B) It defines project metadata, dependencies, and build configuration</li>
+        <li>C) It configures the database</li>
+        <li>D) It's the application startup file</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) It defines project metadata, dependencies, and build configuration — <code>pom.xml</code> (Project Object Model) is Maven's configuration file. It manages all your project's dependencies and build lifecycle.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What command runs a Spring Boot application using Maven?</p>
+      <ul>
+        <li>A) maven run</li>
+        <li>B) mvn start</li>
+        <li>C) mvn spring-boot:run</li>
+        <li>D) java -run</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) mvn spring-boot:run — This command compiles and starts the Spring Boot application using the embedded Tomcat server.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. Where does Maven download dependencies from by default?</p>
+      <ul>
+        <li>A) Your hard drive</li>
+        <li>B) GitHub</li>
+        <li>C) Maven Central Repository</li>
+        <li>D) Oracle's website</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Maven Central Repository — Maven downloads JARs from repo.maven.apache.org and caches them in <code>~/.m2/repository</code> on your machine.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What does <code>mvn package</code> do?</p>
+      <ul>
+        <li>A) Installs Maven</li>
+        <li>B) Downloads dependencies only</li>
+        <li>C) Compiles code and packages it into a JAR/WAR file</li>
+        <li>D) Deploys the application</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Compiles code and packages it into a JAR/WAR file — <code>mvn package</code> runs compile, test, and package phases. The output JAR is in the <code>target/</code> directory.</p></details>
+    </div>
+  </div>
 </article>
