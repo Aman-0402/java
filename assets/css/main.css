@@ -215,11 +215,16 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 18px;
-  padding: 4px 8px;
+  font-size: 20px;
+  padding: 10px 12px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 4px;
   color: var(--color-text);
   transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar-toggle:hover, .theme-toggle:hover { background: rgba(0,0,0,0.08); }
@@ -479,8 +484,12 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
     transform: translateX(-100%);
     transition: transform 0.25s ease;
     height: 100%;
+    pointer-events: none;
   }
-  .sidebar.open { transform: translateX(0); }
+  .sidebar.open {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
   .sidebar-overlay.visible { display: block; }
   .sidebar-toggle { display: flex; }
   .content-area { padding: 24px 20px; }

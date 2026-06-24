@@ -126,23 +126,33 @@ window.addEventListener('hashchange', handleHash);
 document.addEventListener('DOMContentLoaded', handleHash);
 
 // ── Sidebar helpers ──
-const isMobile = () => window.innerWidth <= 768;
+const mq = window.matchMedia('(max-width: 768px)');
+const isMobile = () => mq.matches;
 const overlay = document.querySelector('.sidebar-overlay');
 
 function closeSidebar() {
   if (isMobile()) {
     sidebar.classList.remove('open');
-    overlay?.classList.remove('visible');
+    overlay.classList.remove('visible');
+    document.body.style.overflow = '';
   } else {
     ebookShell.classList.add('sidebar-collapsed');
   }
 }
 
+function openSidebarMobile() {
+  sidebar.classList.add('open');
+  overlay.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
 function toggleSidebar() {
   if (isMobile()) {
-    const opening = !sidebar.classList.contains('open');
-    sidebar.classList.toggle('open');
-    overlay?.classList.toggle('visible', opening);
+    if (sidebar.classList.contains('open')) {
+      closeSidebar();
+    } else {
+      openSidebarMobile();
+    }
   } else {
     ebookShell.classList.toggle('sidebar-collapsed');
   }
