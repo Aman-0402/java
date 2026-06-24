@@ -1,1 +1,183 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📘 Section 2 — Java DSA</span>
+    <h1>Chapter 23: Linked List</h1>
+    <p class="chapter-intro">A linked list is a chain of nodes where each node holds a value and a pointer to the next node, making insertions and deletions fast without shifting elements.</p>
+  </div>
 
+  <h2>The Train Carriages Analogy</h2>
+  <p>Think of a linked list as a train. Each carriage (node) carries cargo (data) and is hooked to the next carriage. To find carriage 5, you must walk through carriages 1, 2, 3, 4 first — there is no shortcut. But adding or removing a carriage in the middle only requires unhooking a couple of connections, no matter how long the train is.</p>
+
+  <p>This is very different from an array, which is like a row of numbered seats: you can jump to seat 5 instantly, but adding a seat in the middle means physically moving every seat after it.</p>
+
+  <h2>The Node Class</h2>
+  <p>Every element in a linked list is a <strong>Node</strong>. A node has two fields: the data it holds, and a reference (<code>next</code>) pointing to the next node. The last node's <code>next</code> is <code>null</code>.</p>
+
+  <pre><code class="language-java">class Node {
+    int data;   // the value stored in this node
+    Node next;  // pointer to the next node (null if last)
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+</code></pre>
+
+  <h2>Structure of a Singly Linked List</h2>
+
+<pre>
+head
+ │
+ ▼
+┌──────┬──────┐    ┌──────┬──────┐    ┌──────┬──────┐
+│  10  │  ──────►  │  20  │  ──────►  │  30  │ null │
+└──────┴──────┘    └──────┴──────┘    └──────┴──────┘
+  Node 1               Node 2               Node 3
+
+Each box: [data | next pointer]
+The last node's next pointer is null (end of list).
+</pre>
+
+  <h2>Building a Linked List from Scratch</h2>
+  <p>The list itself only needs to track the <code>head</code> — the first node. All other nodes are reachable by following <code>next</code> pointers.</p>
+
+  <pre><code class="language-java">public class LinkedList {
+    Node head; // first node; null when list is empty
+
+    // Add a node at the end of the list
+    void add(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;    // list was empty
+            return;
+        }
+        // Walk to the last node
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = newNode; // attach new node at the end
+    }
+
+    // Print all values
+    void print() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " -> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+
+    // Count nodes
+    int size() {
+        int count = 0;
+        Node current = head;
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }
+
+    // Delete first node with matching value
+    void delete(int data) {
+        if (head == null) return;
+
+        // Special case: delete head
+        if (head.data == data) {
+            head = head.next;
+            return;
+        }
+
+        // Find the node just before the one to delete
+        Node current = head;
+        while (current.next != null) {
+            if (current.next.data == data) {
+                current.next = current.next.next; // skip over deleted node
+                return;
+            }
+            current = current.next;
+        }
+    }
+}
+</code></pre>
+
+  <h2>Step-by-Step: delete(20) on the list [10 → 20 → 30]</h2>
+<pre>
+Before: head → [10|●] → [20|●] → [30|null]
+
+1. head.data (10) != 20, so head stays.
+2. Walk: current = node(10)
+3. current.next.data = 20 — match found!
+4. current.next = current.next.next
+   i.e. node(10).next = node(30)
+
+After:  head → [10|●] → [30|null]
+   node(20) is now unreachable — garbage collected.
+</pre>
+
+  <h2>Full Working Example</h2>
+  <pre><code class="language-java">public class LinkedListDemo {
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        list.add(40);
+
+        list.print();          // 10 -> 20 -> 30 -> 40 -> null
+        System.out.println("Size: " + list.size()); // 4
+
+        list.delete(20);
+        list.print();          // 10 -> 30 -> 40 -> null
+
+        list.delete(10);       // delete head
+        list.print();          // 30 -> 40 -> null
+    }
+}
+</code></pre>
+
+  <h2>Array vs Linked List</h2>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Operation</th>
+        <th>Array</th>
+        <th>Linked List</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Access by index</td><td>O(1) — instant</td><td>O(n) — must walk from head</td></tr>
+      <tr><td>Insert at end</td><td>O(1) amortised</td><td>O(n) — must walk to end</td></tr>
+      <tr><td>Insert at beginning</td><td>O(n) — shift all</td><td>O(1) — update head</td></tr>
+      <tr><td>Delete in middle</td><td>O(n) — shift all</td><td>O(n) — walk, then O(1) unlink</td></tr>
+      <tr><td>Memory</td><td>Compact, contiguous</td><td>Extra memory per node for pointer</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">💡 Use a linked list when you need frequent insertions or deletions at the beginning or middle of a collection. Use an array (or ArrayList) when you need fast random access by index.</div>
+
+  <h2>Java's Built-in LinkedList</h2>
+  <p>Java provides <code>java.util.LinkedList</code> in the Collections framework. It is a doubly linked list (each node also has a <code>prev</code> pointer) and implements both <code>List</code> and <code>Deque</code>.</p>
+
+  <pre><code class="language-java">import java.util.LinkedList;
+
+LinkedList&lt;Integer&gt; list = new LinkedList&lt;&gt;();
+list.add(10);         // add to end
+list.addFirst(5);     // add to beginning
+list.removeLast();    // remove from end
+System.out.println(list.get(0)); // access by index (O(n) internally)
+</code></pre>
+
+  <div class="callout info">ℹ️ In practice, <code>ArrayList</code> outperforms <code>LinkedList</code> for most tasks because modern CPUs cache contiguous memory very efficiently. Prefer <code>ArrayList</code> unless you specifically need O(1) front insertions or are implementing a deque/queue.</div>
+
+  <div class="callout warning">⚠️ Never modify a linked list while iterating over it with a standard loop. Use an <code>Iterator</code> and its <code>remove()</code> method, or collect indices to delete afterward.</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Add a method <code>addFirst(int data)</code> to the custom <code>LinkedList</code> class above that inserts a new node at the <em>beginning</em> of the list in O(1) time. Then add a method <code>contains(int data)</code> that returns <code>true</code> if the value exists in the list. Test both with a list of 5 elements.</p>
+  </div>
+</article>

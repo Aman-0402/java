@@ -1,1 +1,159 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📘 Section 2 — Java DSA</span>
+    <h1>Chapter 21: Big O Notation</h1>
+    <p class="chapter-intro">Big O notation is the universal language programmers use to describe how an algorithm's performance scales as the input grows larger.</p>
+  </div>
 
+  <h2>Why Performance Scaling Matters</h2>
+  <p>Imagine you need to fill a container with water. Filling a small glass takes a second. Filling a swimming pool takes hours — not because your tap got slower, but because the <em>size of the problem</em> changed. The same idea applies to algorithms: some grow slowly as input grows, others grow explosively.</p>
+
+  <p>Big O notation captures that growth rate. It answers the question: <strong>"If I double the input size, what happens to the runtime?"</strong> It does <em>not</em> tell you the exact number of milliseconds — it tells you the shape of the curve.</p>
+
+  <div class="callout info">ℹ️ Big O focuses on the <em>dominant term</em> as input size (n) approaches infinity. Constants and smaller terms are dropped because they become irrelevant at scale.</div>
+
+  <h2>O(1) — Constant Time</h2>
+  <p>No matter how big the input, the operation always takes the same amount of work. Think of looking up a word if you already know the exact page number — it doesn't matter how thick the book is.</p>
+
+  <pre><code class="language-java">// O(1) — accessing an array by index is always one step
+int[] numbers = {10, 20, 30, 40, 50};
+int first = numbers[0];  // instant, no matter how large the array
+</code></pre>
+
+  <h2>O(log n) — Logarithmic Time</h2>
+  <p>Each step cuts the problem roughly in half. Binary search is the classic example: to find a name in a sorted phone book, you open to the middle, discard half, repeat. A phone book with 1,000,000 names only takes about 20 comparisons.</p>
+
+  <pre><code class="language-java">// O(log n) — binary search
+int binarySearch(int[] arr, int target) {
+    int left = 0, right = arr.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) return mid;
+        else if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+</code></pre>
+
+  <h2>O(n) — Linear Time</h2>
+  <p>Work grows in direct proportion to input size. To find the maximum value in an unsorted list you must look at every element once. Double the list, double the work.</p>
+
+  <pre><code class="language-java">// O(n) — scanning every element once
+int findMax(int[] arr) {
+    int max = arr[0];
+    for (int num : arr) {      // visits every element
+        if (num > max) max = num;
+    }
+    return max;
+}
+</code></pre>
+
+  <h2>O(n²) — Quadratic Time</h2>
+  <p>For every element you do work proportional to n again — a loop inside a loop. Bubble sort is the textbook example. Double the input, quadruple the work.</p>
+
+  <pre><code class="language-java">// O(n²) — bubble sort (nested loops)
+void bubbleSort(int[] arr) {
+    int n = arr.length;
+    for (int i = 0; i < n - 1; i++) {          // outer loop
+        for (int j = 0; j < n - i - 1; j++) {  // inner loop
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+</code></pre>
+
+  <h2>Growth Rate Comparison</h2>
+  <p>Here is how each complexity class behaves as n grows. Notice how O(n²) explodes while O(log n) barely moves.</p>
+
+<pre>
+n         O(1)   O(log n)   O(n)    O(n²)
+----------------------------------------------
+1           1        0        1        1
+10          1        3       10      100
+100         1        7      100    10,000
+1,000       1       10    1,000 1,000,000
+1,000,000   1       20  1,000,000  10^12
+</pre>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Big O</th>
+        <th>Name</th>
+        <th>Real-world analogy</th>
+        <th>Example algorithm</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>O(1)</td>
+        <td>Constant</td>
+        <td>Looking up a saved phone contact</td>
+        <td>Array index access</td>
+      </tr>
+      <tr>
+        <td>O(log n)</td>
+        <td>Logarithmic</td>
+        <td>Finding a word in a dictionary by halving</td>
+        <td>Binary search</td>
+      </tr>
+      <tr>
+        <td>O(n)</td>
+        <td>Linear</td>
+        <td>Reading every page of a book</td>
+        <td>Linear search, findMax</td>
+      </tr>
+      <tr>
+        <td>O(n log n)</td>
+        <td>Linearithmic</td>
+        <td>Sorting a deck of cards efficiently</td>
+        <td>Merge sort, quicksort</td>
+      </tr>
+      <tr>
+        <td>O(n²)</td>
+        <td>Quadratic</td>
+        <td>Every person in a room shaking every other person's hand</td>
+        <td>Bubble sort, selection sort</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Why We Drop Constants and Lower-Order Terms</h2>
+  <p>An algorithm that runs <code>3n + 5</code> operations is still O(n). At n = 1,000,000 the constant 3 and the +5 are irrelevant compared to n itself. Big O captures the growth pattern, not the exact count.</p>
+
+  <pre><code class="language-java">// This is O(n), not O(3n + 5)
+void example(int[] arr) {
+    int sum = 0;         // 1 operation
+    for (int x : arr) { // n operations
+        sum += x;        // 1 op each
+        sum *= 2;        // 1 op each
+        sum -= 1;        // 1 op each
+    }
+    System.out.println(sum); // 1 operation
+    // Total: 3n + 2 → still O(n)
+}
+</code></pre>
+
+  <div class="callout tip">💡 When analysing your own code, count the loops. One loop → O(n). A loop inside a loop → O(n²). No loop → O(1). This heuristic handles 90% of interview situations.</div>
+
+  <h2>Best, Worst, and Average Case</h2>
+  <p>Big O typically describes the <strong>worst case</strong> — the scenario that takes the longest. For linear search on an array of n elements:</p>
+  <ul>
+    <li><strong>Best case:</strong> target is the first element → O(1)</li>
+    <li><strong>Average case:</strong> target is somewhere in the middle → O(n/2) → O(n)</li>
+    <li><strong>Worst case:</strong> target is last or missing → O(n)</li>
+  </ul>
+  <p>When people say "linear search is O(n)" they mean the worst case, which is the safe guarantee to design around.</p>
+
+  <div class="callout warning">⚠️ Do not confuse O(log n) with "fast" and O(n²) with "slow" in absolute terms. For n = 5, bubble sort is perfectly fine. Big O matters when n is large — hundreds of thousands or more.</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Write a method <code>countPairs(int[] arr)</code> that prints every pair of elements. How many pairs are there for an array of size n? What is the Big O? Now write a second version that only prints pairs where both elements are positive — does the Big O change? Explain why or why not.</p>
+  </div>
+</article>

@@ -1,1 +1,171 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📘 Section 2 — Java DSA</span>
+    <h1>Chapter 22: Recursion</h1>
+    <p class="chapter-intro">Recursion is the technique of writing a function that solves a problem by calling itself on a smaller version of the same problem.</p>
+  </div>
 
+  <h2>What Is Recursion?</h2>
+  <p>Imagine you are standing in a line and someone asks "what position are you in?" You do not want to count everyone in front, so you ask the person ahead: "What is your position?" They ask the person ahead of them, and so on — until someone at the front says "I am number 1." Then each person adds 1 and passes the answer back. That chain of asking-and-answering is recursion.</p>
+
+  <p>In code, a recursive method calls <em>itself</em> with a simpler input, until it reaches a stopping point called the <strong>base case</strong>.</p>
+
+  <h2>The Two Rules of Recursion</h2>
+  <ol>
+    <li><strong>Base case</strong> — a condition where the function returns immediately without calling itself. Without this, you get infinite recursion and a crash.</li>
+    <li><strong>Recursive case</strong> — the function calls itself with input that is <em>closer</em> to the base case than the current input.</li>
+  </ol>
+
+  <div class="callout warning">⚠️ Forgetting the base case is the #1 recursion mistake. Always write the base case first, before the recursive call, or your program will never stop.</div>
+
+  <h2>The Call Stack — Visualised</h2>
+  <p>Every time a method is called, Java pushes a <em>stack frame</em> onto the call stack. When the method returns, that frame is popped off. Recursive calls stack up frames and only unwind once the base case is hit.</p>
+
+<pre>
+factorial(4) is called:
+
+ Call stack builds UP            Stack unwinds DOWN
+ ┌───────────────────┐
+ │  factorial(1) = 1 │  ← base case returns 1
+ ├───────────────────┤
+ │  factorial(2)     │  ← receives 1, returns 2 * 1 = 2
+ ├───────────────────┤
+ │  factorial(3)     │  ← receives 2, returns 3 * 2 = 6
+ ├───────────────────┤
+ │  factorial(4)     │  ← receives 6, returns 4 * 6 = 24
+ └───────────────────┘  ← final answer: 24
+</pre>
+
+  <h2>Example 1: Factorial</h2>
+  <p>The factorial of n (written n!) is n × (n-1) × (n-2) × … × 1. For example, 4! = 4 × 3 × 2 × 1 = 24. Notice that 4! = 4 × 3! — the problem contains a smaller copy of itself.</p>
+
+  <pre><code class="language-java">int factorial(int n) {
+    // Base case — factorial(0) = 1 by definition
+    if (n == 0) return 1;
+
+    // Recursive case — n! = n * (n-1)!
+    return n * factorial(n - 1);
+}
+
+System.out.println(factorial(5)); // 120
+</code></pre>
+
+  <h3>Step-by-Step Trace for factorial(4)</h3>
+<pre>
+factorial(4)
+  └─ 4 * factorial(3)
+           └─ 3 * factorial(2)
+                    └─ 2 * factorial(1)
+                              └─ 1 * factorial(0)
+                                        └─ returns 1   (base case)
+
+Unwinding:
+  factorial(1) = 1 * 1 = 1
+  factorial(2) = 2 * 1 = 2
+  factorial(3) = 3 * 2 = 6
+  factorial(4) = 4 * 6 = 24
+</pre>
+
+  <h2>Example 2: Fibonacci</h2>
+  <p>The Fibonacci sequence is 0, 1, 1, 2, 3, 5, 8, 13 … Each number is the sum of the two before it. fib(n) = fib(n-1) + fib(n-2). This has <em>two</em> recursive calls.</p>
+
+  <pre><code class="language-java">int fibonacci(int n) {
+    // Base cases
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+
+    // Recursive case
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+System.out.println(fibonacci(6)); // 8
+</code></pre>
+
+  <h3>Step-by-Step Trace for fibonacci(4)</h3>
+<pre>
+fib(4)
+  ├─ fib(3)
+  │    ├─ fib(2)
+  │    │    ├─ fib(1) = 1
+  │    │    └─ fib(0) = 0   → fib(2) = 1
+  │    └─ fib(1) = 1        → fib(3) = 2
+  └─ fib(2)
+       ├─ fib(1) = 1
+       └─ fib(0) = 0        → fib(2) = 1
+
+fib(4) = 2 + 1 = 3
+</pre>
+
+  <div class="callout warning">⚠️ The naive recursive Fibonacci is O(2ⁿ) — it recalculates the same values repeatedly. For fib(50) it makes over a trillion calls. Use a loop or memoisation for real use.</div>
+
+  <h2>Danger: Stack Overflow</h2>
+  <p>Java's call stack has a limited size. If recursion goes too deep (typically beyond ~10,000 levels), you get a <code>StackOverflowError</code>. This is almost always caused by a missing or unreachable base case.</p>
+
+  <pre><code class="language-java">// BROKEN — goes -1, -2, -3 ... forever for negative input
+int brokenFactorial(int n) {
+    if (n == 0) return 1;
+    return n * brokenFactorial(n - 1);
+}
+
+// FIXED — guard handles 0 and negative
+int safeFactorial(int n) {
+    if (n <= 0) return 1;
+    return n * safeFactorial(n - 1);
+}
+</code></pre>
+
+  <h2>Recursion vs Loops</h2>
+  <p>Anything you can do with recursion you can also do with a loop, and vice versa. The choice is about clarity.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr><th>Situation</th><th>Prefer</th><th>Reason</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Simple iteration (sum, max)</td><td>Loop</td><td>Less overhead, easier to read</td></tr>
+      <tr><td>Tree / graph traversal</td><td>Recursion</td><td>Trees are naturally recursive structures</td></tr>
+      <tr><td>Divide and conquer (merge sort)</td><td>Recursion</td><td>Algorithm is naturally recursive</td></tr>
+      <tr><td>Very deep input (n &gt; 10,000)</td><td>Loop</td><td>Avoid StackOverflowError</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Full Working Example</h2>
+  <pre><code class="language-java">public class RecursionDemo {
+
+    static void countdown(int n) {
+        if (n <= 0) {               // base case
+            System.out.println("Blastoff!");
+            return;
+        }
+        System.out.println(n);
+        countdown(n - 1);           // recursive case
+    }
+
+    static int factorial(int n) {
+        if (n <= 0) return 1;
+        return n * factorial(n - 1);
+    }
+
+    static int fibonacci(int n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+
+    public static void main(String[] args) {
+        countdown(5);
+        // Prints: 5, 4, 3, 2, 1, Blastoff!
+
+        System.out.println("5! = " + factorial(5));     // 120
+        System.out.println("fib(8) = " + fibonacci(8)); // 21
+    }
+}
+</code></pre>
+
+  <div class="callout tip">💡 When writing a recursive method, always start by asking: "What is the simplest input this function can receive?" That is your base case. Then ask: "How does the big problem break into a smaller copy of itself?" That is your recursive case.</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Write a recursive method <code>sumDigits(int n)</code> that returns the sum of all digits in a positive integer. For example, <code>sumDigits(1234)</code> should return <code>10</code>. Hint: the last digit is <code>n % 10</code> and the remaining number is <code>n / 10</code>. What is your base case?</p>
+  </div>
+</article>

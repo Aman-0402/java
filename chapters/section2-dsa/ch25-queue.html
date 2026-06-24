@@ -1,1 +1,166 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📘 Section 2 — Java DSA</span>
+    <h1>Chapter 25: Queue</h1>
+    <p class="chapter-intro">A queue is a First-In, First-Out (FIFO) data structure where items are added at the back and removed from the front — just like a ticket counter line.</p>
+  </div>
 
+  <h2>The Ticket Counter Analogy</h2>
+  <p>Imagine a queue at a railway ticket counter. The first person to arrive is the first person to be served. New arrivals join at the back. Nobody cuts in line (ideally). This is exactly how a queue data structure behaves: <strong>first in, first out</strong>.</p>
+
+  <p>The three core operations are:</p>
+  <ul>
+    <li><strong>enqueue (offer)</strong> — add an item to the back of the queue</li>
+    <li><strong>dequeue (poll)</strong> — remove and return the item at the front</li>
+    <li><strong>peek</strong> — look at the front item without removing it</li>
+  </ul>
+
+  <h2>Queue Structure — ASCII Diagram</h2>
+
+<pre>
+After enqueue(A), enqueue(B), enqueue(C):
+
+  FRONT                              BACK
+   │                                  │
+   ▼                                  ▼
+ ┌─────┐     ┌─────┐     ┌─────┐
+ │  A  │ ──► │  B  │ ──► │  C  │
+ └─────┘     └─────┘     └─────┘
+
+poll() → removes A (front), queue becomes [B, C]
+poll() → removes B,          queue becomes [C]
+offer(D) →                   queue becomes [C, D]
+peek()  → returns C (no removal)
+</pre>
+
+  <h2>Implementing a Queue in Java</h2>
+  <p>Java's <code>LinkedList</code> class implements the <code>Queue</code> interface, making it the standard way to create a queue. Use the <code>Queue</code> interface type for the variable declaration.</p>
+
+  <pre><code class="language-java">import java.util.LinkedList;
+import java.util.Queue;
+
+Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+
+// offer() — add to back (returns false if queue is capacity-limited)
+queue.offer("Alice");
+queue.offer("Bob");
+queue.offer("Carol");
+
+// peek() — look at front without removing
+System.out.println(queue.peek()); // Alice
+
+// poll() — remove from front (returns null if empty)
+System.out.println(queue.poll()); // Alice
+System.out.println(queue.poll()); // Bob
+
+System.out.println("Remaining: " + queue); // [Carol]
+System.out.println("Size: " + queue.size()); // 1
+</code></pre>
+
+  <div class="callout tip">💡 Prefer <code>offer()</code> over <code>add()</code> and <code>poll()</code> over <code>remove()</code>. The <code>offer</code>/<code>poll</code>/<code>peek</code> methods return special values (<code>false</code> or <code>null</code>) on failure, while <code>add</code>/<code>remove</code> throw exceptions — the special-value versions are usually easier to work with in loops.</div>
+
+  <h2>Use Cases for Queues</h2>
+  <ul>
+    <li><strong>Print queue</strong> — documents print in the order they were submitted.</li>
+    <li><strong>Task scheduling</strong> — OS processes CPU tasks in queue order.</li>
+    <li><strong>Breadth-First Search (BFS)</strong> — explores a graph level by level using a queue.</li>
+    <li><strong>Customer service simulation</strong> — customers wait in line to be served.</li>
+    <li><strong>Message queues</strong> — systems like Kafka use FIFO queues for event streaming.</li>
+  </ul>
+
+  <h2>Full Example: Ticket Queue Simulation</h2>
+  <p>Simulate a railway ticket counter serving 5 customers. Each customer arrives with a name and the simulation processes them one at a time.</p>
+
+  <h3>Step-by-Step Trace</h3>
+<pre>
+Customers arrive:   [Alice, Bob, Carol, Dave, Eve]  (front → back)
+
+Serve Alice: poll() → "Now serving: Alice"   Queue: [Bob, Carol, Dave, Eve]
+Serve Bob:   poll() → "Now serving: Bob"     Queue: [Carol, Dave, Eve]
+Serve Carol: poll() → "Now serving: Carol"   Queue: [Dave, Eve]
+Serve Dave:  poll() → "Now serving: Dave"    Queue: [Eve]
+Serve Eve:   poll() → "Now serving: Eve"     Queue: []
+
+Queue empty — counter closes.
+</pre>
+
+  <pre><code class="language-java">import java.util.LinkedList;
+import java.util.Queue;
+
+public class TicketQueue {
+
+    public static void main(String[] args) {
+        Queue&lt;String&gt; counter = new LinkedList&lt;&gt;();
+
+        // Customers arrive and join the queue
+        String[] arrivals = {"Alice", "Bob", "Carol", "Dave", "Eve"};
+        for (String name : arrivals) {
+            counter.offer(name);
+            System.out.println(name + " joined the queue. Queue size: " + counter.size());
+        }
+
+        System.out.println("\n--- Counter opens ---");
+
+        // Serve each customer in order
+        while (!counter.isEmpty()) {
+            String customer = counter.poll();
+            System.out.println("Now serving: " + customer);
+
+            // Peek at who is next (if anyone)
+            if (!counter.isEmpty()) {
+                System.out.println("  Next up: " + counter.peek());
+            }
+        }
+
+        System.out.println("\nAll customers served. Counter closes.");
+    }
+}
+</code></pre>
+
+  <h3>Expected Output</h3>
+<pre>
+Alice joined the queue. Queue size: 1
+Bob joined the queue. Queue size: 2
+Carol joined the queue. Queue size: 3
+Dave joined the queue. Queue size: 4
+Eve joined the queue. Queue size: 5
+
+--- Counter opens ---
+Now serving: Alice
+  Next up: Bob
+Now serving: Bob
+  Next up: Carol
+Now serving: Carol
+  Next up: Dave
+Now serving: Dave
+  Next up: Eve
+Now serving: Eve
+
+All customers served. Counter closes.
+</pre>
+
+  <h2>Priority Queue — A Brief Introduction</h2>
+  <p>A regular queue serves everyone in arrival order. A <strong>priority queue</strong> serves the highest-priority item first, regardless of order. Java's <code>PriorityQueue</code> class implements this using a heap internally.</p>
+
+  <pre><code class="language-java">import java.util.PriorityQueue;
+
+// Default: smallest number = highest priority (min-heap)
+PriorityQueue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();
+pq.offer(30);
+pq.offer(10);
+pq.offer(20);
+
+System.out.println(pq.poll()); // 10 — smallest first
+System.out.println(pq.poll()); // 20
+System.out.println(pq.poll()); // 30
+</code></pre>
+
+  <div class="callout info">ℹ️ Priority queues are widely used in Dijkstra's shortest path algorithm, hospital triage systems, and CPU task scheduling. They are covered in depth when you reach graph algorithms.</div>
+
+  <div class="callout warning">⚠️ <code>PriorityQueue</code> in Java does not guarantee the order of elements with equal priority. If you need stable ordering (ties broken by insertion order), you need a custom <code>Comparator</code> that includes a sequence number.</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Modify the ticket queue simulation so that a new customer "Frank" arrives and joins the queue <em>after</em> Alice has already been served but before Bob is served. Add a method <code>printQueue(Queue&lt;String&gt; q)</code> that prints all waiting customers without removing them (hint: iterate with a for-each loop — Queue supports it). How many customers does Frank see ahead of him?</p>
+  </div>
+</article>
