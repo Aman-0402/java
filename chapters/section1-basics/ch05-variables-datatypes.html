@@ -1,1 +1,121 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 5: Variables and Data Types</h1>
+    <p class="chapter-intro">Learn how to store information in your program using variables, and understand the different kinds of data Java can hold.</p>
+  </div>
 
+  <h2>What is a Variable?</h2>
+  <p>Imagine a labelled box. You write a name on the outside of the box (like "age"), and you put a value inside (like <code>25</code>). At any point, you can open the box to look at the value, or replace it with a different value. That is exactly what a variable is in Java — a named container that holds a piece of data.</p>
+
+  <h2>Declaring a Variable</h2>
+  <p>To create a variable in Java, you write the <em>data type</em> first, then the name, then optionally give it a starting value:</p>
+
+  <pre><code class="language-java">public class VariableDemo {
+    public static void main(String[] args) {
+        // Declare and assign in one line
+        int age = 25;
+        double price = 9.99;
+        boolean isStudent = true;
+        char grade = 'A';
+        String name = "Alice";
+
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Price: $" + price);
+        System.out.println("Is student: " + isStudent);
+        System.out.println("Grade: " + grade);
+    }
+}</code></pre>
+
+  <h2>Primitive Data Types</h2>
+  <p>A <em>primitive type</em> stores a simple, raw value directly. Java has eight primitive types, but you will use these four most often as a beginner:</p>
+
+  <table>
+    <thead>
+      <tr><th>Type</th><th>Stores</th><th>Example</th><th>Size</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>int</code></td><td>Whole numbers</td><td><code>int score = 100;</code></td><td>-2 billion to 2 billion</td></tr>
+      <tr><td><code>double</code></td><td>Decimal numbers</td><td><code>double pi = 3.14159;</code></td><td>15+ decimal digits of precision</td></tr>
+      <tr><td><code>boolean</code></td><td>True or false</td><td><code>boolean done = false;</code></td><td><code>true</code> or <code>false</code> only</td></tr>
+      <tr><td><code>char</code></td><td>One character</td><td><code>char letter = 'Z';</code></td><td>Any single Unicode character</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">💡 Notice that <code>char</code> values use <em>single</em> quotes (<code>'A'</code>), while text strings use <em>double</em> quotes (<code>"Hello"</code>). Mixing them up is a very common mistake.</div>
+
+  <h2>The String Type</h2>
+  <p><code>String</code> is different from the primitives above — it is a <em>reference type</em>, meaning it is actually an object (a complex thing built from many parts). But you can use it almost the same way as a primitive. A <code>String</code> holds any sequence of characters — words, sentences, even numbers stored as text.</p>
+
+  <pre><code class="language-java">public class StringDemo {
+    public static void main(String[] args) {
+        String firstName = "Bob";
+        String lastName = "Smith";
+
+        // Join (concatenate) strings with +
+        String fullName = firstName + " " + lastName;
+        System.out.println("Full name: " + fullName);
+
+        // String length
+        System.out.println("Length: " + fullName.length());
+
+        // Convert to uppercase
+        System.out.println("Uppercase: " + fullName.toUpperCase());
+    }
+}</code></pre>
+
+  <h2>Declaring vs Assigning vs Reassigning</h2>
+  <p><em>Declaring</em> means creating the box (telling Java the type and name). <em>Assigning</em> means putting a value in the box. <em>Reassigning</em> means replacing the value with a new one.</p>
+
+  <pre><code class="language-java">public class ReassignDemo {
+    public static void main(String[] args) {
+        int count;           // Declare (box is empty)
+        count = 0;           // Assign (put 0 in the box)
+        count = count + 1;   // Reassign (replace with current value + 1)
+        System.out.println(count); // prints 1
+
+        count = 10;
+        System.out.println(count); // prints 10
+    }
+}</code></pre>
+
+  <div class="callout warning">⚠️ You cannot use a variable before assigning it a value. <code>int x; System.out.println(x);</code> will give a compiler error: "variable x might not have been initialized."</div>
+
+  <h2>The <code>var</code> Keyword (Java 10+)</h2>
+  <p>Since Java 10, you can use <code>var</code> instead of writing the type explicitly. Java will figure out the type automatically by looking at the value you assign. This is called <em>type inference</em>.</p>
+
+  <pre><code class="language-java">public class VarDemo {
+    public static void main(String[] args) {
+        var score = 95;          // Java infers: int
+        var temperature = 36.6;  // Java infers: double
+        var city = "London";     // Java infers: String
+        var active = true;       // Java infers: boolean
+
+        System.out.println(city + ": " + temperature + " degrees");
+    }
+}</code></pre>
+
+  <div class="callout info">ℹ️ <code>var</code> does NOT make Java loosely typed. The type is still fixed at the moment you declare the variable — Java just figures it out for you so you don't have to type it. You cannot change the type later (e.g., store a <code>String</code> in a variable that started as an <code>int</code>).</div>
+
+  <h2>Naming Conventions</h2>
+  <p>Java variable names follow <em>camelCase</em>: start with a lowercase letter, and capitalise the first letter of every subsequent word. No spaces, no hyphens.</p>
+
+  <pre><code class="language-java">// Good names (camelCase)
+int studentAge = 20;
+double accountBalance = 1500.75;
+boolean isEmailVerified = false;
+String userFirstName = "Maria";
+
+// Bad names (avoid these)
+int StudentAge = 20;    // starts with uppercase (that's for class names)
+double account_balance; // underscores are for constants, not variables
+int 2fast;              // cannot start with a number</code></pre>
+
+  <div class="callout tip">💡 Choose meaningful names. <code>int age</code> is clear; <code>int a</code> is mysterious. Future-you (and any teammate) will thank you when reading the code weeks later.</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Write a program called <code>PersonProfile.java</code> that stores the following information about a person: their name (<code>String</code>), age (<code>int</code>), height in metres (<code>double</code>), first initial (<code>char</code>), and whether they are employed (<code>boolean</code>). Then print all five values using <code>System.out.println</code>. Try using <code>var</code> for at least two of the variables.</p>
+  </div>
+</article>

@@ -1,1 +1,145 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 6: Operators</h1>
+    <p class="chapter-intro">Learn how to perform calculations, make comparisons, and combine conditions using Java's built-in operators.</p>
+  </div>
 
+  <h2>What is an Operator?</h2>
+  <p>An operator is a symbol that tells Java to perform a specific action on one or more values. Think of operators like the buttons on a calculator — <code>+</code> adds two numbers, <code>-</code> subtracts them. Java has operators for maths, for comparing values, for combining true/false conditions, and more.</p>
+
+  <h2>Arithmetic Operators</h2>
+  <p>These are the ones you know from school maths, plus one new one: the modulus operator <code>%</code>.</p>
+
+  <pre><code class="language-java">public class ArithmeticDemo {
+    public static void main(String[] args) {
+        int a = 17;
+        int b = 5;
+
+        System.out.println(a + b);  // 22  — addition
+        System.out.println(a - b);  // 12  — subtraction
+        System.out.println(a * b);  // 85  — multiplication
+        System.out.println(a / b);  // 3   — integer division (see warning below!)
+        System.out.println(a % b);  // 2   — remainder (17 = 3*5 + 2)
+    }
+}</code></pre>
+
+  <h3>The Integer Division Gotcha</h3>
+  <p>When you divide two <code>int</code> values, Java throws away the decimal part and returns only the whole number. This surprises almost every beginner.</p>
+
+  <pre><code class="language-java">public class DivisionGotcha {
+    public static void main(String[] args) {
+        int x = 7;
+        int y = 2;
+        System.out.println(x / y);      // prints 3, NOT 3.5
+
+        // Fix: use double (or cast one value to double)
+        double result = (double) x / y;
+        System.out.println(result);     // prints 3.5
+    }
+}</code></pre>
+
+  <div class="callout warning">⚠️ <code>7 / 2</code> in Java gives <code>3</code>, not <code>3.5</code>. If you need decimal results, make at least one of the numbers a <code>double</code>, either by declaring it as <code>double</code> or by writing <code>(double) x</code> to cast it.</div>
+
+  <h3>The Modulus Operator <code>%</code></h3>
+  <p>The <code>%</code> operator gives you the <em>remainder</em> after division. It sounds obscure, but it has many practical uses: checking if a number is even or odd, looping back around a range, checking divisibility.</p>
+
+  <pre><code class="language-java">public class ModulusDemo {
+    public static void main(String[] args) {
+        System.out.println(10 % 3);  // 1 (10 = 3*3 + 1)
+        System.out.println(12 % 4);  // 0 (12 divides evenly by 4)
+        System.out.println(9 % 2);   // 1 (9 is odd, any odd number % 2 = 1)
+        System.out.println(8 % 2);   // 0 (8 is even, any even number % 2 = 0)
+    }
+}</code></pre>
+
+  <h2>Assignment Operators</h2>
+  <p>You already know <code>=</code> (assign a value). The compound assignment operators are shortcuts that combine a maths operation with assignment.</p>
+
+  <pre><code class="language-java">public class AssignmentDemo {
+    public static void main(String[] args) {
+        int score = 10;
+
+        score += 5;   // same as: score = score + 5;  -> 15
+        score -= 3;   // same as: score = score - 3;  -> 12
+        score *= 2;   // same as: score = score * 2;  -> 24
+        score /= 4;   // same as: score = score / 4;  -> 6
+        score %= 4;   // same as: score = score % 4;  -> 2
+
+        System.out.println(score); // 2
+
+        // Increment and decrement shortcuts
+        score++;  // same as score = score + 1
+        score--;  // same as score = score - 1
+        System.out.println(score); // 2
+    }
+}</code></pre>
+
+  <div class="callout tip">💡 <code>i++</code> (increment) and <code>i--</code> (decrement) are used so often in loops that they became their own operators. You will see them constantly in <code>for</code> loops in the next chapter.</div>
+
+  <h2>Comparison Operators</h2>
+  <p>Comparison operators compare two values and return a <code>boolean</code> — either <code>true</code> or <code>false</code>. They are the building blocks of decisions in your code.</p>
+
+  <pre><code class="language-java">public class ComparisonDemo {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 20;
+
+        System.out.println(a == b);  // false — equal to
+        System.out.println(a != b);  // true  — not equal to
+        System.out.println(a > b);   // false — greater than
+        System.out.println(a < b);   // true  — less than
+        System.out.println(a >= 10); // true  — greater than or equal to
+        System.out.println(a <= 9);  // false — less than or equal to
+    }
+}</code></pre>
+
+  <div class="callout warning">⚠️ <code>=</code> and <code>==</code> are completely different! <code>=</code> assigns a value (<code>x = 5</code> puts 5 into x). <code>==</code> checks if two values are equal (<code>x == 5</code> asks "is x equal to 5?"). Confusing them is one of the most common beginner bugs.</div>
+
+  <h2>Logical Operators</h2>
+  <p>Logical operators let you combine multiple conditions. Think of them like "AND", "OR", and "NOT" in plain English.</p>
+
+  <pre><code class="language-java">public class LogicalDemo {
+    public static void main(String[] args) {
+        int age = 20;
+        boolean hasTicket = true;
+
+        // && (AND) — both conditions must be true
+        System.out.println(age >= 18 && hasTicket);   // true (is adult AND has ticket)
+
+        // || (OR) — at least one condition must be true
+        System.out.println(age >= 18 || hasTicket);   // true
+
+        // ! (NOT) — flips true to false and vice versa
+        System.out.println(!hasTicket);               // false
+
+        // Practical example: can this person enter a concert?
+        boolean canEnter = age >= 18 && hasTicket;
+        System.out.println("Can enter: " + canEnter); // Can enter: true
+    }
+}</code></pre>
+
+  <h2>The Ternary Operator</h2>
+  <p>The ternary operator is a compact way to write a simple if-else decision in a single line. The name "ternary" means it takes three parts: a condition, a value if true, and a value if false.</p>
+
+  <pre><code class="language-java">public class TernaryDemo {
+    public static void main(String[] args) {
+        int temperature = 28;
+
+        // Syntax: condition ? valueIfTrue : valueIfFalse
+        String weather = temperature > 25 ? "Hot" : "Cool";
+        System.out.println("It is: " + weather); // It is: Hot
+
+        int score = 72;
+        String result = score >= 50 ? "Pass" : "Fail";
+        System.out.println("Result: " + result); // Result: Pass
+    }
+}</code></pre>
+
+  <div class="callout info">ℹ️ The ternary operator is great for short, simple decisions. But if your condition or values are complex, use a full <code>if-else</code> statement instead — readability matters more than brevity.</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Write a program called <code>OperatorPractice.java</code>. Store two integers (your choice of values) in variables <code>x</code> and <code>y</code>. Print the result of every arithmetic operator (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>) applied to them. Then use a comparison operator to print whether <code>x</code> is greater than <code>y</code>. Finally, use the ternary operator to print "x wins" if <code>x &gt; y</code>, or "y wins" otherwise.</p>
+  </div>
+</article>

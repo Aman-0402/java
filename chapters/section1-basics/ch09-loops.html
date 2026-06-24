@@ -1,1 +1,155 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 9: Loops</h1>
+    <p class="chapter-intro">Stop repeating yourself — let Java do the repetitive work by executing a block of code over and over until a condition is met.</p>
+  </div>
 
+  <h2>Why Loops Exist</h2>
+  <p>Imagine you need to print "Good morning!" 1000 times. Writing 1000 <code>println</code> statements would be absurd. A loop solves this by running the same block of code repeatedly. The key principle programmers live by: <strong>Don't Repeat Yourself (DRY)</strong>. Loops are the most direct way to honour that principle.</p>
+
+  <h2>The <code>for</code> Loop</h2>
+  <p>Use a <code>for</code> loop when you know exactly how many times you want to repeat something. It has three parts in the parentheses, separated by semicolons:</p>
+  <ol>
+    <li><strong>Initialise</strong> — run once before the loop starts (e.g., <code>int i = 0</code>)</li>
+    <li><strong>Condition</strong> — checked before each iteration; loop stops when false (e.g., <code>i &lt; 5</code>)</li>
+    <li><strong>Update</strong> — runs after each iteration (e.g., <code>i++</code>)</li>
+  </ol>
+
+  <pre><code class="language-java">public class ForLoopDemo {
+    public static void main(String[] args) {
+        // Print 0, 1, 2, 3, 4
+        for (int i = 0; i < 5; i++) {
+            System.out.println("i = " + i);
+        }
+
+        // Count down
+        for (int n = 10; n >= 1; n--) {
+            System.out.print(n + " ");
+        }
+        System.out.println("Blast off!");
+
+        // Step by 2
+        for (int even = 0; even <= 10; even += 2) {
+            System.out.print(even + " ");  // 0 2 4 6 8 10
+        }
+    }
+}</code></pre>
+
+  <div class="callout tip">💡 The variable <code>i</code> in a <code>for</code> loop is called the <em>loop counter</em> or <em>index</em>. By convention, short names like <code>i</code>, <code>j</code>, <code>k</code> are perfectly fine inside loops — everyone reading Java code knows what they mean.</div>
+
+  <h2>The <code>while</code> Loop</h2>
+  <p>A <code>while</code> loop keeps running as long as a condition is <code>true</code>. Use it when you don't know in advance how many times you need to loop — for example, repeating until the user enters valid input.</p>
+
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class WhileDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int number = 0;
+
+        while (number <= 0) {
+            System.out.print("Enter a positive number: ");
+            number = sc.nextInt();
+            if (number <= 0) {
+                System.out.println("That's not positive. Try again.");
+            }
+        }
+
+        System.out.println("You entered: " + number);
+        sc.close();
+    }
+}</code></pre>
+
+  <div class="callout warning">⚠️ The infinite loop trap: if the condition never becomes <code>false</code>, the loop runs forever and freezes your program. Always make sure something inside your loop eventually makes the condition <code>false</code>. If your program seems frozen, press <code>Ctrl+C</code> in the terminal to stop it.</div>
+
+  <h2>The <code>do-while</code> Loop</h2>
+  <p>A <code>do-while</code> loop is like a <code>while</code> loop, but it runs the body <em>at least once</em> before checking the condition. This is useful when you always need to execute the block once (like showing a menu to the user).</p>
+
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class DoWhileDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("Menu: 1=Play  2=Settings  3=Quit");
+            System.out.print("Your choice: ");
+            choice = sc.nextInt();
+        } while (choice != 3);  // keep looping until user picks Quit
+
+        System.out.println("Goodbye!");
+        sc.close();
+    }
+}</code></pre>
+
+  <h2><code>break</code> and <code>continue</code></h2>
+  <p><code>break</code> exits the loop immediately. <code>continue</code> skips the rest of the current iteration and jumps to the next one.</p>
+
+  <pre><code class="language-java">public class BreakContinueDemo {
+    public static void main(String[] args) {
+        // break: stop as soon as we find 7
+        for (int i = 1; i <= 10; i++) {
+            if (i == 7) {
+                System.out.println("Found 7, stopping.");
+                break;  // exits the loop
+            }
+            System.out.print(i + " ");
+        }
+        // Output: 1 2 3 4 5 6 Found 7, stopping.
+
+        System.out.println();
+
+        // continue: skip odd numbers, only print evens
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 != 0) {
+                continue;  // skip this iteration
+            }
+            System.out.print(i + " ");
+        }
+        // Output: 2 4 6 8 10
+    }
+}</code></pre>
+
+  <h2>The For-Each Loop (Preview)</h2>
+  <p>Java also has a <code>for-each</code> loop (officially called the <em>enhanced for loop</em>) designed for reading through collections and arrays. You will use it extensively in the next chapter on arrays. Here is a quick preview:</p>
+
+  <pre><code class="language-java">public class ForEachPreview {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40, 50};
+
+        for (int num : numbers) {  // "for each num in numbers"
+            System.out.println(num);
+        }
+    }
+}</code></pre>
+
+  <h2>Nested Loops</h2>
+  <p>You can put a loop inside another loop. The inner loop completes all its iterations for each single iteration of the outer loop. A classic example: printing a multiplication table.</p>
+
+  <pre><code class="language-java">public class NestedLoops {
+    public static void main(String[] args) {
+        // Print a 3x3 multiplication table
+        for (int row = 1; row <= 3; row++) {
+            for (int col = 1; col <= 3; col++) {
+                System.out.printf("%4d", row * col);
+            }
+            System.out.println(); // new line after each row
+        }
+        // Output:
+        //    1   2   3
+        //    2   4   6
+        //    3   6   9
+    }
+}</code></pre>
+
+  <div class="callout info">ℹ️ For each iteration of the outer loop (row), the inner loop (col) runs 3 times. So the total number of iterations is 3 x 3 = 9. Be careful with nested loops on large numbers — the iteration count multiplies quickly.</div>
+
+  <div class="callout warning">⚠️ Common infinite loop patterns to avoid: <code>while (true) { }</code> without a <code>break</code>, or a <code>for</code> loop where the update goes in the wrong direction (e.g., <code>for (int i = 0; i &lt; 10; i--)</code> counts down from 0, never reaching 10).</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Write a program called <code>NumberGuess.java</code>. Pick a secret number (hardcode it as a variable, e.g. <code>int secret = 42</code>). Use a <code>while</code> loop and <code>Scanner</code> to keep asking the user to guess until they get it right. After each wrong guess, print "Too high!" or "Too low!" to help them. When they guess correctly, print how many attempts it took.</p>
+  </div>
+</article>

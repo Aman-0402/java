@@ -1,1 +1,162 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 8: If-Else and Switch Statements</h1>
+    <p class="chapter-intro">Give your program the ability to make decisions — run different code depending on whether a condition is true or false.</p>
+  </div>
 
+  <h2>Why Decisions Matter</h2>
+  <p>Imagine a vending machine. When you press a button it checks: "Does this item exist? Is the price correct? Is there stock?" Different answers lead to different actions. Programs work the same way — they constantly check conditions and branch into different paths. Java provides <code>if</code>, <code>else</code>, and <code>switch</code> for exactly this.</p>
+
+  <h2>The <code>if</code> Statement</h2>
+  <p>An <code>if</code> statement runs a block of code only when a condition is <code>true</code>. If the condition is <code>false</code>, the block is skipped entirely.</p>
+
+  <pre><code class="language-java">public class IfDemo {
+    public static void main(String[] args) {
+        int temperature = 35;
+
+        if (temperature > 30) {
+            System.out.println("It's hot outside — drink water!");
+        }
+
+        System.out.println("Program continues here regardless.");
+    }
+}</code></pre>
+
+  <h2>The <code>if-else</code> Statement</h2>
+  <p>Add an <code>else</code> block to handle the case when the condition is <code>false</code>. Exactly one of the two blocks will always run.</p>
+
+  <pre><code class="language-java">public class IfElseDemo {
+    public static void main(String[] args) {
+        int age = 16;
+
+        if (age >= 18) {
+            System.out.println("You can vote.");
+        } else {
+            System.out.println("You are too young to vote.");
+        }
+    }
+}</code></pre>
+
+  <h2>The <code>if-else if</code> Chain</h2>
+  <p>When you have more than two possible paths, chain multiple conditions using <code>else if</code>. Java checks them in order and runs the first one that is true. The final <code>else</code> is a catch-all that runs if none of the conditions matched.</p>
+
+  <pre><code class="language-java">public class GradeCalculator {
+    public static void main(String[] args) {
+        int score = 74;
+        String grade;
+
+        if (score >= 90) {
+            grade = "A";
+        } else if (score >= 80) {
+            grade = "B";
+        } else if (score >= 70) {
+            grade = "C";
+        } else if (score >= 60) {
+            grade = "D";
+        } else {
+            grade = "F";
+        }
+
+        System.out.println("Score: " + score + " -> Grade: " + grade);
+        // Output: Score: 74 -> Grade: C
+    }
+}</code></pre>
+
+  <div class="callout tip">💡 Conditions are checked top to bottom. Once one matches, Java skips the rest. So you don't need to write <code>score >= 70 && score &lt; 80</code> — just <code>score >= 70</code> is enough because if score were 80 or above, a previous condition would have already matched.</div>
+
+  <h2>Nested <code>if</code> Statements</h2>
+  <p>You can place an <code>if</code> inside another <code>if</code>. This is called nesting. Use it when one decision depends on the result of another.</p>
+
+  <pre><code class="language-java">public class NestingDemo {
+    public static void main(String[] args) {
+        boolean hasTicket = true;
+        int age = 20;
+
+        if (hasTicket) {
+            if (age >= 18) {
+                System.out.println("Welcome to the event!");
+            } else {
+                System.out.println("Sorry, this event is 18+.");
+            }
+        } else {
+            System.out.println("You need a ticket to enter.");
+        }
+    }
+}</code></pre>
+
+  <div class="callout warning">⚠️ Don't nest more than 2–3 levels deep. Deeply nested code becomes hard to read. If you find yourself nesting 4+ levels, look for ways to simplify using methods or combined conditions with <code>&amp;&amp;</code>.</div>
+
+  <h2>The Switch Statement</h2>
+  <p>A <code>switch</code> statement is like a list of labelled doors. You give it a value, and it opens the matching door. It works well when you have one variable with many possible exact values (like a day of the week or a menu choice).</p>
+
+  <pre><code class="language-java">public class DayOfWeek {
+    public static void main(String[] args) {
+        int day = 3; // 1=Monday, 2=Tuesday, ...
+
+        switch (day) {
+            case 1:
+                System.out.println("Monday — start of the week");
+                break;
+            case 2:
+                System.out.println("Tuesday");
+                break;
+            case 3:
+                System.out.println("Wednesday — middle of the week");
+                break;
+            case 4:
+                System.out.println("Thursday");
+                break;
+            case 5:
+                System.out.println("Friday — almost the weekend!");
+                break;
+            case 6:
+            case 7:
+                System.out.println("Weekend!");  // cases 6 and 7 share this output
+                break;
+            default:
+                System.out.println("Invalid day number");
+        }
+    }
+}</code></pre>
+
+  <div class="callout warning">⚠️ Do not forget <code>break</code> at the end of each case! Without it, Java will "fall through" and execute the next case's code too, which is almost never what you want. This is one of the most famous bugs in Java history.</div>
+
+  <h2>Switch Expression (Java 14+)</h2>
+  <p>Modern Java introduced a cleaner switch syntax using <code>-></code> (arrow). It does not fall through, so you don't need <code>break</code>. It can also return a value directly.</p>
+
+  <pre><code class="language-java">public class ModernSwitch {
+    public static void main(String[] args) {
+        int day = 6;
+
+        String type = switch (day) {
+            case 1, 2, 3, 4, 5 -> "Weekday";
+            case 6, 7           -> "Weekend";
+            default             -> "Unknown";
+        };
+
+        System.out.println("Day " + day + " is a: " + type);
+        // Output: Day 6 is a: Weekend
+    }
+}</code></pre>
+
+  <div class="callout tip">💡 The switch expression (with <code>-></code>) is cleaner and less error-prone than the traditional switch statement (with <code>break</code>). If you are using Java 14 or newer, prefer the arrow syntax.</div>
+
+  <h2>The <code>=</code> vs <code>==</code> Trap in Conditions</h2>
+  <p>This cannot be repeated enough. In a condition inside <code>if ( ... )</code>, you almost always want <code>==</code> to compare, not <code>=</code> to assign.</p>
+
+  <pre><code class="language-java">int x = 5;
+
+// WRONG - assigns 10 to x, condition is always true
+if (x = 10) { ... }     // compiler error in Java (unlike C/C++)
+
+// CORRECT - compares x to 10
+if (x == 10) { ... }    // returns true or false</code></pre>
+
+  <div class="callout info">ℹ️ Java's compiler actually protects you here — using a single <code>=</code> inside an <code>if</code> condition causes a compile error (because an assignment doesn't return a boolean). But the habit of telling them apart matters greatly in other languages and in other contexts.</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Write a program called <code>SeasonChecker.java</code>. Ask the user to type a month number (1-12). Use an <code>if-else if</code> chain to print the season: December, January, February = Winter; March, April, May = Spring; June, July, August = Summer; September, October, November = Autumn. Then rewrite the same logic using a switch expression. Compare both versions.</p>
+  </div>
+</article>

@@ -1,1 +1,108 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 4: Hello, World! — Anatomy of a Java Program</h1>
+    <p class="chapter-intro">Dissect every single word of the classic Hello World program so you know exactly why each piece is there and what happens when you run it.</p>
+  </div>
 
+  <h2>The Full Program</h2>
+  <p>Here is the program you will write. Do not worry if it looks like a wall of words right now — by the end of this chapter, every word will make sense.</p>
+
+  <pre><code class="language-java">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre>
+
+  <h2>What is a Class?</h2>
+  <p>Imagine a class as a blueprint. A house blueprint is not a house — it describes how a house should be built. Similarly, a Java class is a blueprint that describes a piece of your program. Every piece of Java code must live inside a class. Right now, your entire program is one class called <code>HelloWorld</code>.</p>
+  <p>The keyword <code>public</code> before <code>class</code> means "anyone can see and use this class." You will learn more about <code>public</code> vs <code>private</code> in the Object-Oriented chapters. For now, just always write <code>public class</code>.</p>
+
+  <div class="callout warning">⚠️ The class name must exactly match the filename. If your class is named <code>HelloWorld</code>, the file must be saved as <code>HelloWorld.java</code> — same capitalisation, no spaces. Java is case-sensitive: <code>helloworld</code> and <code>HelloWorld</code> are completely different names.</div>
+
+  <h2>Breaking Down <code>public static void main(String[] args)</code></h2>
+  <p>This line is called the <em>main method signature</em>. It is the entry point — the starting line of your program. When you run a Java program, the Java runtime looks for exactly this line and begins executing from there. Let's decode each word:</p>
+
+  <table>
+    <thead>
+      <tr><th>Word</th><th>What it means</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>public</code></td><td>Any code, anywhere, can call this method — including the Java runtime itself.</td></tr>
+      <tr><td><code>static</code></td><td>This method belongs to the class itself, not to an object created from the class. The runtime can call it without creating a <code>HelloWorld</code> object first.</td></tr>
+      <tr><td><code>void</code></td><td>This method does not return any value when it finishes. (Some methods return a number or text; this one just runs and stops.)</td></tr>
+      <tr><td><code>main</code></td><td>The name the Java runtime specifically looks for as the entry point. It must be spelled exactly <code>main</code> in lowercase.</td></tr>
+      <tr><td><code>String[] args</code></td><td>A list (array) of text values you can pass in when you run the program from the terminal. Beginners rarely use this, but it must still be there.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">ℹ️ You do not need to memorise why every word is there right now. Just accept the whole line as a magic phrase you type every time you start a new Java program. The understanding will build naturally over the next few chapters.</div>
+
+  <h2>What Does <code>System.out.println()</code> Do?</h2>
+  <p>Think of it as a walkie-talkie that sends messages to your screen. Breaking it down:</p>
+  <ul>
+    <li><code>System</code> — a built-in Java class that represents your computer's system resources.</li>
+    <li><code>out</code> — the "output channel" of that system (the screen/terminal).</li>
+    <li><code>println</code> — short for "print line." It prints whatever you put inside the parentheses, then moves to a new line.</li>
+  </ul>
+  <p>The difference between <code>println</code> and <code>print</code>:</p>
+
+  <pre><code class="language-java">public class PrintDemo {
+    public static void main(String[] args) {
+        System.out.println("Line 1");  // prints then moves to next line
+        System.out.println("Line 2");  // prints on a new line
+        System.out.print("No ");       // prints, but stays on same line
+        System.out.print("newline!");  // continues on same line
+    }
+}</code></pre>
+
+  <p>Output:</p>
+  <pre><code>Line 1
+Line 2
+No newline!</code></pre>
+
+  <h2>Compiling and Running — What Actually Happens</h2>
+  <p>Java uses a two-step process before your code runs:</p>
+  <ol>
+    <li><strong>Compile</strong> — <code>javac HelloWorld.java</code> reads your human-readable code and translates it into <em>bytecode</em> (a file called <code>HelloWorld.class</code>). Bytecode is not machine code — it is a special format designed to run on the Java Virtual Machine (JVM).</li>
+    <li><strong>Run</strong> — <code>java HelloWorld</code> starts the JVM, which reads the <code>.class</code> file and actually executes your program.</li>
+  </ol>
+
+  <pre><code class="language-java">// Compile in terminal:  javac HelloWorld.java  -> creates HelloWorld.class
+// Run in terminal:      java HelloWorld         -> JVM executes HelloWorld.class
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre>
+
+  <div class="callout tip">💡 This two-step process is why Java programs run on any operating system without change. The <code>.class</code> bytecode is the same on Windows, macOS, and Linux. The JVM on each platform handles the differences — that is what "Write Once, Run Anywhere" means.</div>
+
+  <h2>Common Errors and What They Mean</h2>
+
+  <h3>Error 1 — Wrong filename</h3>
+  <pre><code class="language-java">// File is saved as helloworld.java, but class name is HelloWorld
+public class HelloWorld { }
+// Compiler error: class HelloWorld is public, should be declared in a file named HelloWorld.java</code></pre>
+
+  <h3>Error 2 — Missing semicolon</h3>
+  <pre><code class="language-java">System.out.println("Hello")   // no semicolon!
+// Compiler error: ';' expected</code></pre>
+  <p>Every statement in Java must end with a semicolon <code>;</code> — think of it as a full stop (period) at the end of a sentence.</p>
+
+  <h3>Error 3 — Mismatched curly braces</h3>
+  <pre><code class="language-java">public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+// Missing closing } for the class block
+// Compiler error: reached end of file while parsing</code></pre>
+
+  <div class="callout warning">⚠️ Every opening brace <code>{</code> must have a matching closing brace <code>}</code>. Count your braces! VS Code highlights matching brackets when your cursor is next to one — use that to check.</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Create a file called <code>AboutMe.java</code> and write a program that prints three lines: your name, your favourite programming language, and one fun fact about yourself. Compile it with <code>javac AboutMe.java</code> and run it with <code>java AboutMe</code>. Then deliberately delete one semicolon and try to compile again — read the error message carefully so you recognise it next time.</p>
+  </div>
+</article>

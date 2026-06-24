@@ -1,1 +1,155 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 7: Input and Output</h1>
+    <p class="chapter-intro">Make your programs interactive by reading text that the user types into the terminal, and displaying results back to the screen.</p>
+  </div>
 
+  <h2>Output You Already Know</h2>
+  <p>You have been using <code>System.out.println</code> since Chapter 4. Let's quickly recap the output methods before moving to input:</p>
+
+  <pre><code class="language-java">public class OutputDemo {
+    public static void main(String[] args) {
+        System.out.println("This prints and moves to a new line.");
+        System.out.print("This prints ");
+        System.out.print("on the same line.\n");   // \n = manual new line
+        System.out.printf("Formatted: name=%s, age=%d, score=%.2f%n",
+                          "Alice", 22, 95.678);
+        // Output: Formatted: name=Alice, age=22, score=95.68
+    }
+}</code></pre>
+
+  <div class="callout info">ℹ️ <code>printf</code> stands for "print formatted." The placeholders work like this: <code>%s</code> = String, <code>%d</code> = integer, <code>%f</code> = decimal (add <code>.2</code> before <code>f</code> to show 2 decimal places). <code>%n</code> is a portable newline.</div>
+
+  <h2>Reading Input — The Scanner Class</h2>
+  <p>Imagine a scanner at a supermarket checkout — you wave the barcode in front of it, and it reads the information. Java's <code>Scanner</code> class works the same way: it reads whatever the user types at the keyboard and hands it to your program.</p>
+
+  <p>To use <code>Scanner</code>, you need to do two things:</p>
+  <ol>
+    <li><strong>Import</strong> it at the top of your file — this tells Java where to find the Scanner code.</li>
+    <li><strong>Create</strong> a Scanner object attached to <code>System.in</code> (the keyboard).</li>
+  </ol>
+
+  <pre><code class="language-java">import java.util.Scanner;  // Step 1: import at the very top of the file
+
+public class ScannerIntro {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);  // Step 2: create the scanner
+
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();           // reads a full line of text
+
+        System.out.println("Hello, " + name + "!");
+
+        scanner.close(); // good practice: close when done
+    }
+}</code></pre>
+
+  <h2>Reading Different Data Types</h2>
+  <p>Scanner has different methods for reading different types of data:</p>
+
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class ReadingTypes {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a whole number: ");
+        int number = sc.nextInt();        // reads one integer
+
+        System.out.print("Enter a decimal: ");
+        double decimal = sc.nextDouble(); // reads a double
+
+        System.out.print("Enter true or false: ");
+        boolean flag = sc.nextBoolean();  // reads a boolean
+
+        System.out.println("You entered: " + number + ", " + decimal + ", " + flag);
+
+        sc.close();
+    }
+}</code></pre>
+
+  <table>
+    <thead>
+      <tr><th>Method</th><th>Reads</th><th>Example input</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>nextLine()</code></td><td>A full line of text (including spaces)</td><td><code>Hello World</code></td></tr>
+      <tr><td><code>next()</code></td><td>One word (stops at a space)</td><td><code>Hello</code></td></tr>
+      <tr><td><code>nextInt()</code></td><td>One integer</td><td><code>42</code></td></tr>
+      <tr><td><code>nextDouble()</code></td><td>One decimal number</td><td><code>3.14</code></td></tr>
+      <tr><td><code>nextBoolean()</code></td><td>true or false</td><td><code>true</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>The Scanner Pitfall: <code>nextInt()</code> Followed by <code>nextLine()</code></h2>
+  <p>This is one of the most common bugs beginners hit. When you call <code>nextInt()</code>, Scanner reads the number but leaves the newline character (the Enter key press) sitting in the input buffer. The very next <code>nextLine()</code> call reads that leftover newline instead of waiting for you to type something new. Your program seems to skip the question entirely.</p>
+
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class ScannerBug {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter your age: ");
+        int age = sc.nextInt();
+
+        // BUG: this nextLine() will immediately read the leftover newline
+        // from after the age, so the name question gets skipped!
+        System.out.print("Enter your name: ");
+        String name = sc.nextLine();  // reads "" (empty string) immediately
+
+        System.out.println("Age: " + age + ", Name: '" + name + "'");
+        // Output: Age: 25, Name: ''   <-- name is empty!
+
+        sc.close();
+    }
+}</code></pre>
+
+  <div class="callout warning">⚠️ The fix: add an extra <code>sc.nextLine();</code> immediately after <code>nextInt()</code> (or <code>nextDouble()</code>) to consume the leftover newline, then call <code>nextLine()</code> again to read the actual input.</div>
+
+  <h2>Complete Example — Name and Age Program</h2>
+
+  <pre><code class="language-java">import java.util.Scanner;
+
+public class NameAndAge {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter your age: ");
+        int age = sc.nextInt();
+        sc.nextLine(); // consume the leftover newline after nextInt()
+
+        System.out.print("Enter your full name: ");
+        String name = sc.nextLine(); // now correctly waits for input
+
+        System.out.print("Enter your city: ");
+        String city = sc.nextLine();
+
+        System.out.println("-----------------------------");
+        System.out.println("Name : " + name);
+        System.out.println("Age  : " + age);
+        System.out.println("City : " + city);
+        System.out.println("In 10 years you will be " + (age + 10));
+
+        sc.close();
+    }
+}</code></pre>
+
+  <p>Sample run:</p>
+  <pre><code>Enter your age: 22
+Enter your full name: Alice Johnson
+Enter your city: New York
+-----------------------------
+Name : Alice Johnson
+Age  : 22
+City : New York
+In 10 years you will be 32</code></pre>
+
+  <div class="callout tip">💡 Always <code>close()</code> your Scanner when you are done with it. It is good programming habit and prevents resource leaks, especially when reading from files (which you will do later).</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Write a program called <code>OrderSummary.java</code> that asks the user for: a product name (<code>String</code>), the quantity (<code>int</code>), and the price per item (<code>double</code>). Calculate and print the total cost (quantity * price). Make sure to handle the newline pitfall correctly if you mix <code>nextInt()</code>/<code>nextDouble()</code> with <code>nextLine()</code>.</p>
+  </div>
+</article>
