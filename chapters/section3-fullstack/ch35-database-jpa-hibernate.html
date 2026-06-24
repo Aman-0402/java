@@ -1,1 +1,130 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📙 Section 3 — Java Full Stack</span>
+    <h1>Chapter 35: Database + JPA / Hibernate</h1>
+    <p class="chapter-intro">Connect your Spring Boot API to a real database using JPA so data persists across server restarts.</p>
+  </div>
 
+  <h2>What is JPA?</h2>
+  <p><strong>JPA</strong> (Java Persistence API) is a standard that lets you save Java objects directly to a database without writing SQL. Instead of writing <code>INSERT INTO todos ...</code>, you call <code>todoRepository.save(todo)</code> and JPA handles the SQL for you.</p>
+  <p><strong>Hibernate</strong> is the most popular implementation of JPA — Spring Boot uses it automatically under the hood.</p>
+
+  <div class="callout info">
+    ℹ️ ORM = Object-Relational Mapping. JPA maps Java classes (objects) to database tables (relations). One class = one table. One field = one column.
+  </div>
+
+  <h2>Step 1: Add Dependencies to pom.xml</h2>
+  <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;!-- H2 in-memory database (great for learning) --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+    &lt;artifactId&gt;h2&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+
+  <h2>Step 2: Configure application.properties</h2>
+  <pre><code class="language-bash"># src/main/resources/application.properties
+
+spring.datasource.url=jdbc:h2:mem:tododb
+spring.datasource.driver-class-name=org.h2.Driver
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+spring.jpa.show-sql=true</code></pre>
+
+  <div class="callout tip">
+    💡 <code>spring.h2.console.enabled=true</code> gives you a web UI at <code>http://localhost:8080/h2-console</code> to inspect your database tables while developing.
+  </div>
+
+  <h2>Step 3: Create the Entity</h2>
+  <p>Add JPA annotations to your <code>Todo</code> class to tell Hibernate how to map it to a database table:</p>
+  <pre><code class="language-java">import jakarta.persistence.*;
+
+@Entity
+@Table(name = "todos")
+public class Todo {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String title;
+
+    private boolean completed;
+
+    public Todo() {}
+
+    // getters and setters (same as before)
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    public boolean isCompleted() { return completed; }
+    public void setCompleted(boolean completed) { this.completed = completed; }
+}</code></pre>
+
+  <h2>Step 4: Create the Repository</h2>
+  <p>Create an interface that extends <code>JpaRepository</code>. You get 15+ free CRUD methods without writing a single line of SQL:</p>
+  <pre><code class="language-java">import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TodoRepository extends JpaRepository&lt;Todo, Long&gt; {
+    // findAll(), findById(), save(), deleteById() — all free!
+}</code></pre>
+
+  <h2>Step 5: Update the Controller</h2>
+  <pre><code class="language-java">import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/todos")
+@CrossOrigin(origins = "*")
+public class TodoController {
+
+    @Autowired
+    private TodoRepository todoRepository;
+
+    @GetMapping
+    public List&lt;Todo&gt; getAll() {
+        return todoRepository.findAll();
+    }
+
+    @PostMapping
+    public Todo create(@RequestBody Todo todo) {
+        return todoRepository.save(todo);
+    }
+
+    @PutMapping("/{id}")
+    public Todo update(@PathVariable Long id, @RequestBody Todo updated) {
+        updated.setId(id);
+        return todoRepository.save(updated);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        todoRepository.deleteById(id);
+    }
+}</code></pre>
+
+  <div class="callout warning">
+    ⚠️ H2 is an in-memory database — data still resets on restart. For production use MySQL or PostgreSQL. Just change the <code>application.properties</code> datasource URL and add the MySQL driver dependency.
+  </div>
+
+  <h2>What JPA Annotations Mean</h2>
+  <ul>
+    <li><code>@Entity</code> — marks this class as a database table</li>
+    <li><code>@Table(name = "todos")</code> — sets the table name</li>
+    <li><code>@Id</code> — marks the primary key field</li>
+    <li><code>@GeneratedValue(strategy = GenerationType.IDENTITY)</code> — auto-increments the id (1, 2, 3...)</li>
+    <li><code>@Column(nullable = false)</code> — adds a NOT NULL constraint to the column</li>
+  </ul>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Add the H2 dependency, annotate your <code>Todo</code> class, create the repository, update your controller. Run the app, create some todos via Postman, then visit <code>http://localhost:8080/h2-console</code> and run <code>SELECT * FROM TODOS</code> to see the data in the database.</p>
+  </div>
+</article>

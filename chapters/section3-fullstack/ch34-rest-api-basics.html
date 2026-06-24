@@ -1,1 +1,127 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📙 Section 3 — Java Full Stack</span>
+    <h1>Chapter 34: REST API Basics</h1>
+    <p class="chapter-intro">Build a full CRUD REST API in Spring Boot — the backend of every modern web application.</p>
+  </div>
 
+  <h2>What is a REST API?</h2>
+  <p>REST stands for <strong>Representational State Transfer</strong>. A REST API is a set of URL endpoints that a client (browser, React app, mobile app) calls to read or change data on the server.</p>
+  <p>Think of a restaurant menu. Each item (URL) tells the kitchen (server) what to do. You don't care how the kitchen works — you order and get food (data).</p>
+
+  <h2>HTTP Verbs = CRUD</h2>
+  <table class="comparison-table">
+    <thead><tr><th>Verb</th><th>CRUD</th><th>URL</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>GET</td><td>Read</td><td>/api/todos</td><td>Get all todos</td></tr>
+      <tr><td>GET</td><td>Read</td><td>/api/todos/1</td><td>Get one todo</td></tr>
+      <tr><td>POST</td><td>Create</td><td>/api/todos</td><td>Create a todo</td></tr>
+      <tr><td>PUT</td><td>Update</td><td>/api/todos/1</td><td>Update a todo</td></tr>
+      <tr><td>DELETE</td><td>Delete</td><td>/api/todos/1</td><td>Delete a todo</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Todo Model Class</h2>
+  <pre><code class="language-java">public class Todo {
+    private Long id;
+    private String title;
+    private boolean completed;
+
+    public Todo() {}
+
+    public Todo(Long id, String title, boolean completed) {
+        this.id = id;
+        this.title = title;
+        this.completed = completed;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    public boolean isCompleted() { return completed; }
+    public void setCompleted(boolean completed) { this.completed = completed; }
+}</code></pre>
+
+  <h2>Full CRUD Controller</h2>
+  <pre><code class="language-java">import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController
+@RequestMapping("/api/todos")
+@CrossOrigin(origins = "*")
+public class TodoController {
+
+    private List&lt;Todo&gt; todos = new ArrayList&lt;&gt;();
+    private Long nextId = 1L;
+
+    @GetMapping
+    public List&lt;Todo&gt; getAll() { return todos; }
+
+    @GetMapping("/{id}")
+    public Todo getOne(@PathVariable Long id) {
+        return todos.stream()
+            .filter(t -> t.getId().equals(id))
+            .findFirst().orElse(null);
+    }
+
+    @PostMapping
+    public Todo create(@RequestBody Todo todo) {
+        todo.setId(nextId++);
+        todos.add(todo);
+        return todo;
+    }
+
+    @PutMapping("/{id}")
+    public Todo update(@PathVariable Long id, @RequestBody Todo updated) {
+        for (Todo t : todos) {
+            if (t.getId().equals(id)) {
+                t.setTitle(updated.getTitle());
+                t.setCompleted(updated.isCompleted());
+                return t;
+            }
+        }
+        return null;
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
+        todos.removeIf(t -> t.getId().equals(id));
+        return "Deleted " + id;
+    }
+}</code></pre>
+
+  <div class="callout tip">
+    💡 <code>@CrossOrigin(origins = "*")</code> lets your React frontend (port 3000) call this API (port 8080). Without it the browser blocks the request with a CORS error.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ Todos are stored in a <code>List</code> — they vanish on server restart. Chapter 35 adds a real database.
+  </div>
+
+  <h2>Test with curl</h2>
+  <pre><code class="language-bash"># Create a todo
+curl -X POST http://localhost:8080/api/todos \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Buy milk","completed":false}'
+
+# Get all
+curl http://localhost:8080/api/todos
+
+# Update
+curl -X PUT http://localhost:8080/api/todos/1 \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Buy milk","completed":true}'
+
+# Delete
+curl -X DELETE http://localhost:8080/api/todos/1</code></pre>
+
+  <div class="callout info">
+    ℹ️ On Windows use <strong>Postman</strong> (free GUI) instead of curl — much easier for testing APIs visually.
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Run the app (<code>mvn spring-boot:run</code>). Create 3 todos, update one, delete one, then GET all to confirm. Use curl or Postman.</p>
+  </div>
+</article>

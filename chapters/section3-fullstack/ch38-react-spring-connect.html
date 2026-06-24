@@ -1,1 +1,144 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📙 Section 3 — Java Full Stack</span>
+    <h1>Chapter 38: Connect React + Spring Boot</h1>
+    <p class="chapter-intro">Make your React frontend talk to your Spring Boot backend — the bridge that completes your full-stack application.</p>
+  </div>
 
+  <h2>The Setup</h2>
+  <p>In full-stack development, two servers run at the same time:</p>
+  <ul>
+    <li><strong>Spring Boot</strong> — runs on <code>http://localhost:8080</code>, serves your REST API</li>
+    <li><strong>React</strong> — runs on <code>http://localhost:3000</code>, serves your UI</li>
+  </ul>
+  <p>React fetches data from Spring Boot using JavaScript's built-in <code>fetch()</code> function (or Axios, a popular library).</p>
+
+  <h2>Step 1: Enable CORS in Spring Boot</h2>
+  <p>By default, browsers block requests from <code>localhost:3000</code> to <code>localhost:8080</code> because they are different origins. You must tell Spring Boot to allow it:</p>
+  <pre><code class="language-java">@RestController
+@RequestMapping("/api/todos")
+@CrossOrigin(origins = "http://localhost:3000")  // allow React dev server
+public class TodoController {
+    // ...
+}</code></pre>
+
+  <div class="callout tip">
+    💡 For production, replace <code>"http://localhost:3000"</code> with your actual frontend domain, e.g. <code>"https://myapp.netlify.app"</code>.
+  </div>
+
+  <h2>Step 2: Fetch Data in React</h2>
+  <p>Create a React component that loads todos from your Spring Boot API when it mounts:</p>
+  <pre><code class="language-javascript">import { useState, useEffect } from 'react';
+
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/todos')
+      .then(res => {
+        if (!res.ok) throw new Error('Server error: ' + res.status);
+        return res.json();
+      })
+      .then(data => {
+        setTodos(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []); // empty array = run once on mount
+
+  if (loading) return &lt;p&gt;Loading...&lt;/p&gt;;
+  if (error)   return &lt;p&gt;Error: {error}&lt;/p&gt;;
+
+  return (
+    &lt;ul&gt;
+      {todos.map(todo =&gt; (
+        &lt;li key={todo.id}&gt;
+          {todo.completed ? '✅' : '⬜'} {todo.title}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+
+export default TodoList;</code></pre>
+
+  <h2>Step 3: Create a Todo from React</h2>
+  <pre><code class="language-javascript">function AddTodo({ onAdd }) {
+  const [title, setTitle] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await fetch('http://localhost:8080/api/todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, completed: false })
+    });
+    const newTodo = await res.json();
+    onAdd(newTodo);
+    setTitle('');
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input
+        value={title}
+        onChange={e =&gt; setTitle(e.target.value)}
+        placeholder="New todo..."
+      /&gt;
+      &lt;button type="submit"&gt;Add&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+
+  <div class="callout warning">
+    ⚠️ Always check <code>res.ok</code> before calling <code>res.json()</code>. If the server returns a 404 or 500 error, calling <code>res.json()</code> on an error response can throw confusing errors.
+  </div>
+
+  <h2>Putting It Together in App.js</h2>
+  <pre><code class="language-javascript">import { useState, useEffect } from 'react';
+
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/todos')
+      .then(r => r.json())
+      .then(setTodos);
+  }, []);
+
+  const addTodo = async (title) => {
+    const res = await fetch('http://localhost:8080/api/todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, completed: false })
+    });
+    const todo = await res.json();
+    setTodos(prev => [...prev, todo]);
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;My Todos&lt;/h1&gt;
+      &lt;input
+        onKeyDown={e =&gt; e.key === 'Enter' &amp;&amp; addTodo(e.target.value)}
+        placeholder="Press Enter to add..."
+      /&gt;
+      &lt;ul&gt;
+        {todos.map(t =&gt; &lt;li key={t.id}&gt;{t.title}&lt;/li&gt;)}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Run Spring Boot on port 8080 and React on port 3000 simultaneously. Open React in the browser, add a todo via the input, and verify it appears in the list. Then check <code>http://localhost:8080/api/todos</code> to confirm the data was saved to the backend.</p>
+  </div>
+</article>
