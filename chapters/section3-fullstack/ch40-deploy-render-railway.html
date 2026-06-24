@@ -1,1 +1,116 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📙 Section 3 — Java Full Stack</span>
+    <h1>Chapter 40: Deploy to Cloud</h1>
+    <p class="chapter-intro">Take your full-stack Java application live on the internet — free hosting for both backend and frontend.</p>
+  </div>
 
+  <h2>What is Deployment?</h2>
+  <p>Right now your app only runs on your laptop. Deployment means uploading it to a cloud server so anyone with the URL can access it — 24/7, without your laptop being on.</p>
+  <p>We will deploy:</p>
+  <ul>
+    <li><strong>Spring Boot backend</strong> → <strong>Render.com</strong> (free tier)</li>
+    <li><strong>React frontend</strong> → <strong>Netlify</strong> (free tier)</li>
+  </ul>
+
+  <h2>Step 1: Prepare Spring Boot for Production</h2>
+  <p>Switch from H2 (in-memory) to a real database. Render provides a free PostgreSQL database. Add the PostgreSQL driver:</p>
+  <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.postgresql&lt;/groupId&gt;
+    &lt;artifactId&gt;postgresql&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+
+  <p>Update <code>application.properties</code> to use an environment variable for the database URL (never hardcode credentials):</p>
+  <pre><code class="language-bash">spring.datasource.url=${DATABASE_URL}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=update</code></pre>
+
+  <h2>Step 2: Build the JAR</h2>
+  <pre><code class="language-bash"># Package your Spring Boot app into a single executable JAR
+mvn package -DskipTests
+
+# The JAR is created at:
+target/your-app-name-0.0.1-SNAPSHOT.jar
+
+# Test it locally first:
+java -jar target/your-app-name-0.0.1-SNAPSHOT.jar</code></pre>
+
+  <div class="callout tip">
+    💡 <code>-DskipTests</code> skips tests during packaging to speed up the build. Always run tests separately with <code>mvn test</code> before deploying.
+  </div>
+
+  <h2>Step 3: Deploy Backend to Render</h2>
+  <ol>
+    <li>Push your Spring Boot project to a GitHub repository</li>
+    <li>Go to <strong>render.com</strong> → Sign up → New → <strong>Web Service</strong></li>
+    <li>Connect your GitHub repo</li>
+    <li>Settings:
+      <ul>
+        <li><strong>Build Command:</strong> <code>mvn package -DskipTests</code></li>
+        <li><strong>Start Command:</strong> <code>java -jar target/*.jar</code></li>
+        <li><strong>Environment:</strong> Java</li>
+      </ul>
+    </li>
+    <li>Create a free PostgreSQL database on Render → copy the <strong>Internal Database URL</strong></li>
+    <li>Add environment variable: <code>DATABASE_URL</code> = the PostgreSQL URL</li>
+    <li>Click <strong>Deploy</strong> — Render builds and starts your app</li>
+  </ol>
+
+  <div class="callout warning">
+    ⚠️ Render's free tier <strong>spins down after 15 minutes of inactivity</strong> and takes ~30 seconds to cold-start. This is normal for the free tier. Paid tier keeps it always-on.
+  </div>
+
+  <h2>Step 4: Deploy Frontend to Netlify</h2>
+  <ol>
+    <li>In your React project, update the API base URL to your Render backend URL:
+      <pre><code class="language-javascript">const API_URL = 'https://your-app.onrender.com';</code></pre>
+    </li>
+    <li>Build React for production: <code>npm run build</code></li>
+    <li>Go to <strong>netlify.com</strong> → Sign up → New site → <strong>Import from Git</strong></li>
+    <li>Connect your GitHub repo</li>
+    <li>Settings:
+      <ul>
+        <li><strong>Build command:</strong> <code>npm run build</code></li>
+        <li><strong>Publish directory:</strong> <code>build</code> (or <code>dist</code> if using Vite)</li>
+      </ul>
+    </li>
+    <li>Click <strong>Deploy site</strong> — Netlify builds and gives you a live URL</li>
+  </ol>
+
+  <h2>Deployment Checklist</h2>
+  <table class="comparison-table">
+    <thead><tr><th>Item</th><th>Done?</th></tr></thead>
+    <tbody>
+      <tr><td>Spring Boot JAR builds without errors</td><td>⬜</td></tr>
+      <tr><td>Database URL in environment variable (not hardcoded)</td><td>⬜</td></tr>
+      <tr><td>CORS updated to allow production frontend URL</td><td>⬜</td></tr>
+      <tr><td>React API_URL points to production backend</td><td>⬜</td></tr>
+      <tr><td>React build succeeds (<code>npm run build</code>)</td><td>⬜</td></tr>
+      <tr><td>Backend live URL tested with Postman</td><td>⬜</td></tr>
+      <tr><td>Frontend live URL opens in browser</td><td>⬜</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout info">
+    ℹ️ <strong>Railway.app</strong> is an alternative to Render — also has a free tier, often simpler to configure. Both work well for learning projects.
+  </div>
+
+  <h2>🎉 Congratulations!</h2>
+  <p>You have built and deployed a complete full-stack Java application. You went from installing Java to shipping a real app to the internet. Here is what you now know:</p>
+  <ul>
+    <li>✅ Java fundamentals — variables, OOP, collections, exceptions</li>
+    <li>✅ Data Structures & Algorithms — linked lists, trees, graphs, sorting</li>
+    <li>✅ Spring Boot REST API with database persistence</li>
+    <li>✅ React frontend connected to a backend</li>
+    <li>✅ JWT authentication basics</li>
+    <li>✅ Cloud deployment</li>
+  </ul>
+  <p>Keep building. The best way to solidify everything you learned is to start your own project from scratch — an idea you care about. Use this ebook as a reference whenever you get stuck.</p>
+
+  <div class="exercise">
+    <h3>✅ Final Challenge</h3>
+    <p>Deploy your Todo app (Spring Boot + React) to Render and Netlify. Share the live URL with a friend. If it works for them — you are a full-stack Java developer.</p>
+  </div>
+</article>
