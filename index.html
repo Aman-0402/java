@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Java Ebook — Basics to Full Stack</title>
+  <link rel="stylesheet" href="assets/css/prism.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/dark.css" />
+</head>
+<body>
+
+  <div class="ebook-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="assets/img/logo.svg" alt="Java Ebook" class="logo" />
+        <span class="ebook-title">Java Ebook</span>
+      </div>
+
+      <div class="search-wrapper">
+        <input type="text" id="search-input" placeholder="🔍 Search topics..." autocomplete="off" />
+        <div id="search-results" class="search-results hidden"></div>
+      </div>
+
+      <nav class="chapter-nav-sidebar">
+
+        <div class="section-label">📗 Section 1 — Java Basics</div>
+        <ul>
+          <li><a href="#ch01-what-is-java">Ch 1. What is Java?</a></li>
+          <li><a href="#ch02-install-jdk">Ch 2. Install JDK 21</a></li>
+          <li><a href="#ch03-install-vscode">Ch 3. Install VS Code</a></li>
+          <li><a href="#ch04-hello-world">Ch 4. Hello World</a></li>
+          <li><a href="#ch05-variables-datatypes">Ch 5. Variables &amp; Data Types</a></li>
+          <li><a href="#ch06-operators">Ch 6. Operators</a></li>
+          <li><a href="#ch07-input-output">Ch 7. Input / Output</a></li>
+          <li><a href="#ch08-if-else-switch">Ch 8. if / else / switch</a></li>
+          <li><a href="#ch09-loops">Ch 9. Loops</a></li>
+          <li><a href="#ch10-arrays">Ch 10. Arrays</a></li>
+          <li><a href="#ch11-methods">Ch 11. Methods</a></li>
+          <li><a href="#ch12-oop-classes-objects">Ch 12. Classes &amp; Objects</a></li>
+          <li><a href="#ch13-constructors">Ch 13. Constructors</a></li>
+          <li><a href="#ch14-inheritance">Ch 14. Inheritance</a></li>
+          <li><a href="#ch15-polymorphism">Ch 15. Polymorphism</a></li>
+          <li><a href="#ch16-encapsulation-abstraction">Ch 16. Encapsulation &amp; Abstraction</a></li>
+          <li><a href="#ch17-interfaces">Ch 17. Interfaces</a></li>
+          <li><a href="#ch18-exception-handling">Ch 18. Exception Handling</a></li>
+          <li><a href="#ch19-collections">Ch 19. Collections</a></li>
+          <li><a href="#ch20-string-manipulation">Ch 20. String Manipulation</a></li>
+        </ul>
+
+        <div class="section-label">📘 Section 2 — Java DSA</div>
+        <ul>
+          <li><a href="#ch21-big-o-notation">Ch 21. Big O Notation</a></li>
+          <li><a href="#ch22-recursion">Ch 22. Recursion</a></li>
+          <li><a href="#ch23-linked-list">Ch 23. Linked List</a></li>
+          <li><a href="#ch24-stack">Ch 24. Stack</a></li>
+          <li><a href="#ch25-queue">Ch 25. Queue</a></li>
+          <li><a href="#ch26-binary-search">Ch 26. Binary Search</a></li>
+          <li><a href="#ch27-sorting-algorithms">Ch 27. Sorting Algorithms</a></li>
+          <li><a href="#ch28-trees-binary-tree">Ch 28. Trees &amp; Binary Tree</a></li>
+          <li><a href="#ch29-hashmap-internals">Ch 29. HashMap Internals</a></li>
+          <li><a href="#ch30-graphs">Ch 30. Graphs</a></li>
+        </ul>
+
+        <div class="section-label">📙 Section 3 — Java Full Stack</div>
+        <ul>
+          <li><a href="#ch31-what-is-fullstack">Ch 31. What is Full Stack?</a></li>
+          <li><a href="#ch32-maven-project-setup">Ch 32. Maven &amp; Project Setup</a></li>
+          <li><a href="#ch33-spring-boot-intro">Ch 33. Spring Boot Intro</a></li>
+          <li><a href="#ch34-rest-api-basics">Ch 34. REST API Basics</a></li>
+          <li><a href="#ch35-database-jpa-hibernate">Ch 35. Database + JPA/Hibernate</a></li>
+          <li><a href="#ch36-html-css-for-java-devs">Ch 36. HTML &amp; CSS Basics</a></li>
+          <li><a href="#ch37-react-basics">Ch 37. React Basics</a></li>
+          <li><a href="#ch38-react-spring-connect">Ch 38. React + Spring Boot</a></li>
+          <li><a href="#ch39-auth-jwt-spring-security">Ch 39. Auth: JWT + Spring Security</a></li>
+          <li><a href="#ch40-deploy-render-railway">Ch 40. Deploy to Cloud</a></li>
+        </ul>
+
+      </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main-wrapper">
+
+      <header class="top-bar">
+        <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+        <span class="top-bar-title" id="top-bar-title">Java Ebook</span>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+      </header>
+
+      <main class="content-area" id="content-area">
+        <div class="welcome-screen">
+          <h1>Welcome to Java Ebook</h1>
+          <p>Select a chapter from the sidebar to get started.</p>
+          <p>Start from <a href="#ch01-what-is-java">Chapter 1: What is Java?</a> if you're a beginner.</p>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <script src="assets/js/prism.js"></script>
+  <script type="module" src="assets/js/theme.js"></script>
+  <script type="module" src="assets/js/app.js"></script>
+  <script type="module" src="assets/js/search.js"></script>
+</body>
+</html>

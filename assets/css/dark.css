@@ -1,0 +1,48 @@
+body[data-theme="dark"] {
+  --color-bg: #1e1e2e;
+  --color-sidebar-bg: #181825;
+  --color-sidebar-border: #313244;
+  --color-sidebar-active-bg: #cba6f7;
+  --color-sidebar-active-text: #1e1e2e;
+  --color-sidebar-text: #cdd6f4;
+  --color-sidebar-section-label: #cba6f7;
+  --color-text: #cdd6f4;
+  --color-text-muted: #a6adc8;
+  --color-heading: #cdd6f4;
+  --color-accent: #cba6f7;
+  --color-border: #313244;
+  --color-topbar-bg: #181825;
+  --color-callout-tip-bg: #2a2a3e;
+  --color-callout-tip-border: #cba6f7;
+  --color-callout-warning-bg: #2a2018;
+  --color-callout-warning-border: #fab387;
+  --color-callout-info-bg: #1a2040;
+  --color-callout-info-border: #89b4fa;
+  --color-exercise-bg: #1a2a1a;
+  --color-exercise-border: #a6e3a1;
+  --color-code-bg: #11111b;
+  --color-code-text: #cdd6f4;
+}
+
+body[data-theme="dark"] #search-input {
+  background: #313244;
+  color: #cdd6f4;
+  border-color: #45475a;
+}
+
+body[data-theme="dark"] .search-results {
+  background: #181825;
+}
+
+body[data-theme="dark"] .search-result-item:hover {
+  background: #313244;
+}
+
+body[data-theme="dark"] .chapter-content code {
+  background: #313244;
+  color: #cba6f7;
+}
+
+body[data-theme="dark"] .section-tag {
+  background: #313244;
+}
