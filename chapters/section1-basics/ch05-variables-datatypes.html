@@ -45,6 +45,10 @@
 
   <div class="callout tip">💡 Notice that <code>char</code> values use <em>single</em> quotes (<code>'A'</code>), while text strings use <em>double</em> quotes (<code>"Hello"</code>). Mixing them up is a very common mistake.</div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Java has exactly 8 primitive data types — and they have not changed since Java 1.0 in 1996. The designers wanted stability above all. The same <code>int</code> keyword works identically in 1996 Java and 2024 Java. Almost no other language can claim this level of backwards compatibility.</div>
+
+  <div class="callout history">📜 <strong>History:</strong> Java borrowed its primitive types from C/C++. But unlike C, Java guarantees that <code>int</code> is always exactly 32 bits on every platform. In C, the size of <code>int</code> varies by operating system — which caused serious portability bugs. Locking down the sizes was a deliberate Java design decision to make "Write Once, Run Anywhere" actually work.</div>
+
   <h2>The String Type</h2>
   <p><code>String</code> is different from the primitives above — it is a <em>reference type</em>, meaning it is actually an object (a complex thing built from many parts). But you can use it almost the same way as a primitive. A <code>String</code> holds any sequence of characters — words, sentences, even numbers stored as text.</p>
 
@@ -81,6 +85,8 @@
 }</code></pre>
 
   <div class="callout warning">⚠️ You cannot use a variable before assigning it a value. <code>int x; System.out.println(x);</code> will give a compiler error: "variable x might not have been initialized."</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> A bank's account balance is stored as <code>long</code> or <code>BigDecimal</code> — never <code>double</code>. Why? Because <code>double</code> has floating-point precision errors: <code>0.1 + 0.2</code> in Java returns <code>0.30000000000000004</code>. For money, that rounding error is catastrophic. Financial systems learned this the hard way.</div>
 
   <h2>The <code>var</code> Keyword (Java 10+)</h2>
   <p>Since Java 10, you can use <code>var</code> instead of writing the type explicitly. Java will figure out the type automatically by looking at the value you assign. This is called <em>type inference</em>.</p>

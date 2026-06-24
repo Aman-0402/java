@@ -122,6 +122,8 @@
 
   <div class="callout warning">⚠️ Do not forget <code>break</code> at the end of each case! Without it, Java will "fall through" and execute the next case's code too, which is almost never what you want. This is one of the most famous bugs in Java history.</div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> The most famous real-world bug caused by a missing <code>break</code> in a switch: Apple's "goto fail" SSL security bug in 2014. A missing statement in Apple's iOS code caused HTTPS security checks to be bypassed silently, leaving millions of iPhones vulnerable to network attacks for months before it was discovered.</div>
+
   <h2>Switch Expression (Java 14+)</h2>
   <p>Modern Java introduced a cleaner switch syntax using <code>-></code> (arrow). It does not fall through, so you don't need <code>break</code>. It can also return a value directly.</p>
 
@@ -141,6 +143,10 @@
 }</code></pre>
 
   <div class="callout tip">💡 The switch expression (with <code>-></code>) is cleaner and less error-prone than the traditional switch statement (with <code>break</code>). If you are using Java 14 or newer, prefer the arrow syntax.</div>
+
+  <div class="callout history">📜 <strong>History:</strong> The <code>switch</code> statement has been in Java since version 1.0, but its clunky fall-through syntax caused bugs for decades. Java 14 (2020) introduced the modern switch expression with <code>-&gt;</code> arrows. Java 21 added full pattern matching in switch — a feature that took 25 years to arrive from the original 1996 design.</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Netflix uses complex conditional logic (if/else chains and switches) in its recommendation engine to decide what content to show you. Every "Because you watched X" recommendation is the result of hundreds of nested conditions evaluating your watch history, time of day, device type, and viewing patterns — running in real-time.</div>
 
   <h2>The <code>=</code> vs <code>==</code> Trap in Conditions</h2>
   <p>This cannot be repeated enough. In a condition inside <code>if ( ... )</code>, you almost always want <code>==</code> to compare, not <code>=</code> to assign.</p>

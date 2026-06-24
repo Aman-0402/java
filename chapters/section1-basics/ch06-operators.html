@@ -44,6 +44,8 @@
   <h3>The Modulus Operator <code>%</code></h3>
   <p>The <code>%</code> operator gives you the <em>remainder</em> after division. It sounds obscure, but it has many practical uses: checking if a number is even or odd, looping back around a range, checking divisibility.</p>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> The modulus operator <code>%</code> is used to check if a number is even or odd (<code>n % 2 == 0</code> = even). This single operation powers FizzBuzz — the most famous coding interview question ever used by Google, Facebook, and Amazon to screen candidates. Master <code>%</code> and you have already solved one of tech's most iconic interview problems.</div>
+
   <pre><code class="language-java">public class ModulusDemo {
     public static void main(String[] args) {
         System.out.println(10 % 3);  // 1 (10 = 3*3 + 1)
@@ -137,6 +139,10 @@
 }</code></pre>
 
   <div class="callout info">ℹ️ The ternary operator is great for short, simple decisions. But if your condition or values are complex, use a full <code>if-else</code> statement instead — readability matters more than brevity.</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Integer division (<code>/</code>) combined with modulus (<code>%</code>) is used in pagination on every website. If you have 101 items and show 10 per page: <code>101 / 10 = 10</code> pages, <code>101 % 10 = 1</code> item on the last page. Every "Page 1 of 11" you have ever seen was calculated with exactly these two operators.</div>
+
+  <div class="callout history">📜 <strong>History:</strong> The <code>&amp;&amp;</code> (short-circuit AND) and <code>||</code> (short-circuit OR) operators exist for performance. In 1970s computers, evaluating both sides of a boolean expression was expensive. Short-circuit evaluation — stopping as soon as the result is known — became standard across C, Java, JavaScript, and most modern languages.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

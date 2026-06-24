@@ -24,6 +24,10 @@
     ℹ️ LTS versions: 8, 11, 17, 21. Always pick the latest LTS. At the time of writing, that is <strong>JDK 21</strong>.
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> JDK 1.0 was released in January 1996 with just 212 classes. JDK 21 (2023) has over 4,000 classes. The ecosystem grew 20x in 27 years — yet code written in 1996 still compiles and runs on modern Java. Few languages can say that.</div>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Java releases a new version every 6 months (since Java 9 in 2017). But only LTS (Long-Term Support) versions get multi-year security patches — that is why companies stick to versions 8, 11, 17, or 21 instead of chasing every release.</div>
+
   <h2>Step 1: Download JDK 21</h2>
   <ol>
     <li>Go to <strong>adoptium.net</strong> — this is Eclipse Temurin, a free and open-source JDK.</li>
@@ -74,6 +78,8 @@ OpenJDK Runtime Environment Temurin-21.0.3+9</code></pre>
   <pre><code class="language-bash">export JAVA_HOME=$(/usr/libexec/java_home -v 21)
 export PATH=$JAVA_HOME/bin:$PATH</code></pre>
   <p>Then run <code>source ~/.zshrc</code> (or <code>~/.bashrc</code>) to apply the changes.</p>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> NASA uses Java in mission-critical systems. When the Curiosity Rover landed on Mars in 2012, Java code was running the ground control systems back on Earth. The same JDK you just installed is the foundation of the language powering deep-space exploration.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

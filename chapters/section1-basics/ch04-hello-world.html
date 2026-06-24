@@ -20,6 +20,8 @@
 
   <div class="callout warning">⚠️ The class name must exactly match the filename. If your class is named <code>HelloWorld</code>, the file must be saved as <code>HelloWorld.java</code> — same capitalisation, no spaces. Java is case-sensitive: <code>helloworld</code> and <code>HelloWorld</code> are completely different names.</div>
 
+  <div class="callout history">📜 <strong>History:</strong> The tradition of printing "Hello, World!" as the first program started with Brian Kernighan's 1972 book "A Tutorial Introduction to the Language B." It became iconic in C and then spread to virtually every programming language ever created. When you type it in Java, you are part of a 50-year programmer tradition.</div>
+
   <h2>Breaking Down <code>public static void main(String[] args)</code></h2>
   <p>This line is called the <em>main method signature</em>. It is the entry point — the starting line of your program. When you run a Java program, the Java runtime looks for exactly this line and begins executing from there. Let's decode each word:</p>
 
@@ -37,6 +39,8 @@
   </table>
 
   <div class="callout info">ℹ️ You do not need to memorise why every word is there right now. Just accept the whole line as a magic phrase you type every time you start a new Java program. The understanding will build naturally over the next few chapters.</div>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Every Java program needs exactly one <code>public static void main(String[] args)</code> as its entry point. This design was intentional — it makes every Java program self-contained and runnable without any external configuration. Compare that to JavaScript, where there is no standard entry point at all.</div>
 
   <h2>What Does <code>System.out.println()</code> Do?</h2>
   <p>Think of it as a walkie-talkie that sends messages to your screen. Breaking it down:</p>
@@ -78,6 +82,8 @@ public class HelloWorld {
 }</code></pre>
 
   <div class="callout tip">💡 This two-step process is why Java programs run on any operating system without change. The <code>.class</code> bytecode is the same on Windows, macOS, and Linux. The JVM on each platform handles the differences — that is what "Write Once, Run Anywhere" means.</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> The <code>System.out.println()</code> method you write in Hello World is the exact same method used in production at Amazon, Twitter, and LinkedIn's backend systems — just printing to server logs instead of your terminal. Your first program uses real, production-grade Java.</div>
 
   <h2>Common Errors and What They Mean</h2>
 

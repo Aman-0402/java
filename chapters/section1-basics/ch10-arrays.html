@@ -33,6 +33,8 @@
 
   <div class="callout warning">⚠️ Arrays in Java are <strong>zero-indexed</strong>. The first element is at index <code>0</code>, not <code>1</code>. An array of size 5 has valid indices 0, 1, 2, 3, 4. Trying to access index 5 causes an <code>ArrayIndexOutOfBoundsException</code>.</div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Arrays start at index 0 because in C (which influenced Java), the index represents a memory offset from the start of the array. <code>array[0]</code> literally means "0 bytes from the start." Dijkstra wrote a famous 1982 paper arguing why 0-based indexing is mathematically superior to 1-based — and he won the debate for most languages.</div>
+
   <h2>The <code>length</code> Property</h2>
   <p><code>array.length</code> tells you how many slots the array has. It is a property, not a method — notice there are no parentheses after it.</p>
 
@@ -98,6 +100,8 @@
 
   <div class="callout warning">⚠️ When you see <code>ArrayIndexOutOfBoundsException</code>, immediately check two things: the size of your array, and the index you used. The most common cause is writing <code>i &lt;= array.length</code> in a loop instead of <code>i &lt; array.length</code> (off-by-one error).</div>
 
+  <div class="callout history">📜 <strong>History:</strong> The <code>ArrayIndexOutOfBoundsException</code> is one of the most famous Java errors — and it was intentional. In 1990s C/C++, reading past the end of an array caused silent memory corruption and security vulnerabilities (entire categories of hacks exploited this). Java's bounds checking was a deliberate safety feature, at the cost of a small performance penalty.</div>
+
   <h2>2D Arrays (Intro)</h2>
   <p>A 2D array is like a table with rows and columns — think of a spreadsheet or a chess board. You declare it with two pairs of square brackets.</p>
 
@@ -128,6 +132,8 @@
 }</code></pre>
 
   <div class="callout tip">💡 For 2D arrays: <code>grid.length</code> gives the number of rows. <code>grid[0].length</code> gives the number of columns in the first row. Use nested <code>for</code> loops to traverse all elements.</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Every image on your screen is stored as a 2D array of pixels. A 1920×1080 HD display is essentially an <code>int[1080][1920]</code> array where each <code>int</code> stores the RGB color value of one pixel. Java's image processing libraries (like BufferedImage) use exactly this structure to manipulate photos and graphics.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

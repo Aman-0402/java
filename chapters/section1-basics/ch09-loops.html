@@ -38,6 +38,8 @@
 
   <div class="callout tip">💡 The variable <code>i</code> in a <code>for</code> loop is called the <em>loop counter</em> or <em>index</em>. By convention, short names like <code>i</code>, <code>j</code>, <code>k</code> are perfectly fine inside loops — everyone reading Java code knows what they mean.</div>
 
+  <div class="callout history">📜 <strong>History:</strong> The <code>for</code> loop syntax (<code>for (init; condition; update)</code>) was adopted directly from C (1972). James Gosling kept it intentionally familiar so that C and C++ developers could learn Java quickly. This single decision accelerated Java's adoption massively during the late 1990s developer boom.</div>
+
   <h2>The <code>while</code> Loop</h2>
   <p>A <code>while</code> loop keeps running as long as a condition is <code>true</code>. Use it when you don't know in advance how many times you need to loop — for example, repeating until the user enters valid input.</p>
 
@@ -62,6 +64,8 @@ public class WhileDemo {
 }</code></pre>
 
   <div class="callout warning">⚠️ The infinite loop trap: if the condition never becomes <code>false</code>, the loop runs forever and freezes your program. Always make sure something inside your loop eventually makes the condition <code>false</code>. If your program seems frozen, press <code>Ctrl+C</code> in the terminal to stop it.</div>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Infinite loops are not always bugs. Web servers run in an intentional infinite loop — <code>while (true) { acceptConnection(); }</code> — continuously waiting for incoming requests. Every time your browser loads a webpage, it hits a server running that infinite loop.</div>
 
   <h2>The <code>do-while</code> Loop</h2>
   <p>A <code>do-while</code> loop is like a <code>while</code> loop, but it runs the body <em>at least once</em> before checking the condition. This is useful when you always need to execute the block once (like showing a menu to the user).</p>
@@ -145,6 +149,8 @@ public class DoWhileDemo {
 }</code></pre>
 
   <div class="callout info">ℹ️ For each iteration of the outer loop (row), the inner loop (col) runs 3 times. So the total number of iterations is 3 x 3 = 9. Be careful with nested loops on large numbers — the iteration count multiplies quickly.</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Google's search crawler (Googlebot) uses loops to visit billions of web pages continuously. It runs 24/7, looping through queues of URLs, downloading pages, and indexing their content. Java loops — just like the ones you are writing — are at the core of how the entire web gets indexed.</div>
 
   <div class="callout warning">⚠️ Common infinite loop patterns to avoid: <code>while (true) { }</code> without a <code>break</code>, or a <code>for</code> loop where the update goes in the wrong direction (e.g., <code>for (int i = 0; i &lt; 10; i--)</code> counts down from 0, never reaching 10).</div>
 

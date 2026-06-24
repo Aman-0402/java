@@ -21,6 +21,10 @@
 
   <div class="callout info">ℹ️ <code>printf</code> stands for "print formatted." The placeholders work like this: <code>%s</code> = String, <code>%d</code> = integer, <code>%f</code> = decimal (add <code>.2</code> before <code>f</code> to show 2 decimal places). <code>%n</code> is a portable newline.</div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> <code>System.out</code> is a <code>PrintStream</code> object — one of the oldest classes in Java, unchanged since 1996. When you type <code>System.out.println()</code>, you are using a class that is literally older than Google (founded 1998) and older than the first iPhone (2007).</div>
+
+  <div class="callout history">📜 <strong>History:</strong> <code>System.in</code>, <code>System.out</code>, and <code>System.err</code> are inspired by Unix's standard streams (stdin, stdout, stderr) from the 1970s. Java inherited this concept directly from Unix operating system design — connecting the world of 1970s systems programming to modern Java applications.</div>
+
   <h2>Reading Input — The Scanner Class</h2>
   <p>Imagine a scanner at a supermarket checkout — you wave the barcode in front of it, and it reads the information. Java's <code>Scanner</code> class works the same way: it reads whatever the user types at the keyboard and hands it to your program.</p>
 
@@ -147,6 +151,8 @@ City : New York
 In 10 years you will be 32</code></pre>
 
   <div class="callout tip">💡 Always <code>close()</code> your Scanner when you are done with it. It is good programming habit and prevents resource leaks, especially when reading from files (which you will do later).</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> The <code>Scanner</code> class introduced in Java 5 (2004) simplified input reading dramatically. Before that, developers had to use <code>BufferedReader</code> with <code>InputStreamReader</code> — three lines of code just to read one string. Modern production Java apps rarely use Scanner directly — they use HTTP APIs and JSON parsing — but Scanner is the perfect teaching tool for understanding how input works.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>
