@@ -1,0 +1,76 @@
+<h2>Combined Layout: Sidebar + Book Feel</h2>
+<p class="subtitle">Two variations of A+C combo — pick which direction feels better</p>
+
+<div class="cards">
+  <div class="card" data-choice="ac1" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1200;padding:12px;border-radius:6px;font-family:monospace;">
+      <div style="display:flex;gap:0;height:150px;border-radius:4px;overflow:hidden;border:1px solid #333;">
+        <!-- Sidebar -->
+        <div style="width:36%;background:#2a2a3e;padding:8px;">
+          <div style="color:#7c7cff;font-size:9px;font-weight:bold;margin-bottom:8px;">📚 CHAPTERS</div>
+          <div style="color:#aaa;font-size:8px;line-height:18px;">
+            <div style="color:#fff;background:#4444aa;padding:2px 5px;border-radius:2px;margin-bottom:2px;">▶ 1. Setup Java</div>
+            <div style="padding:2px 5px;color:#ccc;">2. Variables & Types</div>
+            <div style="padding:2px 5px;color:#888;">3. Control Flow</div>
+            <div style="padding:2px 5px;color:#888;">4. OOP Basics</div>
+            <div style="padding:2px 5px;color:#888;">5. Arrays</div>
+            <div style="padding:2px 5px;color:#888;">─ DSA ─</div>
+            <div style="padding:2px 5px;color:#888;">6. LinkedList</div>
+          </div>
+        </div>
+        <!-- Book content -->
+        <div style="flex:1;background:#fdf6e3;padding:8px;display:flex;flex-direction:column;">
+          <div style="color:#5c3d1e;font-size:9px;font-weight:bold;border-bottom:1px solid #ddd;padding-bottom:3px;margin-bottom:5px;">Chapter 1: Setting Up Java</div>
+          <div style="color:#444;font-size:7px;line-height:14px;margin-bottom:5px;flex:1;">Java Development Kit (JDK) is the foundation. We'll install JDK 21, configure PATH, and write our very first program.</div>
+          <div style="background:#f0ede0;border-left:3px solid #8B4513;padding:3px 5px;color:#333;font-size:7px;margin-bottom:5px;">💡 JDK = compiler (javac) + runtime (java)</div>
+          <div style="background:#1e1e1e;border-radius:2px;padding:3px 5px;color:#79c0ff;font-size:7px;margin-bottom:5px;">System.out.println("Hello, Java!");</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="color:#999;font-size:7px;">← Prev</div>
+            <div style="color:#8B4513;font-size:7px;">Page 1 of 8</div>
+            <div style="color:#8B4513;font-size:7px;font-weight:bold;">Next →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>V1 — Dark Sidebar + Warm Book Content</h3>
+      <p>Dark sidebar (pro feel), warm parchment content area (textbook feel). Page numbers inside each chapter.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="ac2" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f5f0e8;padding:12px;border-radius:6px;font-family:monospace;">
+      <div style="display:flex;gap:0;height:150px;border-radius:4px;overflow:hidden;border:1px solid #c8b89a;">
+        <!-- Sidebar -->
+        <div style="width:36%;background:#e8dcc8;padding:8px;border-right:2px solid #c8b89a;">
+          <div style="color:#5c3d1e;font-size:9px;font-weight:bold;margin-bottom:8px;">📖 Java Ebook</div>
+          <div style="color:#6b5240;font-size:8px;line-height:18px;">
+            <div style="color:#fff;background:#8B4513;padding:2px 5px;border-radius:2px;margin-bottom:2px;">▶ Ch.1 Setup</div>
+            <div style="padding:2px 5px;color:#5c3d1e;">Ch.2 Variables</div>
+            <div style="padding:2px 5px;color:#8a7060;">Ch.3 Loops</div>
+            <div style="padding:2px 5px;color:#8a7060;">Ch.4 OOP</div>
+            <div style="padding:2px 5px;color:#8a7060;">Ch.5 Arrays</div>
+            <div style="padding:2px 5px;color:#aaa;font-size:7px;">── DSA Section ──</div>
+            <div style="padding:2px 5px;color:#8a7060;">Ch.6 Stack</div>
+          </div>
+        </div>
+        <!-- Book content -->
+        <div style="flex:1;background:#fffdf7;padding:8px;display:flex;flex-direction:column;">
+          <div style="color:#2c1810;font-size:9px;font-weight:bold;margin-bottom:4px;">Chapter 1: Setup Java</div>
+          <div style="color:#3d2b1f;font-size:7px;line-height:14px;margin-bottom:4px;flex:1;">Download JDK 21 from oracle.com. Run installer. Add JAVA_HOME to your system PATH. Verify with <code style="background:#f0ede0;padding:0 2px;">java -version</code>.</div>
+          <div style="background:#f5f0e0;border:1px solid #c8b89a;border-radius:2px;padding:3px 5px;color:#333;font-size:7px;margin-bottom:4px;">📌 Always install LTS versions — currently JDK 21</div>
+          <div style="background:#1e1e2e;border-radius:2px;padding:3px 5px;color:#cba6f7;font-size:7px;margin-bottom:4px;">public class Hello &#123;<br>&nbsp;&nbsp;public static void main(String[] args) &#123;<br>&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Hi!");<br>&nbsp;&nbsp;&#125;<br>&#125;</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #ddd;padding-top:3px;">
+            <div style="color:#8B4513;font-size:7px;">← Back</div>
+            <div style="color:#999;font-size:7px;">1 / 6</div>
+            <div style="color:#8B4513;font-size:7px;">Next →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>V2 — All Warm / Full Book Theme</h3>
+      <p>Entire layout uses warm paper tones. Sidebar blends into content. Feels like one unified book. Softer on eyes.</p>
+    </div>
+  </div>
+</div>
