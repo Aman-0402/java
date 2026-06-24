@@ -461,15 +461,26 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .ebook-shell { grid-template-columns: 1fr; }
+  .ebook-shell.sidebar-collapsed { grid-template-columns: 1fr; } /* no-op on mobile */
   .sidebar {
     position: fixed;
     left: 0; top: 0; bottom: 0;
     width: var(--sidebar-width);
     z-index: 200;
     transform: translateX(-100%);
-    transition: transform 0.25s;
+    transition: transform 0.25s ease;
+    height: 100%;
   }
   .sidebar.open { transform: translateX(0); }
-  .sidebar-toggle { display: block; }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 199;
+  }
+  .sidebar-overlay.visible { display: block; }
+  .sidebar-toggle { display: flex; }
   .content-area { padding: 24px 20px; }
+  .main-wrapper { width: 100%; }
 }

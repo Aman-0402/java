@@ -125,20 +125,44 @@ function handleHash() {
 window.addEventListener('hashchange', handleHash);
 document.addEventListener('DOMContentLoaded', handleHash);
 
+// ── Sidebar helpers ──
+const isMobile = () => window.innerWidth <= 768;
+const overlay = document.querySelector('.sidebar-overlay');
+
+function closeSidebar() {
+  if (isMobile()) {
+    sidebar.classList.remove('open');
+    overlay?.classList.remove('visible');
+  } else {
+    ebookShell.classList.add('sidebar-collapsed');
+  }
+}
+
+function toggleSidebar() {
+  if (isMobile()) {
+    const opening = !sidebar.classList.contains('open');
+    sidebar.classList.toggle('open');
+    overlay?.classList.toggle('visible', opening);
+  } else {
+    ebookShell.classList.toggle('sidebar-collapsed');
+  }
+}
+
 // ── Sidebar Link Clicks ──
 document.querySelectorAll('.chapter-nav-sidebar a').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
     const id = a.getAttribute('href').slice(1);
     loadChapter(id);
-    ebookShell.classList.add('sidebar-collapsed');
+    closeSidebar();
   });
 });
 
 // ── Sidebar Toggle ──
-sidebarToggle.addEventListener('click', () => {
-  ebookShell.classList.toggle('sidebar-collapsed');
-});
+sidebarToggle.addEventListener('click', toggleSidebar);
+
+// ── Mobile overlay tap closes sidebar ──
+document.querySelector('.sidebar-overlay')?.addEventListener('click', closeSidebar);
 
 // ── Chapter Nav Bottom Click Delegation ──
 contentArea.addEventListener('click', e => {
