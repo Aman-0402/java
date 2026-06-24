@@ -8,6 +8,8 @@
   <h2>Why Authentication?</h2>
   <p>Right now anyone can call <code>DELETE /api/todos/1</code> and destroy data. Authentication prevents this — only users who prove their identity (login) can access protected endpoints.</p>
 
+  <div class="callout history">📜 <strong>History:</strong> JWT (JSON Web Token) was standardized as RFC 7519 in 2015 by the IETF. Before JWT, most web apps used server-side sessions — the server stored session data in memory or a database, and the client just sent a session ID cookie. JWTs moved session storage to the client (the token itself contains user data), reducing server memory usage and enabling stateless, horizontally-scalable architectures.</div>
+
   <h2>What is JWT?</h2>
   <p>JWT stands for <strong>JSON Web Token</strong>. After a user logs in, the server creates a signed token and sends it to the client. The client sends this token with every future request. The server verifies the signature to confirm the token is genuine — no database lookup needed.</p>
 
@@ -17,6 +19,8 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY5MDAwMH0.XyZ_signature
 # Part 1: Header (algorithm)
 # Part 2: Payload (user data — not secret, just encoded)
 # Part 3: Signature (proves it was made by your server)</code></pre>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> A JWT's signature uses HMAC-SHA256 — a cryptographic algorithm. HMAC stands for Hash-based Message Authentication Code. The math behind it involves modular arithmetic and was designed by Mihir Bellare and Ran Canetti in 1996. When your app validates a JWT, it's running a cryptographic proof that was peer-reviewed by cryptographers. You get military-grade security from a 3-line code snippet.</div>
 
   <div class="callout warning">
     ⚠️ The JWT payload is Base64-encoded, NOT encrypted. Never put passwords or sensitive data inside a JWT. It can be decoded by anyone.
@@ -136,6 +140,8 @@ const getTodos = async () => {
   });
   return res.json();
 };</code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Spotify uses JWT for its API authentication. When you connect a third-party app to Spotify (like a playlist manager), Spotify issues a JWT. The token contains your permissions (read playlists, modify library) encoded in the payload. The third-party app sends this token with every API request — Spotify validates the signature without hitting a database.</div>
 
   <div class="callout tip">
     💡 <code>localStorage</code> is simple for learning but has XSS risks in production. For production apps consider using <code>httpOnly</code> cookies instead.

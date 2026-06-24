@@ -39,6 +39,8 @@
   <p>The database stores data permanently. When a user registers, their email and password are saved to the database. When they log in next week, the backend reads that data back. Without a database, all data would vanish the moment the server restarts.</p>
   <p>We will use <strong>H2</strong> (an in-memory database, perfect for learning) and later you can swap it for <strong>MySQL</strong> or <strong>PostgreSQL</strong> with a single config change.</p>
 
+  <div class="callout history">📜 <strong>History:</strong> The term "full-stack developer" was coined around 2008 at Facebook. Facebook engineers were expected to work across the entire stack — from PHP backend to JavaScript frontend to MySQL databases. The term spread industrywide after a 2012 blog post by Facebook engineer Carlos Bueno titled "The Full Stack."</div>
+
   <h2>The Request-Response Cycle</h2>
   <p>Every web interaction follows this cycle:</p>
   <ol>
@@ -48,6 +50,8 @@
     <li>Backend formats the data as JSON and sends it back to the frontend.</li>
     <li>Frontend displays the data to the user.</li>
   </ol>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> A typical web request touches at least 5 layers: DNS server, load balancer, web server, application server, database. A "full stack" developer understands all of these. At large companies (Google, Amazon), specialists handle each layer. At startups, one developer handles all of them.</div>
 
   <div class="callout info">
     ℹ️ <strong>JSON</strong> (JavaScript Object Notation) is the universal language that backends and frontends use to exchange data. Example: <code>{"name": "Alice", "age": 25}</code>. It is readable by both Java and JavaScript — that is why it became the standard.
@@ -108,6 +112,8 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Instagram was built by just 13 engineers when it was acquired by Facebook for $1 billion in 2012. All 13 were full-stack developers. The backend was Python/Django, frontend was HTML/CSS/JS, database was PostgreSQL. 13 people built an app used by 30 million users. Full-stack skills made this possible.</div>
 
   <div class="callout tip">
     💡 <strong>Full stack does not mean you do everything alone.</strong> In a real company, frontend and backend teams are often separate. But knowing both sides makes you far more valuable — you can debug issues that cross the boundary, and you can build complete features yourself.

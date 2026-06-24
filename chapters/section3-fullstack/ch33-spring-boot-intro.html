@@ -10,6 +10,8 @@
   <p>Spring Boot flips this around with one principle: <strong>convention over configuration</strong>. Instead of asking you to configure everything, Spring Boot makes sensible decisions for you by default. You only need to override a setting when the default does not fit your needs.</p>
   <p>Think of it like a brand-new smartphone. Out of the box it already has a default ringtone, default wallpaper, and default apps. You can change any of them — but you do not have to before you can make your first call.</p>
 
+  <div class="callout history">📜 <strong>History:</strong> Spring Framework was created by Rod Johnson in 2003, published in his book "Expert One-on-One J2EE Design and Development." It was a reaction against J2EE (Java Enterprise Edition), which required writing 200+ lines of XML config for a simple database connection. Spring's tagline was "make Java development simple again." Spring Boot (2014) took this further — zero XML config required.</div>
+
   <h2>The Main Class: @SpringBootApplication</h2>
   <p>Every Spring Boot project has one main class. When you generated your project from Spring Initializr it was created for you:</p>
 
@@ -37,6 +39,8 @@ public class TodoApiApplication {
   <div class="callout info">
     ℹ️ <strong>What is a Bean?</strong> In Spring, a "bean" is simply an object that Spring creates and manages for you. Instead of writing <code>new MyService()</code>, you annotate a class and Spring creates and injects it wherever it is needed. This is called <strong>Dependency Injection</strong> and it is one of Spring's core ideas.
   </div>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Spring Boot is used by over 60% of Java enterprise developers. Companies using Spring Boot include Netflix (microservices), Alibaba (e-commerce), and Trivago (travel). Spring Boot's <code>@SpringBootApplication</code> annotation triggers 100+ auto-configuration classes that set up your entire application — database connections, web server, JSON serialization — in under a second.</div>
 
   <h2>How Auto-Configuration Works</h2>
   <p>When your app starts, Spring Boot looks at which libraries are on the classpath and configures itself accordingly:</p>
@@ -119,6 +123,8 @@ spring.datasource.password=
 # Enable the H2 web console at /h2-console
 spring.h2.console.enabled=true
 </code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Netflix uses Spring Boot for hundreds of microservices. Each service (authentication, recommendations, billing, streaming) is a separate Spring Boot application. Spring Boot's built-in health checks and metrics (<code>/actuator/health</code>) are how Netflix monitors that all 700+ services are running 24/7.</div>
 
   <div class="callout tip">
     💡 <strong>Change the port if 8080 is busy.</strong> If another application is already using port 8080, add <code>server.port=9090</code> (or any free port) to <code>application.properties</code> and restart. No code changes needed.

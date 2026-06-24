@@ -20,6 +20,8 @@
     <li><strong>React way:</strong> Declare <code>&lt;p&gt;{name}&lt;/p&gt;</code> and update the variable — like using JPA with auto-generated queries.</li>
   </ul>
 
+  <div class="callout history">📜 <strong>History:</strong> React was created by Jordan Walke at Facebook in 2011. Facebook's news feed was becoming impossible to maintain — UI state was inconsistent and bugs were everywhere. Walke invented React's core ideas (virtual DOM, one-way data flow) on a weekend and presented it internally. React was open-sourced in 2013. It is now the most popular JavaScript UI library in the world.</div>
+
   <h2>Why Use React with Spring Boot?</h2>
   <p>
     Spring Boot is excellent at serving data as JSON via REST APIs. React is excellent at consuming that JSON
@@ -148,6 +150,8 @@ function App() {
 
   <div class="callout tip">💡 <strong>Tip:</strong> Props flow <em>downward</em> — from parent to child. A child component never modifies its own props. If you need data to flow up, you pass a callback function as a prop.</div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> React's "Virtual DOM" is a lightweight JavaScript copy of the real browser DOM. When state changes, React compares the new Virtual DOM with the old one (called "diffing"), finds the minimum changes needed, and only updates those parts of the real DOM. This makes React fast — but the Virtual DOM itself isn't magic, just smart optimization.</div>
+
   <h2>useState — Local State</h2>
   <p>
     State is data that can change over time and when it changes, React <em>re-renders</em> the component automatically.
@@ -174,6 +178,8 @@ function Counter() {
   <pre><code class="language-javascript">const [stateName, setStateName] = useState(initialValue);</code></pre>
 
   <div class="callout warning">⚠️ <strong>Never mutate state directly.</strong> Always use the setter function. Writing <code>count = count + 1</code> will NOT trigger a re-render. You must write <code>setCount(count + 1)</code>. This is one of the most common React mistakes for beginners.</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> React powers the UIs of Facebook, Instagram, Airbnb, Netflix, and WhatsApp Web. WhatsApp Web's entire chat interface is a React application. When you send a message, React re-renders only the chat window, not the entire page. The responsiveness you experience is React's reconciliation algorithm at work.</div>
 
   <h2>useEffect — Side Effects and API Calls</h2>
   <p>

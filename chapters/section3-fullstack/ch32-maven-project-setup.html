@@ -10,6 +10,8 @@
   <p>Think of Maven as <strong>npm for Java</strong>. Just like <code>npm install</code> downloads all the JavaScript packages your project needs, Maven reads a single file called <code>pom.xml</code> and automatically downloads every Java library (called a <strong>dependency</strong>) your project needs from the internet.</p>
   <p>Maven also handles building, testing, and packaging your app — all from the command line.</p>
 
+  <div class="callout history">📜 <strong>History:</strong> Maven was created by Jason van Zyl in 2002 while working on a project at Apache Software Foundation. Before Maven, Java developers manually downloaded JAR files and managed classpaths. Maven introduced the revolutionary idea of declaring dependencies in XML and downloading them automatically. It was the npm of its era.</div>
+
   <h2>Understanding pom.xml</h2>
   <p>POM stands for <strong>Project Object Model</strong>. It is an XML file that lives at the root of your project and describes everything Maven needs to know about it.</p>
   <p>Here is a minimal Spring Boot pom.xml with explanations:</p>
@@ -134,6 +136,8 @@
     <li><code>pom.xml</code> — dependency and build configuration.</li>
   </ul>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Maven Central Repository (repo1.maven.org) hosts over 9 million JAR files (artifacts) from 500,000+ projects. When you add a dependency to <code>pom.xml</code>, Maven downloads it from this repository. It handles over 100 billion downloads per year — one of the most trafficked servers in the world.</div>
+
   <h2>Key Maven Commands</h2>
   <p>Run these in the terminal from your project root directory:</p>
 
@@ -159,6 +163,8 @@ mvn clean package
 ./mvnw spring-boot:run        # Linux/Mac
 mvnw.cmd spring-boot:run      # Windows
 </code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Every major Java framework (Spring, Hibernate, Apache Kafka, Elasticsearch) distributes through Maven Central. When Netflix writes new Java microservices, they use Maven/Gradle to pull in hundreds of dependencies. Without Maven, managing those dependencies manually would take days per project.</div>
 
   <div class="callout warning">
     ⚠️ <strong>Maven downloads dependencies on first run.</strong> The first time you run <code>mvn compile</code> or <code>mvn spring-boot:run</code>, Maven will download all dependency JARs from the internet into a local cache at <code>~/.m2/repository</code>. This can take a minute or two. Subsequent runs are instant because everything is cached.

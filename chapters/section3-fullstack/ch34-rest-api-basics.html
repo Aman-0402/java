@@ -9,6 +9,8 @@
   <p>REST stands for <strong>Representational State Transfer</strong>. A REST API is a set of URL endpoints that a client (browser, React app, mobile app) calls to read or change data on the server.</p>
   <p>Think of a restaurant menu. Each item (URL) tells the kitchen (server) what to do. You don't care how the kitchen works — you order and get food (data).</p>
 
+  <div class="callout history">📜 <strong>History:</strong> REST (Representational State Transfer) was defined by Roy Fielding in his 2000 PhD dissertation at UC Irvine. Fielding was one of the authors of the HTTP specification. He noticed that the web itself already followed certain architectural principles (stateless, resource-based URLs) and formalized them as REST. It became the dominant API style by 2010, replacing SOAP.</div>
+
   <h2>HTTP Verbs = CRUD</h2>
   <table class="comparison-table">
     <thead><tr><th>Verb</th><th>CRUD</th><th>URL</th><th>What it does</th></tr></thead>
@@ -91,6 +93,8 @@ public class TodoController {
     }
 }</code></pre>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Twitter's REST API receives over 500 million API calls per day. Every tweet, follow, and like is a REST API call. Twitter's API was so influential that it established conventions (JSON responses, resource URLs like <code>/users/:id/tweets</code>) that most modern REST APIs still follow.</div>
+
   <div class="callout tip">
     💡 <code>@CrossOrigin(origins = "*")</code> lets your React frontend (port 3000) call this API (port 8080). Without it the browser blocks the request with a CORS error.
   </div>
@@ -115,6 +119,8 @@ curl -X PUT http://localhost:8080/api/todos/1 \
 
 # Delete
 curl -X DELETE http://localhost:8080/api/todos/1</code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> When you order food on Zomato/Swiggy, at least 10 REST API calls happen: authentication check, restaurant list fetch, menu fetch, cart update, payment processing, order creation, restaurant notification, delivery assignment, location tracking, and notification push. Every tap triggers a REST call to a Spring Boot (or similar) backend.</div>
 
   <div class="callout info">
     ℹ️ On Windows use <strong>Postman</strong> (free GUI) instead of curl — much easier for testing APIs visually.

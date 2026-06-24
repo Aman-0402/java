@@ -13,6 +13,8 @@
   </ul>
   <p>React fetches data from Spring Boot using JavaScript's built-in <code>fetch()</code> function (or Axios, a popular library).</p>
 
+  <div class="callout history">📜 <strong>History:</strong> The <code>fetch()</code> API was introduced in 2015 as a modern replacement for <code>XMLHttpRequest</code> (XHR), which dated back to 1999. Microsoft created XHR for Outlook Web Access. Google used XHR for Gmail in 2004, pioneering AJAX (Asynchronous JavaScript and XML). When Gmail launched with live email updates without page reloads, it changed the web forever.</div>
+
   <h2>Step 1: Enable CORS in Spring Boot</h2>
   <p>By default, browsers block requests from <code>localhost:3000</code> to <code>localhost:8080</code> because they are different origins. You must tell Spring Boot to allow it:</p>
   <pre><code class="language-java">@RestController
@@ -21,6 +23,8 @@
 public class TodoController {
     // ...
 }</code></pre>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> CORS (Cross-Origin Resource Sharing) was introduced in 2006 as a browser security policy. Before CORS, a malicious website could make requests to your bank's API using your session cookies. CORS forces browsers to ask the server "Can this origin access you?" before sending the real request. The browser adds an <code>Origin</code> header; the server responds with <code>Access-Control-Allow-Origin</code>.</div>
 
   <div class="callout tip">
     💡 For production, replace <code>"http://localhost:3000"</code> with your actual frontend domain, e.g. <code>"https://myapp.netlify.app"</code>.
@@ -136,6 +140,8 @@ function App() {
 }
 
 export default App;</code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Every major app you use — Uber, Airbnb, LinkedIn — has a React (or similar) frontend calling a Java/Node/Python backend via API calls exactly like what you just built. The <code>fetch()</code> call you wrote is the same fundamental mechanism powering apps used by billions. The patterns don't change — only the scale does.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

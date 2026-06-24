@@ -13,6 +13,8 @@
     <li><strong>React frontend</strong> → <strong>Netlify</strong> (free tier)</li>
   </ul>
 
+  <div class="callout history">📜 <strong>History:</strong> Cloud hosting was revolutionized by Amazon Web Services (AWS) in 2006 when Amazon launched S3 (storage) and EC2 (virtual servers). Before AWS, companies bought physical servers, installed them in data centers, and managed everything manually. AWS let developers rent servers by the hour. This enabled startups to scale instantly without capital investment. Render and Railway are modern successors — even simpler than AWS.</div>
+
   <h2>Step 1: Prepare Spring Boot for Production</h2>
   <p>Switch from H2 (in-memory) to a real database. Render provides a free PostgreSQL database. Add the PostgreSQL driver:</p>
   <pre><code class="language-xml">&lt;dependency&gt;
@@ -36,6 +38,8 @@ target/your-app-name-0.0.1-SNAPSHOT.jar
 
 # Test it locally first:
 java -jar target/your-app-name-0.0.1-SNAPSHOT.jar</code></pre>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Netflix runs entirely on AWS (Amazon Web Services). They have over 1,000 microservices deployed across multiple AWS regions. In 2011, Netflix famously had a major AWS outage on Christmas Eve that took down their service for hours. This led them to build "Chaos Monkey" — a tool that randomly kills production servers to force engineers to build resilient systems.</div>
 
   <div class="callout tip">
     💡 <code>-DskipTests</code> skips tests during packaging to speed up the build. Always run tests separately with <code>mvn test</code> before deploying.
@@ -92,6 +96,8 @@ java -jar target/your-app-name-0.0.1-SNAPSHOT.jar</code></pre>
       <tr><td>Frontend live URL opens in browser</td><td>⬜</td></tr>
     </tbody>
   </table>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> When you deploy to Render, your Spring Boot JAR runs inside a Docker container on a Linux virtual machine in a data center. Render handles the Linux setup, SSL certificates, load balancing, and auto-restarts. What used to require a dedicated DevOps engineer — server provisioning, certificate management, deployment pipelines — now takes 5 minutes for a single developer.</div>
 
   <div class="callout info">
     ℹ️ <strong>Railway.app</strong> is an alternative to Render — also has a free tier, often simpler to configure. Both work well for learning projects.

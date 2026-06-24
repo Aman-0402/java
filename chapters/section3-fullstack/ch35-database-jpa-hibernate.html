@@ -9,6 +9,8 @@
   <p><strong>JPA</strong> (Java Persistence API) is a standard that lets you save Java objects directly to a database without writing SQL. Instead of writing <code>INSERT INTO todos ...</code>, you call <code>todoRepository.save(todo)</code> and JPA handles the SQL for you.</p>
   <p><strong>Hibernate</strong> is the most popular implementation of JPA — Spring Boot uses it automatically under the hood.</p>
 
+  <div class="callout history">📜 <strong>History:</strong> Hibernate was created by Gavin King in 2001 as a personal project. He was frustrated with writing repetitive JDBC SQL code. He released it as open source, and it was adopted so widely that Sun Microsystems based the JPA (Java Persistence API) standard on Hibernate's design in 2006. Gavin King was hired by JBoss (later Red Hat) specifically to continue developing Hibernate.</div>
+
   <div class="callout info">
     ℹ️ ORM = Object-Relational Mapping. JPA maps Java classes (objects) to database tables (relations). One class = one table. One field = one column.
   </div>
@@ -34,6 +36,8 @@ spring.datasource.driver-class-name=org.h2.Driver
 spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 spring.h2.console.enabled=true
 spring.jpa.show-sql=true</code></pre>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Hibernate generates SQL at runtime, which means you can switch from MySQL to PostgreSQL to Oracle by changing one line in <code>application.properties</code>. This database independence is hugely valuable for enterprises. 87% of Java enterprise applications use JPA/Hibernate for database access.</div>
 
   <div class="callout tip">
     💡 <code>spring.h2.console.enabled=true</code> gives you a web UI at <code>http://localhost:8080/h2-console</code> to inspect your database tables while developing.
@@ -109,6 +113,8 @@ public class TodoController {
         todoRepository.deleteById(id);
     }
 }</code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> eBay's product catalog — 1.5 billion listings — is stored in a database accessed through JPA. Each product is an <code>@Entity</code> class with <code>@Column</code> fields. When you search eBay, Hibernate translates your search into SQL, retrieves entities, and returns them as Java objects. The same ORM pattern you learned in this chapter powers one of the world's largest databases.</div>
 
   <div class="callout warning">
     ⚠️ H2 is an in-memory database — data still resets on restart. For production use MySQL or PostgreSQL. Just change the <code>application.properties</code> datasource URL and add the MySQL driver dependency.
