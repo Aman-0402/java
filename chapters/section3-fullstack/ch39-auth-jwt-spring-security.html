@@ -1,1 +1,152 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📙 Section 3 — Java Full Stack</span>
+    <h1>Chapter 39: Auth — JWT + Spring Security</h1>
+    <p class="chapter-intro">Secure your Spring Boot API so only logged-in users can access protected endpoints.</p>
+  </div>
 
+  <h2>Why Authentication?</h2>
+  <p>Right now anyone can call <code>DELETE /api/todos/1</code> and destroy data. Authentication prevents this — only users who prove their identity (login) can access protected endpoints.</p>
+
+  <h2>What is JWT?</h2>
+  <p>JWT stands for <strong>JSON Web Token</strong>. After a user logs in, the server creates a signed token and sends it to the client. The client sends this token with every future request. The server verifies the signature to confirm the token is genuine — no database lookup needed.</p>
+
+  <pre><code class="language-bash"># A JWT looks like this (3 parts separated by dots):
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY5MDAwMH0.XyZ_signature
+
+# Part 1: Header (algorithm)
+# Part 2: Payload (user data — not secret, just encoded)
+# Part 3: Signature (proves it was made by your server)</code></pre>
+
+  <div class="callout warning">
+    ⚠️ The JWT payload is Base64-encoded, NOT encrypted. Never put passwords or sensitive data inside a JWT. It can be decoded by anyone.
+  </div>
+
+  <h2>Step 1: Add Dependencies</h2>
+  <pre><code class="language-xml">&lt;!-- Spring Security --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;!-- JWT library (jjwt) --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
+    &lt;artifactId&gt;jjwt-api&lt;/artifactId&gt;
+    &lt;version&gt;0.12.3&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
+    &lt;artifactId&gt;jjwt-impl&lt;/artifactId&gt;
+    &lt;version&gt;0.12.3&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
+    &lt;artifactId&gt;jjwt-jackson&lt;/artifactId&gt;
+    &lt;version&gt;0.12.3&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+
+  <h2>Step 2: JWT Utility Class</h2>
+  <pre><code class="language-java">import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import java.util.Date;
+import javax.crypto.SecretKey;
+
+public class JwtUtil {
+
+    // Use a long, random secret key in production — store in environment variable
+    private static final String SECRET = "mySecretKey12345mySecretKey12345";
+    private static final SecretKey KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
+    private static final long EXPIRY = 1000 * 60 * 60 * 24; // 24 hours
+
+    public static String generateToken(String username) {
+        return Jwts.builder()
+            .subject(username)
+            .issuedAt(new Date())
+            .expiration(new Date(System.currentTimeMillis() + EXPIRY))
+            .signWith(KEY)
+            .compact();
+    }
+
+    public static String extractUsername(String token) {
+        return Jwts.parser()
+            .verifyWith(KEY)
+            .build()
+            .parseSignedClaims(token)
+            .getPayload()
+            .getSubject();
+    }
+
+    public static boolean isValid(String token) {
+        try {
+            extractUsername(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}</code></pre>
+
+  <h2>Step 3: Login Endpoint</h2>
+  <pre><code class="language-java">@RestController
+@CrossOrigin(origins = "*")
+public class AuthController {
+
+    @PostMapping("/api/login")
+    public ResponseEntity&lt;?&gt; login(@RequestBody LoginRequest req) {
+        // In real apps: check username/password against database
+        if ("user".equals(req.getUsername()) && "password".equals(req.getPassword())) {
+            String token = JwtUtil.generateToken(req.getUsername());
+            return ResponseEntity.ok(Map.of("token", token));
+        }
+        return ResponseEntity.status(401).body("Invalid credentials");
+    }
+}
+
+// Simple DTO
+class LoginRequest {
+    private String username;
+    private String password;
+    // getters and setters
+    public String getUsername() { return username; }
+    public void setUsername(String u) { this.username = u; }
+    public String getPassword() { return password; }
+    public void setPassword(String p) { this.password = p; }
+}</code></pre>
+
+  <h2>Step 4: Send Token from React</h2>
+  <pre><code class="language-javascript">// After login, store the token
+const login = async () => {
+  const res = await fetch('http://localhost:8080/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: 'user', password: 'password' })
+  });
+  const data = await res.json();
+  localStorage.setItem('token', data.token);
+};
+
+// Send token with protected requests
+const getTodos = async () => {
+  const token = localStorage.getItem('token');
+  const res = await fetch('http://localhost:8080/api/todos', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+  return res.json();
+};</code></pre>
+
+  <div class="callout tip">
+    💡 <code>localStorage</code> is simple for learning but has XSS risks in production. For production apps consider using <code>httpOnly</code> cookies instead.
+  </div>
+
+  <div class="callout info">
+    ℹ️ This chapter covers the core JWT concepts. Full Spring Security configuration (JWT filter, SecurityFilterChain) is an advanced topic — many production teams use libraries like Spring Security's OAuth2 resource server support or third-party auth providers (Auth0, Firebase Auth) to avoid writing JWT filters manually.
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Add the JWT utility class to your project. Call <code>POST /api/login</code> with Postman (body: <code>{"username":"user","password":"password"}</code>). Copy the returned token and decode it at <strong>jwt.io</strong> to see the payload contents.</p>
+  </div>
+</article>
