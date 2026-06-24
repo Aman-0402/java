@@ -1,1 +1,344 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📘 Section 2 — Java DSA</span>
+    <h1>Chapter 30: Graphs, BFS, and DFS</h1>
+    <p class="chapter-intro">Graphs model anything with connections — cities and roads, social networks, web pages and links — and BFS and DFS are the two fundamental algorithms for exploring them.</p>
+  </div>
 
+  <h2>What Is a Graph?</h2>
+  <p>
+    Imagine a map of cities connected by roads. Each city is a point, and each road is a line between two points. That is a graph. More formally:
+  </p>
+  <ul>
+    <li>A <strong>vertex</strong> (also called a node) is a point in the graph — a city, a person, a web page.</li>
+    <li>An <strong>edge</strong> is a connection between two vertices — a road, a friendship, a hyperlink.</li>
+  </ul>
+  <p>
+    Graphs are the most general data structure you have studied so far. Trees are actually a special case of a graph — a tree is a connected graph with no cycles.
+  </p>
+
+  <h2>Types of Graphs</h2>
+  <table>
+    <thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Undirected</strong></td><td>Edges go both ways</td><td>Roads between cities (you can drive either way)</td></tr>
+      <tr><td><strong>Directed</strong></td><td>Edges have a direction (one way)</td><td>Twitter follows (I follow you ≠ you follow me)</td></tr>
+      <tr><td><strong>Weighted</strong></td><td>Edges have a numeric cost</td><td>Roads with distances in km</td></tr>
+      <tr><td><strong>Unweighted</strong></td><td>All edges are equal</td><td>Friendship links in a social network</td></tr>
+    </tbody>
+  </table>
+
+  <h2>ASCII Diagram — Example Graph</h2>
+<pre>
+Undirected, unweighted graph (6 vertices, 7 edges):
+
+    (1)——(2)——(5)
+     |    |
+    (3)——(4)
+     |
+    (6)
+
+Edges: 1-2, 1-3, 2-4, 2-5, 3-4, 3-6, 4-5
+
+Adjacency list representation:
+  1 → [2, 3]
+  2 → [1, 4, 5]
+  3 → [1, 4, 6]
+  4 → [2, 3, 5]
+  5 → [2, 4]
+  6 → [3]
+</pre>
+
+  <h2>Representing a Graph in Java: Adjacency List</h2>
+  <p>
+    The most practical representation for most graph problems is an <strong>adjacency list</strong>: a map where each vertex maps to a list of its neighbours. This is memory-efficient for sparse graphs (few edges) and fast for iterating over neighbours.
+  </p>
+  <pre><code class="language-java">import java.util.*;
+
+public class Graph {
+
+    // Map: vertex → list of adjacent vertices
+    private Map&lt;Integer, List&lt;Integer&gt;&gt; adjacencyList;
+
+    public Graph() {
+        adjacencyList = new HashMap&lt;&gt;();
+    }
+
+    // Add a vertex (creates an empty neighbour list if needed)
+    public void addVertex(int vertex) {
+        adjacencyList.putIfAbsent(vertex, new ArrayList&lt;&gt;());
+    }
+
+    // Add an undirected edge between u and v
+    public void addEdge(int u, int v) {
+        adjacencyList.putIfAbsent(u, new ArrayList&lt;&gt;());
+        adjacencyList.putIfAbsent(v, new ArrayList&lt;&gt;());
+        adjacencyList.get(u).add(v);
+        adjacencyList.get(v).add(u);  // remove this line for a directed graph
+    }
+
+    public List&lt;Integer&gt; getNeighbors(int vertex) {
+        return adjacencyList.getOrDefault(vertex, new ArrayList&lt;&gt;());
+    }
+
+    public Set&lt;Integer&gt; getVertices() {
+        return adjacencyList.keySet();
+    }
+
+    // Build the example graph from the ASCII diagram above
+    public static Graph buildExampleGraph() {
+        Graph g = new Graph();
+        g.addEdge(1, 2);
+        g.addEdge(1, 3);
+        g.addEdge(2, 4);
+        g.addEdge(2, 5);
+        g.addEdge(3, 4);
+        g.addEdge(3, 6);
+        g.addEdge(4, 5);
+        return g;
+    }
+}
+</code></pre>
+
+  <h2>BFS — Breadth-First Search</h2>
+  <p>
+    BFS explores the graph <strong>level by level</strong>, starting from a source vertex. It visits all neighbours of the starting vertex first, then all neighbours of those neighbours, and so on — like ripples spreading outward from a stone dropped in water.
+  </p>
+  <p>
+    BFS uses a <strong>Queue</strong> (FIFO). It also needs a <code>visited</code> set to avoid revisiting vertices and getting stuck in cycles.
+  </p>
+  <p>
+    <strong>BFS finds the shortest path</strong> (in terms of number of edges) from the source to any reachable vertex in an unweighted graph. That is why it powers "degrees of separation" in social networks and shortest-route features.
+  </p>
+
+  <h3>BFS Step Trace — Starting from Vertex 1</h3>
+<pre>
+Graph:  1-2, 1-3, 2-4, 2-5, 3-4, 3-6, 4-5
+
+Start: source=1, visited={1}, queue=[1]
+
+Step 1: Dequeue 1. Visit 1.
+        Neighbours: 2, 3 (not visited)
+        Enqueue 2, 3 → queue=[2, 3], visited={1,2,3}
+
+Step 2: Dequeue 2. Visit 2.
+        Neighbours: 1(visited), 4, 5 (not visited)
+        Enqueue 4, 5 → queue=[3, 4, 5], visited={1,2,3,4,5}
+
+Step 3: Dequeue 3. Visit 3.
+        Neighbours: 1(visited), 4(visited), 6 (not visited)
+        Enqueue 6 → queue=[4, 5, 6], visited={1,2,3,4,5,6}
+
+Step 4: Dequeue 4. Visit 4.
+        Neighbours: 2,3,5 (all visited)
+        queue=[5, 6]
+
+Step 5: Dequeue 5. Visit 5.
+        Neighbours: 2,4 (all visited)
+        queue=[6]
+
+Step 6: Dequeue 6. Visit 6.
+        Neighbours: 3 (visited)
+        queue=[]
+
+BFS order: 1 → 2 → 3 → 4 → 5 → 6
+Level 0: 1
+Level 1: 2, 3       (1 edge from source)
+Level 2: 4, 5, 6    (2 edges from source)
+</pre>
+
+  <h3>BFS Java Implementation</h3>
+  <pre><code class="language-java">import java.util.*;
+
+public class BFS {
+
+    public static void bfs(Graph graph, int source) {
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+
+        // Start from the source vertex
+        visited.add(source);
+        queue.add(source);
+
+        System.out.print("BFS order: ");
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();  // dequeue the front element
+            System.out.print(current + " ");
+
+            // Enqueue all unvisited neighbours
+            for (int neighbor : graph.getNeighbors(current)) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);
+                }
+            }
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Graph g = Graph.buildExampleGraph();
+        bfs(g, 1);  // BFS order: 1 2 3 4 5 6
+    }
+}
+</code></pre>
+
+  <h2>DFS — Depth-First Search</h2>
+  <p>
+    DFS explores the graph by going as <strong>deep as possible</strong> down one path before backtracking to try another. Think of navigating a maze: you follow one corridor until you hit a dead end, then backtrack to the last junction and try a different corridor.
+  </p>
+  <p>
+    The recursive version of DFS uses the <strong>call stack</strong> implicitly, making the code very clean. You also need a <code>visited</code> set for the same reason as BFS.
+  </p>
+  <p>
+    DFS is useful for: detecting cycles, topological sorting, finding connected components, solving mazes, and exploring all possible paths.
+  </p>
+
+  <h3>DFS Step Trace — Starting from Vertex 1</h3>
+<pre>
+Graph:  1-2, 1-3, 2-4, 2-5, 3-4, 3-6, 4-5
+
+dfs(1):
+  Visit 1. Explore neighbours: [2, 3]
+  → dfs(2):
+      Visit 2. Explore neighbours: [1(visited), 4, 5]
+      → dfs(4):
+          Visit 4. Explore neighbours: [2(visited), 3, 5]
+          → dfs(3):
+              Visit 3. Explore neighbours: [1(visited), 4(visited), 6]
+              → dfs(6):
+                  Visit 6. Neighbours: [3(visited)] → return
+              return
+          → dfs(5):
+              Visit 5. Neighbours: [2(visited), 4(visited)] → return
+          return
+      → dfs(5): already visited, skip
+      return
+  → dfs(3): already visited, skip
+
+DFS order: 1 → 2 → 4 → 3 → 6 → 5
+</pre>
+
+  <h3>DFS Java Implementation (Recursive)</h3>
+  <pre><code class="language-java">import java.util.*;
+
+public class DFS {
+
+    public static void dfs(Graph graph, int current, Set&lt;Integer&gt; visited) {
+        visited.add(current);
+        System.out.print(current + " ");
+
+        // Recursively explore each unvisited neighbour
+        for (int neighbor : graph.getNeighbors(current)) {
+            if (!visited.contains(neighbor)) {
+                dfs(graph, neighbor, visited);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Graph g = Graph.buildExampleGraph();
+
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        System.out.print("DFS order: ");
+        dfs(g, 1, visited);  // DFS order: 1 2 4 3 6 5
+        System.out.println();
+    }
+}
+</code></pre>
+
+  <h2>BFS vs DFS — When to Use Which</h2>
+  <table>
+    <thead>
+      <tr><th>Property</th><th>BFS</th><th>DFS</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Data structure</strong></td><td>Queue (FIFO)</td><td>Stack (call stack / explicit)</td></tr>
+      <tr><td><strong>Explores</strong></td><td>Level by level</td><td>Deep first, then backtrack</td></tr>
+      <tr><td><strong>Shortest path?</strong></td><td>Yes (unweighted)</td><td>No</td></tr>
+      <tr><td><strong>Use when</strong></td><td>Shortest path, nearest neighbour</td><td>All paths, cycle detection, topological sort</td></tr>
+      <tr><td><strong>Memory</strong></td><td>More (stores entire level)</td><td>Less (stores one path at a time)</td></tr>
+      <tr><td><strong>Time complexity</strong></td><td>O(V + E)</td><td>O(V + E)</td></tr>
+    </tbody>
+  </table>
+  <p>
+    Both BFS and DFS have the same time complexity — O(V + E) where V is the number of vertices and E is the number of edges — because each vertex and each edge is visited exactly once.
+  </p>
+
+  <div class="callout tip">
+    💡 <strong>Tip — Always Track Visited Vertices:</strong> In a graph with cycles (which is most real-world graphs), forgetting the <code>visited</code> set will cause infinite loops. Unlike a tree, a graph can have multiple paths to the same node — you must remember where you have already been.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common Mistake — Disconnected Graphs:</strong> If the graph is not fully connected, starting BFS or DFS from a single vertex will only visit the vertices reachable from that vertex. To ensure every vertex is visited in a disconnected graph, wrap your BFS/DFS in a loop over all vertices and only start a traversal from unvisited ones. This pattern is used to count connected components.
+  </div>
+
+  <h2>Putting It All Together — Full Example</h2>
+  <pre><code class="language-java">import java.util.*;
+
+public class GraphDemo {
+
+    static Map&lt;Integer, List&lt;Integer&gt;&gt; graph = new HashMap&lt;&gt;();
+
+    static void addEdge(int u, int v) {
+        graph.computeIfAbsent(u, k -&gt; new ArrayList&lt;&gt;()).add(v);
+        graph.computeIfAbsent(v, k -&gt; new ArrayList&lt;&gt;()).add(u);
+    }
+
+    // BFS — finds shortest path (hop count) from source to all vertices
+    static void bfs(int source) {
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+        visited.add(source);
+        queue.add(source);
+        System.out.print("BFS: ");
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            System.out.print(node + " ");
+            for (int nb : graph.getOrDefault(node, List.of())) {
+                if (!visited.contains(nb)) {
+                    visited.add(nb);
+                    queue.add(nb);
+                }
+            }
+        }
+        System.out.println();
+    }
+
+    // DFS — recursive
+    static void dfs(int node, Set&lt;Integer&gt; visited) {
+        visited.add(node);
+        System.out.print(node + " ");
+        for (int nb : graph.getOrDefault(node, List.of())) {
+            if (!visited.contains(nb)) {
+                dfs(nb, visited);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        addEdge(1, 2); addEdge(1, 3); addEdge(2, 4);
+        addEdge(2, 5); addEdge(3, 4); addEdge(3, 6); addEdge(4, 5);
+
+        bfs(1);  // BFS: 1 2 3 4 5 6
+
+        System.out.print("DFS: ");
+        dfs(1, new HashSet&lt;&gt;());  // DFS: 1 2 4 3 6 5
+        System.out.println();
+    }
+}
+</code></pre>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Using the graph in this chapter (vertices 1–6, edges 1-2, 1-3, 2-4, 2-5, 3-4, 3-6, 4-5):
+    </p>
+    <ol>
+      <li>Run BFS starting from vertex 6. Write out the expected order before running the code.</li>
+      <li>Modify the BFS code to also print the distance (hop count) from the source to each vertex.</li>
+      <li><strong>Bonus:</strong> Write a method <code>isConnected(Graph g)</code> that returns <code>true</code> if every vertex in the graph can be reached from any other vertex (i.e., the graph is connected). Hint: run BFS from any vertex and check whether the visited set size equals the total number of vertices.</li>
+    </ol>
+  </div>
+</article>

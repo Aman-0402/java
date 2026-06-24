@@ -1,1 +1,227 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📘 Section 2 — Java DSA</span>
+    <h1>Chapter 26: Binary Search</h1>
+    <p class="chapter-intro">Binary search cuts a sorted array in half each time, finding any value in O(log n) steps instead of scanning every element.</p>
+  </div>
 
+  <h2>The Phone Book Analogy</h2>
+  <p>
+    Imagine you are looking for "Smith" in a phone book. You would <em>never</em> start at page one and read every name. Instead, you open the book in the middle. If the middle page shows "Miller", you know Smith is in the right half — so you discard the left half entirely and repeat on the remaining pages. That is <strong>binary search</strong>.
+  </p>
+  <p>
+    The key requirement: <strong>the collection must already be sorted</strong>. Binary search cannot work on a random pile of names any more than you could use the "open the middle" trick on a shuffled deck of cards.
+  </p>
+
+  <h2>Linear Search vs Binary Search</h2>
+  <p>
+    <strong>Linear search</strong> checks every element from left to right until it finds the target or runs out of elements. It works on unsorted data but is slow for large arrays — up to <code>n</code> comparisons in the worst case (O(n)).
+  </p>
+  <p>
+    <strong>Binary search</strong> eliminates half the remaining elements with each comparison. An array of 1,000,000 elements needs at most 20 comparisons (because 2<sup>20</sup> &gt; 1,000,000). That is O(log n).
+  </p>
+
+  <h2>Algorithm Steps</h2>
+  <p>
+    Three pointers track the search space: <code>low</code> (start index), <code>high</code> (end index), and <code>mid</code> (middle index).
+  </p>
+  <ol>
+    <li>Set <code>low = 0</code> and <code>high = array.length - 1</code>.</li>
+    <li>While <code>low &lt;= high</code>:</li>
+    <li>&nbsp;&nbsp;Calculate <code>mid = low + (high - low) / 2</code>.</li>
+    <li>&nbsp;&nbsp;If <code>array[mid] == target</code> → found, return <code>mid</code>.</li>
+    <li>&nbsp;&nbsp;If <code>array[mid] &lt; target</code> → target is in the right half, set <code>low = mid + 1</code>.</li>
+    <li>&nbsp;&nbsp;If <code>array[mid] &gt; target</code> → target is in the left half, set <code>high = mid - 1</code>.</li>
+    <li>If the loop ends without a match, return <code>-1</code> (not found).</li>
+  </ol>
+
+  <h2>ASCII Diagram — Array [1, 3, 5, 7, 9, 11, 13]</h2>
+<pre>
+Index:   0    1    2    3    4    5    6
+Array: [ 1,   3,   5,   7,   9,  11,  13 ]
+        ^                              ^
+       low                           high
+
+Searching for 7:
+
+Step 1:  low=0, high=6
+         mid = 0 + (6-0)/2 = 3
+         array[3] = 7  ==  target (7)
+         >>> FOUND at index 3 <<<
+
+Searching for 11:
+
+Step 1:  low=0, high=6
+         mid=3, array[3]=7  <  11
+         Target in RIGHT half → low = 4
+
+         [ 1,   3,   5,   7, | 9,  11,  13 ]
+                               ^           ^
+                              low         high
+
+Step 2:  low=4, high=6
+         mid = 4 + (6-4)/2 = 5
+         array[5] = 11  ==  target (11)
+         >>> FOUND at index 5 <<<
+</pre>
+
+  <h2>Step-by-Step Trace — Finding 7 in [1, 3, 5, 7, 9, 11, 13]</h2>
+  <table>
+    <thead>
+      <tr><th>Step</th><th>low</th><th>high</th><th>mid</th><th>array[mid]</th><th>Decision</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>0</td><td>6</td><td>3</td><td>7</td><td>7 == 7 → return index 3</td></tr>
+    </tbody>
+  </table>
+
+  <p>One single comparison for a 7-element array! Now trace finding <strong>13</strong> (worst case — rightmost element):</p>
+  <table>
+    <thead>
+      <tr><th>Step</th><th>low</th><th>high</th><th>mid</th><th>array[mid]</th><th>Decision</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>0</td><td>6</td><td>3</td><td>7</td><td>7 &lt; 13 → low = 4</td></tr>
+      <tr><td>2</td><td>4</td><td>6</td><td>5</td><td>11</td><td>11 &lt; 13 → low = 6</td></tr>
+      <tr><td>3</td><td>6</td><td>6</td><td>6</td><td>13</td><td>13 == 13 → return index 6</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Java Implementation — Iterative</h2>
+  <pre><code class="language-java">public class BinarySearch {
+
+    public static int binarySearch(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            // Safe mid: avoids integer overflow when low+high is large
+            int mid = low + (high - low) / 2;
+
+            if (arr[mid] == target) {
+                return mid;           // found — return the index
+            } else if (arr[mid] < target) {
+                low = mid + 1;        // target is in the right half
+            } else {
+                high = mid - 1;       // target is in the left half
+            }
+        }
+
+        return -1;  // target not in array
+    }
+
+    public static void main(String[] args) {
+        int[] sorted = {1, 3, 5, 7, 9, 11, 13};
+
+        System.out.println(binarySearch(sorted, 7));   // 3
+        System.out.println(binarySearch(sorted, 11));  // 5
+        System.out.println(binarySearch(sorted, 13));  // 6
+        System.out.println(binarySearch(sorted, 4));   // -1 (not found)
+    }
+}
+</code></pre>
+
+  <h2>Java Implementation — Recursive</h2>
+  <pre><code class="language-java">public class BinarySearchRecursive {
+
+    public static int binarySearch(int[] arr, int target, int low, int high) {
+        // Base case: search space is empty
+        if (low > high) {
+            return -1;
+        }
+
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == target) {
+            return mid;
+        } else if (arr[mid] < target) {
+            // Search the right half
+            return binarySearch(arr, target, mid + 1, high);
+        } else {
+            // Search the left half
+            return binarySearch(arr, target, low, mid - 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] sorted = {1, 3, 5, 7, 9, 11, 13};
+
+        // Pass the full range on the first call
+        int result = binarySearch(sorted, 7, 0, sorted.length - 1);
+        System.out.println("Found at index: " + result);  // 3
+
+        int missing = binarySearch(sorted, 4, 0, sorted.length - 1);
+        System.out.println("Found at index: " + missing); // -1
+    }
+}
+</code></pre>
+
+  <h2>Built-in: <code>Arrays.binarySearch()</code></h2>
+  <p>
+    Java's standard library ships a ready-to-use binary search. It returns the index of the target if found, or a negative value if not found. The negative value encodes where the element would be inserted to maintain sorted order.
+  </p>
+  <pre><code class="language-java">import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class BuiltInBinarySearch {
+    public static void main(String[] args) {
+        int[] sorted = {1, 3, 5, 7, 9, 11, 13};
+
+        // Returns the index (3) when found
+        int found = Arrays.binarySearch(sorted, 7);
+        System.out.println("Found at: " + found);   // 3
+
+        // Returns a negative number when not found
+        int missing = Arrays.binarySearch(sorted, 4);
+        System.out.println("Not found: " + missing); // negative
+
+        // Also works on sorted List
+        List&lt;Integer&gt; list = List.of(1, 3, 5, 7, 9, 11, 13);
+        int idx = Collections.binarySearch(list, 11);
+        System.out.println("List search: " + idx);   // 5
+    }
+}
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Tip — Safe Mid Calculation:</strong> Always compute <code>mid = low + (high - low) / 2</code> instead of <code>(low + high) / 2</code>. When both <code>low</code> and <code>high</code> are large integers their sum can overflow a 32-bit <code>int</code>. The safe formula prevents that subtle bug. This was actually a bug in Java's own <code>Arrays.binarySearch()</code> for years before it was fixed.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common Mistake — Searching an Unsorted Array:</strong> Binary search gives silently wrong answers on unsorted data — it will not throw an exception or warn you. Always sort the array first with <code>Arrays.sort(arr)</code>. If you need to search an unsorted collection use linear search instead; binary search on unsorted data is worse than useless because you cannot trust the result.
+  </div>
+
+  <h2>Why O(log n)?</h2>
+  <p>
+    Each step halves the search space. Starting from <code>n</code> elements:
+  </p>
+<pre>
+After 1 step:  n / 2    elements remain
+After 2 steps: n / 4    elements remain
+After 3 steps: n / 8    elements remain
+After k steps: n / 2^k  elements remain
+
+Search ends when n / 2^k = 1
+Solving: k = log₂(n)
+
+Examples:
+  n = 10        →  k ≤  4 comparisons
+  n = 1,000     →  k ≤ 10 comparisons
+  n = 1,000,000 →  k ≤ 20 comparisons
+  n = 1,000,000,000 → k ≤ 30 comparisons
+</pre>
+  <p>
+    A billion-element array, 30 comparisons. That is the power of logarithmic growth.
+  </p>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Write a method <code>countSteps(int[] arr, int target)</code> that returns the number of comparisons binary search makes before finding (or failing to find) the target. Test it on arrays of size 10, 100, and 1000 and verify that the step count matches the O(log n) prediction.
+    </p>
+    <p>
+      <strong>Bonus:</strong> Implement a binary search that finds the <em>first</em> occurrence of a target in a sorted array with duplicates. For example, searching for 4 in <code>[2, 4, 4, 4, 7]</code> should return index 1, not 2 or 3.
+    </p>
+  </div>
+</article>

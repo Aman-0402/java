@@ -1,1 +1,294 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📘 Section 2 — Java DSA</span>
+    <h1>Chapter 27: Sorting Algorithms</h1>
+    <p class="chapter-intro">Sorting is the most studied problem in computer science — understanding the classic algorithms teaches you how to think about comparisons, swaps, and efficiency.</p>
+  </div>
 
+  <h2>Why Sorting Matters</h2>
+  <p>
+    Sorted data unlocks faster everything. Binary search only works on sorted arrays. Database indexes are sorted. Auto-complete suggestions are sorted. Even your file explorer shows files in sorted order. A solid grasp of sorting algorithms also teaches you how to measure and compare algorithmic efficiency — the same thinking you use for every DSA problem.
+  </p>
+  <p>
+    In this chapter you will learn three classic sorting algorithms — Bubble Sort, Selection Sort, and Insertion Sort — then see when to reach for Java's built-in <code>Arrays.sort()</code> instead.
+  </p>
+
+  <h2>Bubble Sort</h2>
+  <p>
+    Imagine bubbles rising to the surface of water: large values "bubble up" to the end of the array through repeated swaps with their neighbours. Each full pass through the array moves the next largest element to its correct position at the right end.
+  </p>
+
+  <h3>ASCII Diagram — Bubble Sort on [5, 3, 8, 1, 4]</h3>
+<pre>
+Start: [ 5, 3, 8, 1, 4 ]
+
+Pass 1 — compare and swap adjacent pairs:
+  Compare 5,3 → swap  →  [ 3, 5, 8, 1, 4 ]
+  Compare 5,8 → OK    →  [ 3, 5, 8, 1, 4 ]
+  Compare 8,1 → swap  →  [ 3, 5, 1, 8, 4 ]
+  Compare 8,4 → swap  →  [ 3, 5, 1, 4, 8 ]   ← 8 is in place
+
+Pass 2:
+  Compare 3,5 → OK    →  [ 3, 5, 1, 4, 8 ]
+  Compare 5,1 → swap  →  [ 3, 1, 5, 4, 8 ]
+  Compare 5,4 → swap  →  [ 3, 1, 4, 5, 8 ]   ← 5 is in place
+
+Pass 3:
+  Compare 3,1 → swap  →  [ 1, 3, 4, 5, 8 ]
+  Compare 3,4 → OK    →  [ 1, 3, 4, 5, 8 ]   ← 4 is in place
+
+Pass 4:
+  Compare 1,3 → OK    →  [ 1, 3, 4, 5, 8 ]   ← done
+
+Result: [ 1, 3, 4, 5, 8 ] ✓
+</pre>
+
+  <h3>Step-by-Step Trace</h3>
+  <table>
+    <thead><tr><th>Pass</th><th>Array after pass</th><th>Largest placed</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>[3, 5, 1, 4, <strong>8</strong>]</td><td>8 at index 4</td></tr>
+      <tr><td>2</td><td>[3, 1, 4, <strong>5</strong>, 8]</td><td>5 at index 3</td></tr>
+      <tr><td>3</td><td>[1, 3, <strong>4</strong>, 5, 8]</td><td>4 at index 2</td></tr>
+      <tr><td>4</td><td>[<strong>1</strong>, <strong>3</strong>, 4, 5, 8]</td><td>sorted</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Java Implementation</h3>
+  <pre><code class="language-java">public class BubbleSort {
+
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+
+        for (int pass = 0; pass < n - 1; pass++) {
+            // After each pass, the last (pass+1) elements are sorted
+            for (int i = 0; i < n - 1 - pass; i++) {
+                if (arr[i] > arr[i + 1]) {
+                    // Swap adjacent elements
+                    int temp = arr[i];
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] data = {5, 3, 8, 1, 4};
+        bubbleSort(data);
+
+        for (int val : data) {
+            System.out.print(val + " ");  // 1 3 4 5 8
+        }
+    }
+}
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Optimization:</strong> Add a <code>boolean swapped</code> flag inside the outer loop. If a full inner pass completes with zero swaps, the array is already sorted — break early. This makes Bubble Sort O(n) on an already-sorted array (best case).
+  </div>
+
+  <h2>Selection Sort</h2>
+  <p>
+    Think of selecting players for a team by always picking the best remaining player. Selection Sort scans the unsorted portion of the array to find the minimum element, then swaps it into the first position of the unsorted portion. It divides the array into a sorted left section and an unsorted right section, growing the sorted section one element at a time.
+  </p>
+
+  <h3>ASCII Diagram — Selection Sort on [5, 3, 8, 1, 4]</h3>
+<pre>
+Start: [ 5, 3, 8, 1, 4 ]
+        |___ unsorted __|
+
+Pass 1: Find min in [5,3,8,1,4] → min=1 at index 3
+        Swap index 0 and index 3
+        [ 1 | 3, 8, 5, 4 ]
+        sorted^  unsorted
+
+Pass 2: Find min in [3,8,5,4] → min=3 at index 1
+        Swap index 1 with itself (no-op)
+        [ 1, 3 | 8, 5, 4 ]
+
+Pass 3: Find min in [8,5,4] → min=4 at index 4
+        Swap index 2 and index 4
+        [ 1, 3, 4 | 5, 8 ]
+
+Pass 4: Find min in [5,8] → min=5 at index 3
+        Swap index 3 with itself (no-op)
+        [ 1, 3, 4, 5 | 8 ]
+
+Result: [ 1, 3, 4, 5, 8 ] ✓
+</pre>
+
+  <h3>Step-by-Step Trace</h3>
+  <table>
+    <thead><tr><th>Pass</th><th>Min found</th><th>Swap</th><th>Array after pass</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>1 (index 3)</td><td>index 0 ↔ 3</td><td>[<strong>1</strong>, 3, 8, 5, 4]</td></tr>
+      <tr><td>2</td><td>3 (index 1)</td><td>no-op</td><td>[1, <strong>3</strong>, 8, 5, 4]</td></tr>
+      <tr><td>3</td><td>4 (index 4)</td><td>index 2 ↔ 4</td><td>[1, 3, <strong>4</strong>, 5, 8]</td></tr>
+      <tr><td>4</td><td>5 (index 3)</td><td>no-op</td><td>[1, 3, 4, <strong>5</strong>, 8]</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Java Implementation</h3>
+  <pre><code class="language-java">public class SelectionSort {
+
+    public static void selectionSort(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 0; i < n - 1; i++) {
+            // Find the index of the minimum element in arr[i..n-1]
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+
+            // Swap the found minimum into position i
+            int temp = arr[minIndex];
+            arr[minIndex] = arr[i];
+            arr[i] = temp;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] data = {5, 3, 8, 1, 4};
+        selectionSort(data);
+
+        for (int val : data) {
+            System.out.print(val + " ");  // 1 3 4 5 8
+        }
+    }
+}
+</code></pre>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common Mistake — Selection Sort is Not Stable:</strong> A <em>stable</em> sort preserves the original order of equal elements. Selection Sort is not stable: when it swaps the minimum into position it may reorder equal elements. If you need stable sorting of objects use Insertion Sort or <code>Arrays.sort()</code> (which uses TimSort, a stable algorithm).
+  </div>
+
+  <h2>Insertion Sort</h2>
+  <p>
+    Think of how you sort playing cards in your hand. You pick up one card at a time and slide it left into its correct position among the cards you already hold. Insertion Sort builds a sorted sub-array on the left, one element at a time, by inserting each new element into the right position.
+  </p>
+
+  <h3>ASCII Diagram — Insertion Sort on [5, 3, 8, 1, 4]</h3>
+<pre>
+Start: [ 5 | 3, 8, 1, 4 ]   (first element trivially sorted)
+
+Step 1: Pick 3. Slide left past 5.
+        [ 3, 5 | 8, 1, 4 ]
+
+Step 2: Pick 8. 8 > 5, stays put.
+        [ 3, 5, 8 | 1, 4 ]
+
+Step 3: Pick 1. Slide left past 8, 5, 3.
+        [ 1, 3, 5, 8 | 4 ]
+
+Step 4: Pick 4. Slide left past 8, 5.
+        [ 1, 3, 4, 5, 8 ]
+
+Result: [ 1, 3, 4, 5, 8 ] ✓
+</pre>
+
+  <h3>Step-by-Step Trace</h3>
+  <table>
+    <thead><tr><th>Step</th><th>Element inserted</th><th>Shifted right</th><th>Array after step</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>3</td><td>5 →</td><td>[3, 5, 8, 1, 4]</td></tr>
+      <tr><td>2</td><td>8</td><td>(none)</td><td>[3, 5, 8, 1, 4]</td></tr>
+      <tr><td>3</td><td>1</td><td>8, 5, 3 →</td><td>[1, 3, 5, 8, 4]</td></tr>
+      <tr><td>4</td><td>4</td><td>8, 5 →</td><td>[1, 3, 4, 5, 8]</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Java Implementation</h3>
+  <pre><code class="language-java">public class InsertionSort {
+
+    public static void insertionSort(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 1; i < n; i++) {
+            int key = arr[i];  // the element to insert
+            int j = i - 1;
+
+            // Shift elements that are greater than key one position to the right
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+
+            // Place key in its correct sorted position
+            arr[j + 1] = key;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] data = {5, 3, 8, 1, 4};
+        insertionSort(data);
+
+        for (int val : data) {
+            System.out.print(val + " ");  // 1 3 4 5 8
+        }
+    }
+}
+</code></pre>
+
+  <h2>Built-in: <code>Arrays.sort()</code> and TimSort</h2>
+  <p>
+    Java's <code>Arrays.sort()</code> uses <strong>TimSort</strong> for object arrays (and a dual-pivot Quicksort for primitive arrays like <code>int[]</code>). TimSort is a hybrid of Merge Sort and Insertion Sort engineered by Tim Peters. It is:
+  </p>
+  <ul>
+    <li><strong>Stable</strong> — equal elements keep their original order.</li>
+    <li><strong>Adaptive</strong> — O(n) on already-sorted or nearly-sorted data.</li>
+    <li><strong>O(n log n)</strong> worst case — guaranteed, unlike basic Quicksort.</li>
+  </ul>
+  <pre><code class="language-java">import java.util.Arrays;
+
+int[] numbers = {5, 3, 8, 1, 4};
+Arrays.sort(numbers);
+System.out.println(Arrays.toString(numbers));  // [1, 3, 4, 5, 8]
+
+// Sort only a subrange [from, to)
+Arrays.sort(numbers, 1, 4);  // sorts indices 1, 2, 3
+
+// Sort objects (uses TimSort — stable)
+String[] words = {"banana", "apple", "cherry"};
+Arrays.sort(words);
+System.out.println(Arrays.toString(words));  // [apple, banana, cherry]
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>When to Write Your Own vs Use the Built-in:</strong> In production code, always use <code>Arrays.sort()</code> — it is faster, tested, and optimised. Write Bubble/Selection/Insertion Sort only for learning, interviews, embedded environments with no standard library, or situations where you need to understand and control every comparison.
+  </div>
+
+  <h2>Comparison Table</h2>
+  <table>
+    <thead>
+      <tr><th>Algorithm</th><th>Best Case</th><th>Average Case</th><th>Worst Case</th><th>Stable?</th><th>Swaps</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Bubble Sort</td><td>O(n)*</td><td>O(n²)</td><td>O(n²)</td><td>Yes</td><td>O(n²)</td></tr>
+      <tr><td>Selection Sort</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>No</td><td>O(n)</td></tr>
+      <tr><td>Insertion Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>Yes</td><td>O(n²)</td></tr>
+      <tr><td>Arrays.sort() (TimSort)</td><td>O(n)</td><td>O(n log n)</td><td>O(n log n)</td><td>Yes</td><td>O(n log n)</td></tr>
+    </tbody>
+  </table>
+  <p><small>* Bubble Sort is O(n) best case only with the early-exit optimization.</small></p>
+  <p>
+    <strong>Practical takeaway:</strong> All three classic sorts are fine for arrays of a few dozen elements. For thousands or millions of elements, the O(n²) cost becomes unacceptable — use <code>Arrays.sort()</code>.
+  </p>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common Mistake — Forgetting the Inner Loop Bound in Bubble Sort:</strong> Many beginners write the inner loop as <code>i &lt; n - 1</code> instead of <code>i &lt; n - 1 - pass</code>. The naive version still sorts correctly but wastes time comparing already-sorted elements at the right end — an easy fix that halves the work.
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Implement all three sorting algorithms and add a counter to each that tracks how many <em>swaps</em> (or shifts) each algorithm performs on the same input array <code>{9, 7, 5, 3, 1}</code> (reverse-sorted — the worst case for all three). Print the swap count beside the sorted result. Which algorithm uses the fewest swaps?
+    </p>
+    <p>
+      <strong>Bonus:</strong> Modify Bubble Sort to add the early-exit flag and verify that it exits in a single pass when given an already-sorted array <code>{1, 3, 5, 7, 9}</code>.
+    </p>
+  </div>
+</article>

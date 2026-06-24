@@ -1,1 +1,265 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📘 Section 2 — Java DSA</span>
+    <h1>Chapter 28: Trees and Binary Search Trees</h1>
+    <p class="chapter-intro">A tree is a hierarchical data structure where every node has at most one parent — understanding trees unlocks file systems, databases, compilers, and much more.</p>
+  </div>
 
+  <h2>What Is a Tree?</h2>
+  <p>
+    Think of a family tree. There is one person at the top — a great-grandparent — and they have children, who have children of their own, and so on. No child has two parents in the tree (it is not a social graph, it is a strict hierarchy). That is exactly how a tree data structure works.
+  </p>
+  <p>
+    Unlike linked lists, stacks, and queues — which are all <em>linear</em> (one element follows another in a line) — a tree is <em>hierarchical</em>: each element can branch into multiple children.
+  </p>
+
+  <h2>Terminology</h2>
+  <table>
+    <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Node</strong></td><td>A single element in the tree, holding data.</td></tr>
+      <tr><td><strong>Root</strong></td><td>The topmost node; the tree's entry point. Has no parent.</td></tr>
+      <tr><td><strong>Leaf</strong></td><td>A node with no children (at the bottom of the tree).</td></tr>
+      <tr><td><strong>Parent</strong></td><td>A node that has one or more children below it.</td></tr>
+      <tr><td><strong>Child</strong></td><td>A node directly connected below a parent.</td></tr>
+      <tr><td><strong>Subtree</strong></td><td>Any node together with all its descendants.</td></tr>
+      <tr><td><strong>Height</strong></td><td>The number of edges on the longest path from root to a leaf.</td></tr>
+      <tr><td><strong>Depth</strong></td><td>The number of edges from the root to a particular node.</td></tr>
+      <tr><td><strong>Level</strong></td><td>All nodes at the same depth. Root is level 0.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Binary Tree</h2>
+  <p>
+    A <strong>binary tree</strong> is a tree where each node has <em>at most two children</em>, called the <strong>left child</strong> and the <strong>right child</strong>. "At most" means a node can have zero, one, or two children — never three or more.
+  </p>
+<pre>
+Binary Tree — general (no ordering rule):
+
+           10          ← root (depth 0)
+          /  \
+         5    15       ← depth 1
+        / \     \
+       3   7    20     ← depth 2 (leaves: 3, 7, 20)
+
+Height = 2  (two edges from root to deepest leaf)
+</pre>
+
+  <h2>Binary Search Tree (BST)</h2>
+  <p>
+    A <strong>Binary Search Tree</strong> is a binary tree with one extra rule that makes searching fast:
+  </p>
+  <blockquote>
+    For every node <code>N</code>: all values in the <strong>left subtree</strong> are <strong>less than</strong> <code>N.value</code>, and all values in the <strong>right subtree</strong> are <strong>greater than</strong> <code>N.value</code>.
+  </blockquote>
+  <p>
+    This ordering rule means you can find any value using binary-search-like logic: at each node, decide whether to go left or right. You eliminate half the remaining tree at each step, giving O(log n) average-case search.
+  </p>
+
+  <h2>ASCII Diagram — BST with Values [8, 3, 10, 1, 6, 14, 4, 7]</h2>
+<pre>
+Insert order: 8, 3, 10, 1, 6, 14, 4, 7
+
+            8           ← root
+           / \
+          3   10
+         / \    \
+        1   6   14
+           / \
+          4   7
+
+BST property check:
+  Left of 8:  [3,1,6,4,7]  — all &lt; 8  ✓
+  Right of 8: [10,14]       — all &gt; 8  ✓
+  Left of 6:  [4]           — 4 &lt; 6   ✓
+  Right of 6: [7]           — 7 &gt; 6   ✓
+</pre>
+
+  <h2>BST Operations</h2>
+
+  <h3>Insert</h3>
+  <p>
+    Start at the root. If the new value is less than the current node, go left; if greater, go right. Repeat until you reach an empty spot (<code>null</code>), then place the new node there.
+  </p>
+<pre>
+Insert 5 into the BST above:
+
+  Start at 8: 5 &lt; 8 → go left
+  At 3:       5 &gt; 3 → go right
+  At 6:       5 &lt; 6 → go left
+  At 4:       5 &gt; 4 → go right
+  4.right is null → insert 5 here
+
+            8
+           / \
+          3   10
+         / \    \
+        1   6   14
+           / \
+          4   7
+           \
+            5   ← newly inserted
+</pre>
+
+  <h3>Search</h3>
+  <p>
+    Same logic as insert: compare the target with the current node, go left if smaller, right if greater, return true when you find it, return false when you hit null.
+  </p>
+<pre>
+Search for 6:
+
+  Start at 8: 6 &lt; 8 → go left
+  At 3:       6 &gt; 3 → go right
+  At 6:       6 == 6 → FOUND ✓  (2 comparisons from root)
+
+Search for 5 (not in tree):
+
+  Start at 8: 5 &lt; 8 → left
+  At 3:       5 &gt; 3 → right
+  At 6:       5 &lt; 6 → left
+  At 4:       5 &gt; 4 → right
+  null → NOT FOUND
+</pre>
+
+  <h2>In-Order Traversal</h2>
+  <p>
+    There are three classic ways to traverse (visit every node in) a binary tree:
+  </p>
+  <ul>
+    <li><strong>In-order</strong>: left subtree → current node → right subtree</li>
+    <li><strong>Pre-order</strong>: current node → left subtree → right subtree</li>
+    <li><strong>Post-order</strong>: left subtree → right subtree → current node</li>
+  </ul>
+  <p>
+    The magic of in-order traversal on a BST: it visits nodes in <strong>ascending sorted order</strong>. This is guaranteed by the BST property — every node in the left subtree is smaller, so you visit smaller values first, then the current node, then larger values.
+  </p>
+<pre>
+In-order traversal of BST above:
+  Visit 1, 3, 4, 6, 7, 8, 10, 14
+
+  That is the sorted order of all inserted values. ✓
+</pre>
+
+  <h2>Java Implementation</h2>
+  <pre><code class="language-java">public class BinarySearchTree {
+
+    // Each node holds a value and references to left and right children
+    static class Node {
+        int value;
+        Node left;
+        Node right;
+
+        Node(int value) {
+            this.value = value;
+            this.left = null;
+            this.right = null;
+        }
+    }
+
+    private Node root;
+
+    // Insert a value into the BST
+    public void insert(int value) {
+        root = insertRecursive(root, value);
+    }
+
+    private Node insertRecursive(Node current, int value) {
+        // Base case: we found the empty spot — create a new node here
+        if (current == null) {
+            return new Node(value);
+        }
+
+        if (value < current.value) {
+            current.left = insertRecursive(current.left, value);
+        } else if (value > current.value) {
+            current.right = insertRecursive(current.right, value);
+        }
+        // If value == current.value, duplicates are ignored here
+
+        return current;
+    }
+
+    // Search for a value — returns true if found, false otherwise
+    public boolean search(int value) {
+        return searchRecursive(root, value);
+    }
+
+    private boolean searchRecursive(Node current, int value) {
+        if (current == null) {
+            return false;  // reached a dead end — not found
+        }
+        if (value == current.value) {
+            return true;   // found!
+        }
+        if (value < current.value) {
+            return searchRecursive(current.left, value);
+        } else {
+            return searchRecursive(current.right, value);
+        }
+    }
+
+    // In-order traversal: visits nodes in sorted ascending order
+    public void inOrder() {
+        inOrderRecursive(root);
+        System.out.println();
+    }
+
+    private void inOrderRecursive(Node current) {
+        if (current == null) return;
+
+        inOrderRecursive(current.left);   // visit left subtree
+        System.out.print(current.value + " ");  // visit current node
+        inOrderRecursive(current.right);  // visit right subtree
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTree bst = new BinarySearchTree();
+
+        // Build the tree
+        int[] values = {8, 3, 10, 1, 6, 14, 4, 7};
+        for (int v : values) {
+            bst.insert(v);
+        }
+
+        // In-order traversal prints sorted output
+        System.out.print("In-order: ");
+        bst.inOrder();  // 1 3 4 6 7 8 10 14
+
+        // Search
+        System.out.println("Search 6: " + bst.search(6));   // true
+        System.out.println("Search 5: " + bst.search(5));   // false
+        System.out.println("Search 14: " + bst.search(14)); // true
+    }
+}
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Tip — BST Gives You a Free Sort:</strong> If you insert <em>n</em> elements into a BST one at a time and then do an in-order traversal, you get them back in sorted order. This is called <em>Tree Sort</em> and runs in O(n log n) for a balanced tree — the same complexity as Merge Sort.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common Mistake — Unbalanced BSTs:</strong> If you insert elements in sorted order (e.g., 1, 2, 3, 4, 5), every node goes to the right child of the previous one. The BST degenerates into a linked list, and search becomes O(n) — no better than linear search. Real-world implementations use <em>self-balancing</em> trees like AVL trees or Red-Black trees (which Java's <code>TreeMap</code> uses) to keep height at O(log n) automatically.
+  </div>
+
+  <h2>BST Time Complexity</h2>
+  <table>
+    <thead><tr><th>Operation</th><th>Average Case</th><th>Worst Case (unbalanced)</th></tr></thead>
+    <tbody>
+      <tr><td>Insert</td><td>O(log n)</td><td>O(n)</td></tr>
+      <tr><td>Search</td><td>O(log n)</td><td>O(n)</td></tr>
+      <tr><td>In-order traversal</td><td>O(n)</td><td>O(n)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Using the <code>BinarySearchTree</code> class above, insert these values in order: <code>5, 2, 8, 1, 3, 7, 9</code>. Then:
+    </p>
+    <ol>
+      <li>Print the in-order traversal — confirm it is sorted.</li>
+      <li>Add a <code>height()</code> method that returns the height of the tree (the longest root-to-leaf edge count).</li>
+      <li><strong>Bonus:</strong> Add a <code>findMin()</code> method. Hint: the minimum value in a BST is always the leftmost node.</li>
+    </ol>
+  </div>
+</article>

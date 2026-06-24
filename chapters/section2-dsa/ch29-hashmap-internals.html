@@ -1,1 +1,223 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📘 Section 2 — Java DSA</span>
+    <h1>Chapter 29: HashMap Internals</h1>
+    <p class="chapter-intro">HashMap gives you O(1) average-case lookups by converting keys into array indices — understanding how it does this (and when it breaks down) makes you a far more effective Java developer.</p>
+  </div>
 
+  <h2>The Problem HashMap Solves</h2>
+  <p>
+    Suppose you want to look up a student's grade by their name. Using a plain array you would have to scan every element — O(n). A sorted array with binary search gives O(log n). But what if you could jump directly to the right answer in one step? That is what <code>HashMap</code> achieves: O(1) average-case lookup by converting the key into an array index.
+  </p>
+
+  <h2>The Core Idea: Array of Buckets</h2>
+  <p>
+    Internally, a <code>HashMap</code> is an <strong>array of buckets</strong>. Each bucket can hold one or more key-value pairs. When you call <code>map.put(key, value)</code>, Java:
+  </p>
+  <ol>
+    <li>Calls <code>key.hashCode()</code> to get an integer hash.</li>
+    <li>Reduces the hash to a valid array index: <code>index = hash % buckets.length</code>.</li>
+    <li>Stores the key-value pair in the bucket at that index.</li>
+  </ol>
+  <p>
+    When you call <code>map.get(key)</code>, Java repeats the same two steps to compute the index and jumps straight to that bucket — no scanning needed.
+  </p>
+
+  <h2>ASCII Diagram — Bucket Array</h2>
+<pre>
+HashMap with 8 buckets (indices 0–7):
+
+Inserting: "Alice"→90, "Bob"→85, "Eve"→92, "Carol"→88
+
+  hashCode("Alice") % 8 = 3
+  hashCode("Bob")   % 8 = 6
+  hashCode("Eve")   % 8 = 1
+  hashCode("Carol") % 8 = 6  ← COLLISION with "Bob"!
+
+Bucket array:
+  [0] → null
+  [1] → ("Eve", 92)
+  [2] → null
+  [3] → ("Alice", 90)
+  [4] → null
+  [5] → null
+  [6] → ("Bob", 85) → ("Carol", 88)   ← chained LinkedList
+  [7] → null
+
+get("Bob"):   hash("Bob") % 8 = 6 → scan bucket 6 → found "Bob" → return 85
+get("Carol"): hash("Carol") % 8 = 6 → scan bucket 6 → skip "Bob" → found "Carol" → return 88
+</pre>
+
+  <h2>Hash Codes</h2>
+  <p>
+    Every Java object inherits a <code>hashCode()</code> method from <code>Object</code>. The contract is:
+  </p>
+  <ul>
+    <li>If <code>a.equals(b)</code> is true, then <code>a.hashCode() == b.hashCode()</code> must be true.</li>
+    <li>If <code>a.hashCode() == b.hashCode()</code>, <code>a.equals(b)</code> may or may not be true (that is a <em>collision</em>).</li>
+  </ul>
+  <p>
+    Java's built-in types like <code>String</code>, <code>Integer</code>, and <code>Long</code> have well-implemented <code>hashCode()</code> methods. The <code>String</code> hash is computed from every character:
+  </p>
+  <pre><code class="language-java">// String hashCode — roughly:
+// hash = s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+
+System.out.println("Alice".hashCode());  // some integer, always the same
+System.out.println("Alice".hashCode());  // same integer again — consistent
+</code></pre>
+
+  <h2>Collision Handling: Chaining</h2>
+  <p>
+    Two different keys can produce the same bucket index — that is a <strong>collision</strong>. Java's <code>HashMap</code> handles collisions by <strong>chaining</strong>: each bucket holds a linked list (or a red-black tree in Java 8+ when the chain grows long) of all the key-value pairs that hashed to that index. When searching, Java scans the short list in that bucket using <code>equals()</code> to find the right key.
+  </p>
+<pre>
+Chaining in bucket 6 (from diagram above):
+
+  bucket[6] ──→ Node("Bob", 85) ──→ Node("Carol", 88) ──→ null
+
+get("Carol"):
+  1. Compute index: hash("Carol") % 8 = 6
+  2. Go to bucket[6]
+  3. Check "Bob".equals("Carol") → false, move to next node
+  4. Check "Carol".equals("Carol") → true → return 88
+</pre>
+
+  <h2>Load Factor and Rehashing</h2>
+  <p>
+    As more entries are added, buckets fill up and chains grow longer, slowing down lookups. The <strong>load factor</strong> controls when the internal array is resized.
+  </p>
+  <p>
+    Default load factor: <strong>0.75</strong>. This means: when the number of entries exceeds <code>0.75 × buckets.length</code>, the HashMap doubles its bucket array and <strong>rehashes</strong> all existing entries into the new larger array. Rehashing is O(n) work, but it happens rarely enough that amortised across all insertions the cost is still O(1) per put.
+  </p>
+<pre>
+Example with initial capacity = 4, load factor = 0.75:
+
+  Threshold = 4 × 0.75 = 3 entries
+
+  Add entry 1 → 1 entry  (threshold not hit)
+  Add entry 2 → 2 entries (threshold not hit)
+  Add entry 3 → 3 entries (threshold = 3 → REHASH!)
+    → New capacity = 8, all entries re-indexed
+
+  Add entry 4 → 4 entries (new threshold = 8 × 0.75 = 6)
+  ...
+  Add entry 6 → 6 entries → REHASH again!
+    → New capacity = 16
+</pre>
+
+  <div class="callout tip">
+    💡 <strong>Tip — Pre-size Your HashMap:</strong> If you know you will insert roughly <em>n</em> entries, construct the map with <code>new HashMap&lt;&gt;(n / 0.75 + 1)</code> to avoid rehashing. Rehashing copies every entry — avoiding it is a free performance win for large maps.
+  </div>
+
+  <h2>Custom Class as a HashMap Key</h2>
+  <p>
+    Using your own class as a <code>HashMap</code> key is a common interview topic and a common production bug. If two objects are logically equal but have different default <code>hashCode()</code> values, the HashMap will put them in different buckets and <em>never find the second one</em> when you search by the first.
+  </p>
+  <p>
+    The rule: <strong>whenever you override <code>equals()</code>, you must also override <code>hashCode()</code></strong>.
+  </p>
+  <pre><code class="language-java">import java.util.HashMap;
+import java.util.Objects;
+
+public class Student {
+    String name;
+    int id;
+
+    public Student(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    // Two students are equal if they have the same id
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Student)) return false;
+        Student other = (Student) obj;
+        return this.id == other.id;
+    }
+
+    // hashCode MUST be consistent with equals
+    // If two objects are equal their hashCodes must be equal too
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);  // base hashCode only on fields used in equals
+    }
+
+    public static void main(String[] args) {
+        HashMap&lt;Student, Integer&gt; grades = new HashMap&lt;&gt;();
+
+        Student s1 = new Student("Alice", 101);
+        grades.put(s1, 95);
+
+        // Create a NEW object with the same id
+        Student s2 = new Student("Alice", 101);
+
+        // With equals+hashCode correctly overridden:
+        System.out.println(grades.get(s2));  // 95  ← found correctly
+
+        // Without overriding (using default Object identity):
+        // grades.get(s2) would return null because s1 != s2 in memory
+    }
+}
+</code></pre>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common Mistake — Mutable Keys:</strong> Never mutate an object while it is being used as a HashMap key. The hashCode changes when the object changes, so the map can no longer find the entry (it looks in the wrong bucket). Use immutable objects — like <code>String</code>, <code>Integer</code>, or records — as keys whenever possible.
+  </div>
+
+  <h2>Time Complexity</h2>
+  <table>
+    <thead><tr><th>Operation</th><th>Average Case</th><th>Worst Case (all keys collide)</th></tr></thead>
+    <tbody>
+      <tr><td><code>put(key, value)</code></td><td>O(1)</td><td>O(n)</td></tr>
+      <tr><td><code>get(key)</code></td><td>O(1)</td><td>O(n)</td></tr>
+      <tr><td><code>containsKey(key)</code></td><td>O(1)</td><td>O(n)</td></tr>
+      <tr><td><code>remove(key)</code></td><td>O(1)</td><td>O(n)</td></tr>
+      <tr><td>Rehash</td><td>O(n) (rare)</td><td>O(n)</td></tr>
+    </tbody>
+  </table>
+  <p>
+    The worst case (all keys hash to the same bucket) almost never happens in practice with a good hash function. Java 8+ converts long chains into red-black trees, which limits the worst case to O(log n) even with many collisions.
+  </p>
+
+  <h2>A Quick Demo of HashMap Usage</h2>
+  <pre><code class="language-java">import java.util.HashMap;
+import java.util.Map;
+
+public class HashMapDemo {
+    public static void main(String[] args) {
+        HashMap&lt;String, Integer&gt; wordCount = new HashMap&lt;&gt;();
+
+        String[] words = {"apple", "banana", "apple", "cherry", "banana", "apple"};
+
+        for (String word : words) {
+            // getOrDefault avoids a NullPointerException on first occurrence
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+        }
+
+        System.out.println(wordCount);
+        // {apple=3, banana=2, cherry=1}  (order may vary)
+
+        // Iterate over entries
+        for (Map.Entry&lt;String, Integer&gt; entry : wordCount.entrySet()) {
+            System.out.println(entry.getKey() + " appears " + entry.getValue() + " times");
+        }
+    }
+}
+</code></pre>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Create a class <code>Point</code> with fields <code>int x</code> and <code>int y</code>. Override both <code>equals()</code> and <code>hashCode()</code> so that two Point objects with the same x and y are considered equal. Then:
+    </p>
+    <ol>
+      <li>Put <code>new Point(1, 2)</code> into a <code>HashMap&lt;Point, String&gt;</code> with value "origin offset".</li>
+      <li>Create a second <code>new Point(1, 2)</code> and call <code>map.get()</code> with it — verify you get back "origin offset".</li>
+    </ol>
+    <p>
+      <strong>Bonus:</strong> What happens if you use <code>Objects.hash(x, y)</code> vs <code>x + y</code> as your hashCode? Can you construct two different points that collide when using <code>x + y</code>?
+    </p>
+  </div>
+</article>
