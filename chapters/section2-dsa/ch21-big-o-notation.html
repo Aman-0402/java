@@ -162,4 +162,61 @@ void example(int[] arr) {
     <h3>✅ Try It</h3>
     <p>Write a method <code>countPairs(int[] arr)</code> that prints every pair of elements. How many pairs are there for an array of size n? What is the Big O? Now write a second version that only prints pairs where both elements are positive — does the Big O change? Explain why or why not.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Analyze the Big O complexity of this code: <code>for (int i = 0; i &lt; n; i++) { for (int j = 0; j &lt; n; j++) { System.out.println(i + j); } }</code>. Explain your reasoning.</li>
+      <li>You have two algorithms: one runs in O(n log n) and another in O(n²). For n = 1000, roughly how many operations does each perform? Which would you choose?</li>
+      <li>Why do we drop constants in Big O? Explain why O(2n) = O(n) and why this simplification is valid.</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What is the Big O complexity of binary search?</p>
+      <ul>
+        <li>A) O(n)</li>
+        <li>B) O(n²)</li>
+        <li>C) O(log n)</li>
+        <li>D) O(1)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) O(log n) — Binary search halves the search space each step. For n=1,000,000 elements, it takes at most 20 comparisons.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. Which Big O represents constant time (doesn't depend on input size)?</p>
+      <ul>
+        <li>A) O(n)</li>
+        <li>B) O(1)</li>
+        <li>C) O(log n)</li>
+        <li>D) O(0)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) O(1) — Accessing array[5] takes the same time whether the array has 10 or 10 million elements.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. Sorted from fastest to slowest, which order is correct?</p>
+      <ul>
+        <li>A) O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²)</li>
+        <li>B) O(log n) &lt; O(1) &lt; O(n) &lt; O(n²)</li>
+        <li>C) O(n) &lt; O(log n) &lt; O(1) &lt; O(n²)</li>
+        <li>D) O(1) &lt; O(n) &lt; O(log n) &lt; O(n²)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ A) O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) — This is the standard complexity hierarchy from most to least efficient.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is the Big O of accessing an element by index in an ArrayList?</p>
+      <ul>
+        <li>A) O(n)</li>
+        <li>B) O(log n)</li>
+        <li>C) O(n²)</li>
+        <li>D) O(1)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ D) O(1) — ArrayList is backed by an array. Index access = one memory lookup = constant time.</p></details>
+    </div>
+  </div>
 </article>

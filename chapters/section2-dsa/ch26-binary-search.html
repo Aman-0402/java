@@ -230,4 +230,61 @@ Examples:
       <strong>Bonus:</strong> Implement a binary search that finds the <em>first</em> occurrence of a target in a sorted array with duplicates. For example, searching for 4 in <code>[2, 4, 4, 4, 7]</code> should return index 1, not 2 or 3.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Implement binary search iteratively in Java. Test it on a sorted array of 10 integers.</li>
+      <li>Implement binary search recursively. Compare the code complexity with the iterative version.</li>
+      <li>Binary search requires a sorted array. What is the total cost (sort + search) if you need to search a random array once? Compare: sort O(n log n) + search O(log n) vs. linear search O(n). Which is better for a single search?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What is the prerequisite for binary search to work?</p>
+      <ul>
+        <li>A) The array must have an even number of elements</li>
+        <li>B) The array must be sorted</li>
+        <li>C) The array must fit in memory</li>
+        <li>D) The array must contain integers</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) The array must be sorted — Binary search divides based on comparison with the middle element. This only works correctly on sorted data.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What is the time complexity of binary search?</p>
+      <ul>
+        <li>A) O(n)</li>
+        <li>B) O(n²)</li>
+        <li>C) O(log n)</li>
+        <li>D) O(1)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) O(log n) — Each comparison eliminates half the remaining elements. For n=1,000,000, at most 20 comparisons are needed.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What does binary search return if the target element is not found?</p>
+      <ul>
+        <li>A) 0</li>
+        <li>B) null</li>
+        <li>C) -1 (by convention)</li>
+        <li>D) throws exception</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) -1 (by convention) — The convention is to return -1 (or any negative number) to indicate "not found". Java's <code>Arrays.binarySearch()</code> returns <code>-(insertion point) - 1</code>.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. In the buggy implementation <code>mid = (low + high) / 2</code>, what can go wrong?</p>
+      <ul>
+        <li>A) It gives wrong results</li>
+        <li>B) It causes integer overflow when low + high exceeds Integer.MAX_VALUE</li>
+        <li>C) It's always correct</li>
+        <li>D) It runs in O(n) instead of O(log n)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) It causes integer overflow when low + high exceeds Integer.MAX_VALUE — The safe version is <code>mid = low + (high - low) / 2</code>. This was a bug in Java's Arrays.binarySearch() for years.</p></details>
+    </div>
+  </div>
 </article>

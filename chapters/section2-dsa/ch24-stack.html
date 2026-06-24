@@ -150,4 +150,61 @@ public class BracketMatcher {
     <h3>✅ Try It</h3>
     <p>Extend the <code>BracketMatcher</code> example to also handle angle brackets <code>&lt; &gt;</code>. Then write a method <code>reverseString(String s)</code> that uses a stack to reverse a string character by character (push each character, then pop all). What is the Big O of your reversal method?</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Implement a stack using an array with <code>push()</code>, <code>pop()</code>, <code>peek()</code>, and <code>isEmpty()</code> methods. Don't use Java's Stack class.</li>
+      <li>Use a stack to check if parentheses in a string are balanced. Test with: <code>"(())"</code>, <code>"([{}])"</code>, <code>"(]"</code>, <code>"((("</code>.</li>
+      <li>Explain how the JVM's call stack works using the concept of a stack data structure.</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What principle does a Stack follow?</p>
+      <ul>
+        <li>A) FIFO (First In, First Out)</li>
+        <li>B) LIFO (Last In, First Out)</li>
+        <li>C) Random access</li>
+        <li>D) Priority-based</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) LIFO (Last In, First Out) — The last item pushed is the first item popped. Like a stack of plates.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What is the time complexity of push and pop operations on a stack?</p>
+      <ul>
+        <li>A) O(n)</li>
+        <li>B) O(log n)</li>
+        <li>C) O(1)</li>
+        <li>D) O(n²)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) O(1) — Push and pop only operate on the top of the stack — no traversal needed.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What exception does Java's Stack throw when you call pop() on an empty stack?</p>
+      <ul>
+        <li>A) NullPointerException</li>
+        <li>B) StackUnderflowException</li>
+        <li>C) EmptyStackException</li>
+        <li>D) IndexOutOfBoundsException</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) EmptyStackException — <code>java.util.EmptyStackException</code> is thrown by <code>Stack.pop()</code> and <code>Stack.peek()</code> when the stack is empty.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. Which data structure is naturally used to implement function call tracking?</p>
+      <ul>
+        <li>A) Queue</li>
+        <li>B) Array</li>
+        <li>C) Stack</li>
+        <li>D) Tree</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Stack — The call stack is literally a stack: each method call pushes a frame, and each return pops it.</p></details>
+    </div>
+  </div>
 </article>

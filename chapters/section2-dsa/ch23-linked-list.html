@@ -186,4 +186,61 @@ System.out.println(list.get(0)); // access by index (O(n) internally)
     <h3>✅ Try It</h3>
     <p>Add a method <code>addFirst(int data)</code> to the custom <code>LinkedList</code> class above that inserts a new node at the <em>beginning</em> of the list in O(1) time. Then add a method <code>contains(int data)</code> that returns <code>true</code> if the value exists in the list. Test both with a list of 5 elements.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Implement a singly linked list with <code>add(int val)</code>, <code>remove(int val)</code>, and <code>print()</code> methods from scratch (don't use Java's LinkedList class).</li>
+      <li>Write a method to detect if a linked list has a cycle (loop). Hint: use two pointers moving at different speeds (Floyd's algorithm).</li>
+      <li>What is the time complexity of inserting at the beginning vs. end of a singly linked list? Explain the difference.</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What does each node in a linked list contain?</p>
+      <ul>
+        <li>A) A value and an index</li>
+        <li>B) A value and a reference to the next node</li>
+        <li>C) Two values</li>
+        <li>D) A value and its memory address</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A value and a reference to the next node — Each node has <code>data</code> (the value) and <code>next</code> (a reference to the next node, or null if it's the last).</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What is the time complexity of accessing the kth element in a linked list?</p>
+      <ul>
+        <li>A) O(1)</li>
+        <li>B) O(log n)</li>
+        <li>C) O(k) / O(n)</li>
+        <li>D) O(k²)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) O(k) / O(n) — Unlike arrays, linked lists have no index. You must traverse from the head node one by one to reach the kth element.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What advantage does LinkedList have over ArrayList for insertions at the beginning?</p>
+      <ul>
+        <li>A) None, ArrayList is always faster</li>
+        <li>B) LinkedList insertion at head is O(1); ArrayList shifts all elements → O(n)</li>
+        <li>C) LinkedList uses less memory</li>
+        <li>D) LinkedList is always O(log n)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) LinkedList insertion at head is O(1); ArrayList shifts all elements → O(n) — LinkedList just updates the head pointer. ArrayList must shift every element to make room.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is a doubly linked list?</p>
+      <ul>
+        <li>A) A list that stores two values per node</li>
+        <li>B) A list where each node has references to both the next and previous nodes</li>
+        <li>C) Two linked lists merged together</li>
+        <li>D) A linked list with twice the memory</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A list where each node has references to both the next and previous nodes — Doubly linked lists allow traversal in both directions, enabling O(1) removal when you have a reference to the node.</p></details>
+    </div>
+  </div>
 </article>

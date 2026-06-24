@@ -347,4 +347,61 @@ public class GraphDemo {
       <li><strong>Bonus:</strong> Write a method <code>isConnected(Graph g)</code> that returns <code>true</code> if every vertex in the graph can be reached from any other vertex (i.e., the graph is connected). Hint: run BFS from any vertex and check whether the visited set size equals the total number of vertices.</li>
     </ol>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Implement a graph using an adjacency list (HashMap). Add edges and implement BFS traversal.</li>
+      <li>Implement DFS (depth-first search) on a graph both iteratively (using a Stack) and recursively. Compare the traversal order.</li>
+      <li>Given a social network graph, how would you find if two people are connected (directly or through mutual friends)? Which algorithm would you use and why?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What is the difference between BFS and DFS?</p>
+      <ul>
+        <li>A) BFS uses a stack, DFS uses a queue</li>
+        <li>B) BFS explores level by level (uses queue), DFS explores depth-first (uses stack/recursion)</li>
+        <li>C) BFS is faster than DFS always</li>
+        <li>D) DFS finds shorter paths than BFS</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) BFS explores level by level (uses queue), DFS explores depth-first (uses stack/recursion) — BFS finds shortest path (in unweighted graphs). DFS is better for detecting cycles and topological sorting.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What data structure is used for BFS traversal of a graph?</p>
+      <ul>
+        <li>A) Stack</li>
+        <li>B) Queue</li>
+        <li>C) Priority Queue</li>
+        <li>D) Array</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Queue — BFS enqueues unvisited neighbors and processes them level by level, achieving the level-order exploration pattern.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. In graph representation, what is an adjacency list?</p>
+      <ul>
+        <li>A) A list of all vertices sorted alphabetically</li>
+        <li>B) For each vertex, a list of all vertices it's directly connected to</li>
+        <li>C) A 2D array of all possible edges</li>
+        <li>D) A list of edge weights</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) For each vertex, a list of all vertices it's directly connected to — Adjacency lists are memory-efficient for sparse graphs. Adjacency matrices use O(V²) memory regardless of edges.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What algorithm finds the shortest path in a weighted graph?</p>
+      <ul>
+        <li>A) DFS</li>
+        <li>B) BFS</li>
+        <li>C) Dijkstra's algorithm</li>
+        <li>D) Binary Search</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Dijkstra's algorithm — BFS finds shortest path in unweighted graphs. Dijkstra handles weighted edges using a priority queue.</p></details>
+    </div>
+  </div>
 </article>

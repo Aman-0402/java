@@ -169,4 +169,61 @@ System.out.println(pq.poll()); // 30
     <h3>✅ Try It</h3>
     <p>Modify the ticket queue simulation so that a new customer "Frank" arrives and joins the queue <em>after</em> Alice has already been served but before Bob is served. Add a method <code>printQueue(Queue&lt;String&gt; q)</code> that prints all waiting customers without removing them (hint: iterate with a for-each loop — Queue supports it). How many customers does Frank see ahead of him?</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Implement a queue using two stacks. Hint: use one stack for enqueue, one for dequeue. Analyze the amortized time complexity.</li>
+      <li>Use Java's <code>ArrayDeque</code> to simulate a print queue. Add 5 print jobs, then process them in order.</li>
+      <li>What is a circular queue? What problem does it solve compared to a simple array-based queue?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What principle does a Queue follow?</p>
+      <ul>
+        <li>A) LIFO</li>
+        <li>B) FIFO (First In, First Out)</li>
+        <li>C) Random access</li>
+        <li>D) Sorted order</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) FIFO (First In, First Out) — First element added is the first element removed. Like a line of people waiting.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. Which Java class is the recommended Queue implementation?</p>
+      <ul>
+        <li>A) Queue</li>
+        <li>B) Stack</li>
+        <li>C) ArrayDeque</li>
+        <li>D) LinkedQueue</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) ArrayDeque — <code>ArrayDeque</code> is faster than <code>LinkedList</code> for Queue operations. Java docs recommend it over <code>Stack</code> and <code>LinkedList</code>.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What is a priority queue?</p>
+      <ul>
+        <li>A) A queue that processes VIP items first</li>
+        <li>B) A queue where elements are dequeued by priority (highest or lowest value first), not insertion order</li>
+        <li>C) A queue with more memory</li>
+        <li>D) A type of stack</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A queue where elements are dequeued by priority (highest or lowest value first), not insertion order — Java's <code>PriorityQueue</code> uses a heap. Used in Dijkstra's algorithm, OS task scheduling.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is the time complexity of enqueue and dequeue in an ArrayDeque?</p>
+      <ul>
+        <li>A) O(n)</li>
+        <li>B) O(1) amortized</li>
+        <li>C) O(log n)</li>
+        <li>D) O(n²)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) O(1) amortized — Most operations are O(1). Occasional resizing is O(n) but spread across many operations, averaging O(1) amortized.</p></details>
+    </div>
+  </div>
 </article>

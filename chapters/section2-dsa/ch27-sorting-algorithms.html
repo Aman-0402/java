@@ -297,4 +297,61 @@ System.out.println(Arrays.toString(words));  // [apple, banana, cherry]
       <strong>Bonus:</strong> Modify Bubble Sort to add the early-exit flag and verify that it exits in a single pass when given an already-sorted array <code>{1, 3, 5, 7, 9}</code>.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Implement Bubble Sort in Java. Run it on <code>[64, 34, 25, 12, 22, 11, 90]</code> and trace each pass showing the array state after each swap.</li>
+      <li>Implement Selection Sort. Compare its number of swaps with Bubble Sort for the same array. Which does fewer swaps?</li>
+      <li>When would you choose Insertion Sort over Merge Sort despite its O(n²) complexity?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What is the time complexity of Merge Sort?</p>
+      <ul>
+        <li>A) O(n²)</li>
+        <li>B) O(n log n)</li>
+        <li>C) O(n)</li>
+        <li>D) O(log n)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) O(n log n) — Merge Sort divides the array (log n levels) and merges each level (n work). Always O(n log n) regardless of input.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. Which sorting algorithm does Java's Arrays.sort() use for primitive arrays?</p>
+      <ul>
+        <li>A) Quicksort</li>
+        <li>B) Merge Sort</li>
+        <li>C) Dual-Pivot Quicksort</li>
+        <li>D) Bubble Sort</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Dual-Pivot Quicksort — Java uses Dual-Pivot Quicksort (for primitives) and TimSort (for objects). Both are highly optimized.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What makes Bubble Sort inefficient?</p>
+      <ul>
+        <li>A) It uses too much memory</li>
+        <li>B) It makes O(n²) comparisons in the worst case, swapping adjacent elements repeatedly</li>
+        <li>C) It requires sorted input</li>
+        <li>D) It can't handle negative numbers</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) It makes O(n²) comparisons in the worst case, swapping adjacent elements repeatedly — For n=10,000 elements, that's 100 million comparisons. Compare with Merge Sort's 130,000.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. Which sorting algorithm has the best performance on nearly-sorted data?</p>
+      <ul>
+        <li>A) Merge Sort</li>
+        <li>B) Quicksort</li>
+        <li>C) Insertion Sort</li>
+        <li>D) Selection Sort</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Insertion Sort — On nearly-sorted data, Insertion Sort approaches O(n) because most elements are already close to their correct position. This is why TimSort uses Insertion Sort for small/sorted sub-arrays.</p></details>
+    </div>
+  </div>
 </article>
