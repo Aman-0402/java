@@ -46,6 +46,7 @@ const contentArea = document.getElementById('content-area');
 const topBarTitle  = document.getElementById('top-bar-title');
 const sidebarToggle = document.getElementById('sidebar-toggle');
 const sidebar = document.getElementById('sidebar');
+const ebookShell = document.querySelector('.ebook-shell');
 
 // ── Chapter Loader ──
 async function loadChapter(id) {
@@ -130,13 +131,13 @@ document.querySelectorAll('.chapter-nav-sidebar a').forEach(a => {
     e.preventDefault();
     const id = a.getAttribute('href').slice(1);
     loadChapter(id);
-    if (window.innerWidth <= 768) sidebar.classList.remove('open');
+    ebookShell.classList.add('sidebar-collapsed');
   });
 });
 
-// ── Sidebar Toggle (mobile) ──
+// ── Sidebar Toggle ──
 sidebarToggle.addEventListener('click', () => {
-  sidebar.classList.toggle('open');
+  ebookShell.classList.toggle('sidebar-collapsed');
 });
 
 // ── Chapter Nav Bottom Click Delegation ──

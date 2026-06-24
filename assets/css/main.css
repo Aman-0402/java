@@ -40,6 +40,15 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr;
   min-height: 100vh;
+  transition: grid-template-columns 0.25s ease;
+}
+
+.ebook-shell.sidebar-collapsed {
+  grid-template-columns: 0 1fr;
+}
+
+.ebook-shell.sidebar-collapsed .sidebar {
+  display: none;
 }
 
 /* ── Sidebar ── */
@@ -196,7 +205,7 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
 }
 
 .sidebar-toggle:hover, .theme-toggle:hover { background: rgba(0,0,0,0.08); }
-.sidebar-toggle { display: none; }
+.sidebar-toggle { display: flex; }
 
 /* ── Content Area ── */
 .content-area {
