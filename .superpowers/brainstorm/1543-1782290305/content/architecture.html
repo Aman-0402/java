@@ -1,0 +1,84 @@
+<h2>Ebook Architecture &amp; Folder Structure</h2>
+<p class="subtitle">Multi-file, clean separation. index.html = shell. Chapter files = content only. JS loads chapters dynamically.</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+  <!-- Folder tree -->
+  <div style="background:#1e1e2e;border-radius:8px;padding:16px;font-family:monospace;font-size:11px;color:#cdd6f4;line-height:20px;">
+    <div style="color:#89b4fa;font-weight:bold;margin-bottom:8px;">📁 java-ebook/</div>
+    <div style="color:#a6e3a1;">├── index.html</div>
+    <div style="color:#888;font-size:10px;padding-left:16px;">Shell: sidebar + header + search + theme</div>
+    <br>
+    <div style="color:#cba6f7;">├── 📁 assets/</div>
+    <div style="color:#89dceb;padding-left:16px;">├── 📁 css/</div>
+    <div style="padding-left:32px;">├── main.css <span style="color:#888;font-size:9px;">← layout, warm theme</span></div>
+    <div style="padding-left:32px;">├── dark.css <span style="color:#888;font-size:9px;">← dark mode overrides</span></div>
+    <div style="padding-left:32px;">└── prism.css <span style="color:#888;font-size:9px;">← code highlighting</span></div>
+    <div style="color:#89dceb;padding-left:16px;">├── 📁 js/</div>
+    <div style="padding-left:32px;">├── app.js <span style="color:#888;font-size:9px;">← nav, chapter loader</span></div>
+    <div style="padding-left:32px;">├── search.js <span style="color:#888;font-size:9px;">← search logic</span></div>
+    <div style="padding-left:32px;">├── theme.js <span style="color:#888;font-size:9px;">← dark mode toggle</span></div>
+    <div style="padding-left:32px;">└── prism.js <span style="color:#888;font-size:9px;">← syntax highlight</span></div>
+    <div style="color:#89dceb;padding-left:16px;">└── 📁 img/ <span style="color:#888;font-size:9px;">← logo, diagrams</span></div>
+    <br>
+    <div style="color:#cba6f7;">├── 📁 chapters/</div>
+    <div style="color:#f38ba8;padding-left:16px;">├── 📁 section1-basics/</div>
+    <div style="padding-left:32px;color:#fab387;">├── ch01-what-is-java.html</div>
+    <div style="padding-left:32px;color:#fab387;">├── ch02-install-jdk.html</div>
+    <div style="padding-left:32px;color:#888;font-size:9px;">... ch03 → ch20</div>
+    <div style="color:#a6e3a1;padding-left:16px;">├── 📁 section2-dsa/</div>
+    <div style="padding-left:32px;color:#a6e3a1;">├── ch21-big-o.html</div>
+    <div style="padding-left:32px;color:#888;font-size:9px;">... ch22 → ch30</div>
+    <div style="color:#89b4fa;padding-left:16px;">└── 📁 section3-fullstack/</div>
+    <div style="padding-left:32px;color:#89b4fa;">├── ch31-fullstack-intro.html</div>
+    <div style="padding-left:32px;color:#888;font-size:9px;">... ch32 → ch40</div>
+    <br>
+    <div style="color:#cba6f7;">└── 📁 data/</div>
+    <div style="padding-left:16px;color:#f9e2af;">└── search-index.json <span style="color:#888;font-size:9px;">← pre-built</span></div>
+  </div>
+
+  <!-- How it works -->
+  <div style="display:flex;flex-direction:column;gap:12px;">
+
+    <div style="background:#fffdf7;border:2px solid #c8b89a;border-radius:8px;padding:12px;">
+      <div style="color:#8B4513;font-weight:bold;font-size:12px;margin-bottom:6px;">⚙️ How Chapter Loading Works</div>
+      <div style="font-size:11px;color:#3d2b1f;line-height:18px;">
+        <div>1. <code style="background:#f0ede0;padding:0 3px;">index.html</code> = permanent shell (sidebar + header)</div>
+        <div>2. Click chapter in sidebar → JS fetches <code style="background:#f0ede0;padding:0 3px;">chapters/section1/ch01.html</code></div>
+        <div>3. Content injected into <code style="background:#f0ede0;padding:0 3px;">#content-area</code> div</div>
+        <div>4. URL updates: <code style="background:#f0ede0;padding:0 3px;">index.html#ch01</code> (shareable link)</div>
+        <div>5. Prism.js re-runs → code blocks get highlighted</div>
+      </div>
+    </div>
+
+    <div style="background:#fffdf7;border:2px solid #c8b89a;border-radius:8px;padding:12px;">
+      <div style="color:#2d6a4f;font-weight:bold;font-size:12px;margin-bottom:6px;">📄 Chapter File = Content Only</div>
+      <div style="background:#1e1e2e;border-radius:4px;padding:8px;font-family:monospace;font-size:10px;color:#cdd6f4;line-height:16px;">
+        <span style="color:#888;">&lt;!-- ch02-install-jdk.html --&gt;</span><br>
+        <span style="color:#89b4fa;">&lt;article&gt;</span><br>
+        &nbsp;&nbsp;<span style="color:#a6e3a1;">&lt;h1&gt;</span>Install JDK 21<span style="color:#a6e3a1;">&lt;/h1&gt;</span><br>
+        &nbsp;&nbsp;<span style="color:#a6e3a1;">&lt;p&gt;</span>Step-by-step guide...<span style="color:#a6e3a1;">&lt;/p&gt;</span><br>
+        &nbsp;&nbsp;<span style="color:#a6e3a1;">&lt;pre&gt;&lt;code class="lang-bash"&gt;</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;java -version<br>
+        &nbsp;&nbsp;<span style="color:#a6e3a1;">&lt;/code&gt;&lt;/pre&gt;</span><br>
+        <span style="color:#89b4fa;">&lt;/article&gt;</span>
+      </div>
+      <div style="font-size:10px;color:#888;margin-top:4px;">No &lt;html&gt;/&lt;head&gt;/&lt;body&gt; boilerplate. Pure content.</div>
+    </div>
+
+    <div style="background:#fffdf7;border:2px solid #c8b89a;border-radius:8px;padding:12px;">
+      <div style="color:#1a3a6b;font-weight:bold;font-size:12px;margin-bottom:6px;">🔍 Search Strategy</div>
+      <div style="font-size:11px;color:#3d2b1f;line-height:18px;">
+        <div><code style="background:#f0ede0;padding:0 3px;">data/search-index.json</code> = pre-built keyword map</div>
+        <div>Each chapter → array of keywords + heading anchors</div>
+        <div>Search.js filters index on keypress → shows results</div>
+        <div>Click result → loads chapter + scrolls to heading</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="margin-top:14px;background:#f5f0e8;border:1px solid #c8b89a;border-radius:6px;padding:10px;font-size:11px;color:#5c3d1e;">
+  <strong>Run locally:</strong> <code style="background:#e8dcc8;padding:1px 4px;">npx serve .</code> or VS Code Live Server extension — no build step needed.
+</div>
