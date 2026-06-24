@@ -183,4 +183,61 @@ public void withdraw(double amount) throws InsufficientFundsException {
       separately with a descriptive message.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Write a program that catches <code>ArrayIndexOutOfBoundsException</code> and <code>NumberFormatException</code> separately, printing a different message for each.</li>
+      <li>Create a custom exception <code>InsufficientFundsException</code> that extends <code>Exception</code>. Use it in a <code>BankAccount.withdraw()</code> method.</li>
+      <li>What is the difference between checked and unchecked exceptions? Give two examples of each.</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. Which block always executes whether or not an exception is thrown?</p>
+      <ul>
+        <li>A) catch</li>
+        <li>B) try</li>
+        <li>C) finally</li>
+        <li>D) throws</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) finally — The <code>finally</code> block runs regardless of whether an exception occurred, making it ideal for cleanup code (closing files, releasing connections).</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What is the parent class of all Java exceptions?</p>
+      <ul>
+        <li>A) Error</li>
+        <li>B) RuntimeException</li>
+        <li>C) Throwable</li>
+        <li>D) Exception</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Throwable — Both <code>Exception</code> and <code>Error</code> extend <code>Throwable</code>. Errors (like OutOfMemoryError) are serious JVM issues you typically don't catch.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What is a checked exception?</p>
+      <ul>
+        <li>A) An exception that Java checks for security</li>
+        <li>B) An exception that must be either caught or declared with <code>throws</code></li>
+        <li>C) A RuntimeException</li>
+        <li>D) An exception with a checkbox UI</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) An exception that must be either caught or declared with <code>throws</code> — Checked exceptions (like IOException) must be handled. Unchecked (like NullPointerException) don't have to be.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What does <code>throw new IllegalArgumentException("msg")</code> do?</p>
+      <ul>
+        <li>A) Catches an exception</li>
+        <li>B) Declares an exception</li>
+        <li>C) Manually creates and throws an exception at that point in code</li>
+        <li>D) Logs an error</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Manually creates and throws an exception at that point in code — You use <code>throw</code> to signal that something went wrong in your own code.</p></details>
+    </div>
+  </div>
 </article>

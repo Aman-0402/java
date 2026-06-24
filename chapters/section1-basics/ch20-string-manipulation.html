@@ -192,4 +192,61 @@ System.out.println(blank.isBlank());   // true (Java 11+)
       Call it in <code>main</code> with at least two different strings.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Write a program that reverses a string without using <code>StringBuilder.reverse()</code>. Use a loop.</li>
+      <li>Check if a string is a palindrome (reads the same forwards and backwards). Test with "racecar", "hello", "madam".</li>
+      <li>Count the number of vowels in a string. Use <code>toLowerCase()</code> and <code>indexOf()</code> or <code>contains()</code>.</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. Why are Java Strings immutable?</p>
+      <ul>
+        <li>A) To save memory by sharing string literals</li>
+        <li>B) Security, thread safety, and caching hash codes</li>
+        <li>C) Because Java doesn't allow changing variables</li>
+        <li>D) To prevent string methods from working</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Security, thread safety, and caching hash codes — Immutability means strings can be shared safely between threads and their hash codes can be computed once and cached.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What does <code>"hello".substring(1, 3)</code> return?</p>
+      <ul>
+        <li>A) "hel"</li>
+        <li>B) "ell"</li>
+        <li>C) "el"</li>
+        <li>D) "ello"</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) "el" — <code>substring(start, end)</code> returns characters from index <code>start</code> (inclusive) to <code>end</code> (exclusive). Indices 1 and 2 → "el".</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. Which class is better for building strings in a loop?</p>
+      <ul>
+        <li>A) String</li>
+        <li>B) StringBuffer</li>
+        <li>C) StringBuilder</li>
+        <li>D) StringJoiner</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) StringBuilder — <code>String</code> creates new objects with every concatenation. <code>StringBuilder</code> mutates in place — much faster for loops. Use <code>StringBuffer</code> only when thread safety is needed.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What does <code>"Java".equals("java")</code> return?</p>
+      <ul>
+        <li>A) true</li>
+        <li>B) false</li>
+        <li>C) 1</li>
+        <li>D) throws exception</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) false — <code>equals()</code> is case-sensitive. Use <code>equalsIgnoreCase()</code> for case-insensitive comparison.</p></details>
+    </div>
+  </div>
 </article>

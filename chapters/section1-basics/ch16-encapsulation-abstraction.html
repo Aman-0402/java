@@ -200,4 +200,61 @@ public class Main {
       to return their appropriate sound. In <code>main</code>, call <code>describe()</code> on both.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Create a <code>BankAccount</code> class with a private <code>balance</code> field. Add public <code>deposit(double)</code>, <code>withdraw(double)</code>, and <code>getBalance()</code> methods. Add validation: balance can't go negative.</li>
+      <li>What is the difference between encapsulation and abstraction? Give a real-world analogy for each.</li>
+      <li>Refactor a class that has all-public fields to use private fields with getters/setters. What benefits does this give?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What is encapsulation?</p>
+      <ul>
+        <li>A) Hiding implementation details and exposing only necessary interfaces</li>
+        <li>B) Bundling data (fields) and methods that operate on that data into a class, with access control</li>
+        <li>C) Inheriting from multiple classes</li>
+        <li>D) Making all methods static</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Bundling data (fields) and methods that operate on that data into a class, with access control — Encapsulation = data + behavior in one unit, with visibility modifiers controlling access.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. Which access modifier makes a field accessible only within the same class?</p>
+      <ul>
+        <li>A) public</li>
+        <li>B) protected</li>
+        <li>C) default</li>
+        <li>D) private</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ D) private — <code>private</code> is the most restrictive access modifier, limiting access to the defining class only.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What is a getter method?</p>
+      <ul>
+        <li>A) A method that sets a field value</li>
+        <li>B) A method that retrieves (gets) the value of a private field</li>
+        <li>C) A method that deletes an object</li>
+        <li>D) A constructor</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A method that retrieves (gets) the value of a private field — Getters follow the naming convention <code>getFieldName()</code> (or <code>isFieldName()</code> for booleans).</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is abstraction?</p>
+      <ul>
+        <li>A) Making code abstract (unable to compile)</li>
+        <li>B) Hiding unnecessary implementation details and showing only what's essential to the user</li>
+        <li>C) Using <code>abstract</code> keyword on all methods</li>
+        <li>D) Converting objects to strings</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Hiding unnecessary implementation details and showing only what's essential to the user — Like driving a car: you use the steering wheel and pedals without knowing the engine internals.</p></details>
+    </div>
+  </div>
 </article>

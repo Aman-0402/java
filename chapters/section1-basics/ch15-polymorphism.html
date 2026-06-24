@@ -165,4 +165,61 @@ Drawing a triangle ▲
       loop through and print each employee's bonus using <code>calculateBonus()</code>.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Create an <code>Animal</code> base class and <code>Dog</code>, <code>Cat</code>, <code>Bird</code> subclasses each overriding <code>makeSound()</code>. Store all three in an <code>Animal[]</code> array and call <code>makeSound()</code> on each element. Observe the output.</li>
+      <li>What is the difference between method overriding and method overloading? Give one example of each.</li>
+      <li>What is upcasting? Create a <code>Dog</code> object and assign it to an <code>Animal</code> reference. What methods can you call on the <code>Animal</code> reference?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What is runtime polymorphism in Java?</p>
+      <ul>
+        <li>A) Method overloading resolved at compile time</li>
+        <li>B) The ability of an object to take many forms, with the correct method chosen at runtime</li>
+        <li>C) Converting types at runtime</li>
+        <li>D) Running multiple programs simultaneously</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) The ability of an object to take many forms, with the correct method chosen at runtime — When a parent reference holds a child object, Java calls the child's overriding method at runtime.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. Which annotation should you use when overriding a method?</p>
+      <ul>
+        <li>A) @Override</li>
+        <li>B) @Overwrite</li>
+        <li>C) @Replace</li>
+        <li>D) @Super</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ A) @Override — <code>@Override</code> tells the compiler to verify that you're actually overriding a parent method, catching typos in method signatures.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. For method overriding, the overriding method must have:</p>
+      <ul>
+        <li>A) A different return type</li>
+        <li>B) More parameters</li>
+        <li>C) The same name, same parameters, same or covariant return type</li>
+        <li>D) The word "override" in its name</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) The same name, same parameters, same or covariant return type — Overriding redefines the behavior of an inherited method with the exact same signature.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is dynamic dispatch?</p>
+      <ul>
+        <li>A) Sending messages over a network</li>
+        <li>B) The JVM mechanism that calls the correct overriding method based on the actual object type at runtime</li>
+        <li>C) A multithreading technique</li>
+        <li>D) Dispatching constructors</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) The JVM mechanism that calls the correct overriding method based on the actual object type at runtime — This is what makes polymorphism work: the JVM checks the actual object type, not the reference type.</p></details>
+    </div>
+  </div>
 </article>

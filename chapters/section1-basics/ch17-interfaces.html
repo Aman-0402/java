@@ -194,4 +194,61 @@ public class Robot implements Greetable {
       <code>main</code>, create a <code>Document</code> and call both methods.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Create a <code>Drawable</code> interface with a <code>draw()</code> method. Implement it in <code>Circle</code>, <code>Rectangle</code>, and <code>Triangle</code> classes. Store all three in a <code>Drawable[]</code> array and call <code>draw()</code> on each.</li>
+      <li>What is the difference between an interface and an abstract class? When would you choose one over the other?</li>
+      <li>Demonstrate a class implementing two interfaces. Why does this solve Java's "no multiple inheritance" problem?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What is an interface in Java?</p>
+      <ul>
+        <li>A) A class with no methods</li>
+        <li>B) A contract that specifies what methods a class must implement</li>
+        <li>C) A type of inheritance</li>
+        <li>D) A collection of static methods</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A contract that specifies what methods a class must implement — Interfaces define behavior that implementing classes must provide.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. Which keyword does a class use to implement an interface?</p>
+      <ul>
+        <li>A) extends</li>
+        <li>B) uses</li>
+        <li>C) implements</li>
+        <li>D) inherits</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) implements — <code>class Dog implements Animal</code> means Dog provides implementations for all Animal interface methods.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. Can a class implement multiple interfaces in Java?</p>
+      <ul>
+        <li>A) No, only one</li>
+        <li>B) Yes, using multiple extends</li>
+        <li>C) Yes, separated by commas after implements</li>
+        <li>D) Only if the interfaces share no methods</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Yes, separated by commas after implements — <code>class MyClass implements Interface1, Interface2, Interface3</code> is valid.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What are <code>default</code> methods in interfaces (Java 8+)?</p>
+      <ul>
+        <li>A) Methods that are automatically called</li>
+        <li>B) Methods with a default implementation that implementing classes can optionally override</li>
+        <li>C) Methods that run by default at startup</li>
+        <li>D) Methods that return default values</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Methods with a default implementation that implementing classes can optionally override — This allows adding new methods to interfaces without breaking existing implementations.</p></details>
+    </div>
+  </div>
 </article>

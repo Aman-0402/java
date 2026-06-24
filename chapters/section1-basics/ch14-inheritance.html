@@ -174,4 +174,61 @@ public class Cat extends Animal {
       <em>"Bicycle is pedalling at X km/h"</em>). Create one of each and call <code>move()</code>.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Create a class hierarchy: <code>Animal</code> (with <code>name</code> and <code>sound()</code> method) → <code>Dog</code> (overrides <code>sound()</code> to return "Woof") → <code>GoldenRetriever</code> (adds <code>fetch()</code> method). Demonstrate all three levels.</li>
+      <li>What does the <code>super</code> keyword do? Show two uses: calling a parent constructor and calling a parent method.</li>
+      <li>Why can't Java classes extend multiple classes? What problem does this prevent?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. Which keyword is used to inherit from a class in Java?</p>
+      <ul>
+        <li>A) inherits</li>
+        <li>B) implements</li>
+        <li>C) extends</li>
+        <li>D) uses</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) extends — <code>class Dog extends Animal</code> makes Dog a subclass of Animal.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What does a subclass inherit from its parent?</p>
+      <ul>
+        <li>A) Only public fields</li>
+        <li>B) All fields and methods except private ones</li>
+        <li>C) Everything including private members</li>
+        <li>D) Only methods, not fields</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) All fields and methods except private ones — Private members exist in the subclass object but are not directly accessible. They're accessed via inherited public/protected methods.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What is the root class that all Java classes implicitly extend?</p>
+      <ul>
+        <li>A) Base</li>
+        <li>B) Root</li>
+        <li>C) Object</li>
+        <li>D) Super</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Object — Every Java class implicitly extends <code>java.lang.Object</code>, which provides <code>toString()</code>, <code>equals()</code>, <code>hashCode()</code>, etc.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What does <code>super()</code> do inside a constructor?</p>
+      <ul>
+        <li>A) Creates a new parent object</li>
+        <li>B) Calls the parent class's constructor</li>
+        <li>C) Calls the parent class's main method</li>
+        <li>D) Accesses a parent field</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Calls the parent class's constructor — <code>super()</code> must be the first statement in a constructor and initializes the parent portion of the object.</p></details>
+    </div>
+  </div>
 </article>

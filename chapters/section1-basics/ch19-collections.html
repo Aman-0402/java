@@ -183,4 +183,61 @@ public class Main {
       and (4) print how many were unique.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Create an <code>ArrayList&lt;String&gt;</code> of 5 fruits. Sort it, remove one item, and check if a specific fruit is in the list. Print the results.</li>
+      <li>Create a <code>HashMap&lt;String, Integer&gt;</code> to store word frequency. Given the array <code>["apple", "banana", "apple", "cherry", "banana", "apple"]</code>, count how many times each word appears.</li>
+      <li>What is the difference between <code>ArrayList</code> and <code>LinkedList</code>? When would you prefer each?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. Which collection does NOT allow duplicate values?</p>
+      <ul>
+        <li>A) ArrayList</li>
+        <li>B) LinkedList</li>
+        <li>C) HashSet</li>
+        <li>D) ArrayDeque</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) HashSet — Sets reject duplicate elements. <code>set.add("apple"); set.add("apple");</code> results in only one "apple".</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What does <code>HashMap.get("key")</code> return if the key doesn't exist?</p>
+      <ul>
+        <li>A) 0</li>
+        <li>B) ""</li>
+        <li>C) null</li>
+        <li>D) throws KeyNotFoundException</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) null — <code>HashMap.get()</code> returns <code>null</code> for missing keys. Use <code>getOrDefault("key", defaultValue)</code> to avoid null checks.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. Which interface do ArrayList and LinkedList both implement?</p>
+      <ul>
+        <li>A) Map</li>
+        <li>B) Set</li>
+        <li>C) List</li>
+        <li>D) Collection only</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) List — Both implement <code>java.util.List</code>, which extends <code>Collection</code>. This is why you can write <code>List&lt;String&gt; list = new ArrayList&lt;&gt;();</code>.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is the time complexity of <code>HashMap.get()</code> in the average case?</p>
+      <ul>
+        <li>A) O(n)</li>
+        <li>B) O(log n)</li>
+        <li>C) O(1)</li>
+        <li>D) O(n²)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) O(1) — HashMap uses hashing for constant-time lookups in the average case. Worst case (many collisions) is O(n) or O(log n) in Java 8+.</p></details>
+    </div>
+  </div>
 </article>

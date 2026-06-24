@@ -147,4 +147,61 @@ Bob — 30
       and print all three fields for both.
     </p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Create a <code>Student</code> class with a constructor that takes <code>name</code> and <code>grade</code>. Add a no-arg constructor that sets defaults. Demonstrate both.</li>
+      <li>What is constructor chaining using <code>this()</code>? Write an example with three constructors that chain to each other.</li>
+      <li>Why don't constructors have a return type? What would happen if you added <code>void</code> before a constructor?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What is a constructor?</p>
+      <ul>
+        <li>A) A special method that returns a new object</li>
+        <li>B) A method called automatically when an object is created to initialize it</li>
+        <li>C) A method that copies an object</li>
+        <li>D) A method that destroys an object</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A method called automatically when an object is created to initialize it — Constructors have the same name as the class and no return type.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. If you don't write any constructor, Java provides:</p>
+      <ul>
+        <li>A) No constructor (compile error if you use new)</li>
+        <li>B) A default no-arg constructor</li>
+        <li>C) A constructor with all fields as parameters</li>
+        <li>D) A static factory method</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A default no-arg constructor — Java automatically provides a default constructor ONLY if you haven't defined any constructor.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What is a copy constructor?</p>
+      <ul>
+        <li>A) A constructor that copies memory</li>
+        <li>B) A constructor that takes another object of the same class and copies its values</li>
+        <li>C) A constructor that duplicates the class</li>
+        <li>D) A built-in Java feature</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) A constructor that takes another object of the same class and copies its values — Java doesn't provide copy constructors automatically (unlike C++); you write them manually.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. Can a constructor call another constructor in the same class?</p>
+      <ul>
+        <li>A) No, never</li>
+        <li>B) Yes, using super()</li>
+        <li>C) Yes, using this() as the first statement</li>
+        <li>D) Yes, using new()</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Yes, using this() as the first statement — Constructor chaining with <code>this()</code> must be the very first line in the constructor.</p></details>
+    </div>
+  </div>
 </article>
