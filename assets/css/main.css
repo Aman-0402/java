@@ -59,6 +59,15 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
   border: none;
 }
 
+/* ── Mobile overlay (always fixed, out of grid flow) ── */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 199;
+}
+
 /* ── Sidebar ── */
 .sidebar {
   background: var(--color-sidebar-bg);
@@ -472,13 +481,6 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
     height: 100%;
   }
   .sidebar.open { transform: translateX(0); }
-  .sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 199;
-  }
   .sidebar-overlay.visible { display: block; }
   .sidebar-toggle { display: flex; }
   .content-area { padding: 24px 20px; }
