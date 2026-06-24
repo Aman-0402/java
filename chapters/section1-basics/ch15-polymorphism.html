@@ -137,17 +137,23 @@ Drawing a triangle ▲
     automatically.
   </div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> The word "polymorphism" comes from Greek: "poly" (many) + "morphe" (form). Runtime polymorphism in Java works through a mechanism called "virtual dispatch" — the JVM looks up the actual object type at runtime and calls the correct method. This lookup takes nanoseconds.</div>
+
   <div class="callout warning">
     ⚠️ <strong>Common mistake:</strong> Confusing overloading (same class, different parameters —
     compile-time) with overriding (parent vs child, same signature — runtime). They are different
     mechanisms despite similar-sounding names.
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> Runtime polymorphism was controversial in the 1990s. C++ had it but it was optional (the <code>virtual</code> keyword). Java made all instance methods virtual by default. Critics argued it was too slow. JVMs proved them wrong with JIT (Just-In-Time) compilation, which optimises virtual calls at runtime.</div>
+
   <div class="callout info">
     ℹ️ When you use a parent-type reference to hold a child object, you can only call methods
     that are defined on the parent type. To access child-specific methods, you need to <em>cast</em>:
     <code>((Circle) s).getRadius()</code>. Use casting sparingly.
   </div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Java's <code>List</code> interface is the classic polymorphism example from production code. A method written to accept <code>List&lt;String&gt;</code> works equally with <code>ArrayList</code>, <code>LinkedList</code>, and <code>CopyOnWriteArrayList</code> — you can swap implementations without touching the calling code. Spring Boot and most Java frameworks rely on this pattern constantly.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

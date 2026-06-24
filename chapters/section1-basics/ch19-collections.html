@@ -32,6 +32,8 @@ ArrayList&lt;Integer&gt; scores = new ArrayList&lt;&gt;(); // holds only Integer
     can grow and shrink — like a shopping list where you can always add more items.
   </p>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> <code>ArrayList</code> is arguably the most used Java class in codebases worldwide. Under the hood, it is just an array that doubles in size when full. When the internal array fills up, <code>ArrayList</code> creates a new array twice as large and copies all elements — this is O(n) but happens rarely enough that the amortised cost is O(1) per add.</div>
+
   <pre><code class="language-java">import java.util.ArrayList;
 
 public class Main {
@@ -114,6 +116,8 @@ Carol → 91
     and <code>values()</code> when you only need values.
   </div>
 
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Twitter's trending topics are computed using a structure like <code>HashMap&lt;String, Integer&gt;</code> — mapping each hashtag to its count. When you tweet <code>#JavaIsAwesome</code>, a counter in a HashMap increments. Every few seconds, the top entries are ranked and pushed to the trending list you see on screen.</div>
+
   <h2>HashSet — Unique Values Only</h2>
   <p>
     A <code>HashSet</code> is like a bag that automatically rejects duplicates. If you try to add
@@ -166,6 +170,8 @@ public class Main {
     <code>java.util.ArrayList</code>). The Collections Framework lives in that package. Your IDE
     will suggest the import automatically.
   </div>
+
+  <div class="callout history">📜 <strong>History:</strong> Java's Collections Framework was redesigned in Java 2 (1998) by Joshua Bloch. He later wrote <em>Effective Java</em> — the most influential Java book ever written. The framework he designed (List, Set, Map interfaces with ArrayList, HashMap, HashSet implementations) has remained largely unchanged for over 25 years.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

@@ -113,6 +113,8 @@ Scrooge paddles across the pond.
     breaking existing classes that already implement it.
   </p>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Java 8 (2014) added <code>default</code> methods to interfaces — a significant shift. Before Java 8, interfaces could only have abstract methods. The reason for the change: Java needed to add stream-related methods to <code>List</code> and <code>Collection</code>, but couldn't break the millions of existing classes that implemented them. Default methods were the elegant solution.</div>
+
   <pre><code class="language-java">public interface Greetable {
     String getName();
 
@@ -172,6 +174,10 @@ public class Robot implements Greetable {
     classes when you want to share common <em>state</em> or implementation between closely related
     classes.
   </div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> The <code>Comparable</code> interface (with its single <code>compareTo()</code> method) is used internally by <code>Arrays.sort()</code> and <code>Collections.sort()</code>. Implement <code>Comparable</code> on your class and Java's entire sorting infrastructure works with it instantly — the same pattern used in Amazon's product rankings and Netflix's content ordering.</div>
+
+  <div class="callout history">📜 <strong>History:</strong> Interfaces in Java were inspired by "protocols" in Objective-C (1984) and "pure abstract classes" in C++. James Gosling saw them as the clean alternative to multiple inheritance. The decision to separate <code>implements</code> (interfaces) from <code>extends</code> (inheritance) was one of Java's most influential design choices.</div>
 
   <div class="callout warning">
     ⚠️ <strong>Common mistake:</strong> Forgetting to implement all methods of an interface. The

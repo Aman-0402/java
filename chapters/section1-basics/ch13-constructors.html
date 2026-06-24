@@ -48,6 +48,8 @@ car1.year  = 2022;
     explicitly.
   </div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Java automatically provides a default (no-argument) constructor if you don't write one. But the moment you write ANY constructor, Java removes the default. This trips up beginners constantly — adding a parameterised constructor and then getting errors because the no-arg constructor silently disappeared.</div>
+
   <h2>Parameterized Constructor</h2>
   <p>
     A parameterized constructor accepts arguments and uses them to initialise the object's fields:
@@ -78,6 +80,8 @@ car1.year  = 2022;
     <code>name</code> above) is standard Java style. Always prefix the field assignment with
     <code>this.</code> inside a constructor — it prevents subtle mix-up bugs.
   </div>
+
+  <div class="callout history">📜 <strong>History:</strong> The keyword <code>new</code> for creating objects comes from Simula (1967), was adopted by C++ (1985), and then Java (1995). <code>new</code> explicitly allocates memory on the heap — making it one of the most important keywords in all of object-oriented programming.</div>
 
   <div class="callout warning">
     ⚠️ <strong>Common mistake:</strong> Writing <code>name = name;</code> without <code>this</code>
@@ -130,6 +134,8 @@ car1.year  = 2022;
 Alice — 0
 Bob — 30
 </code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> When you open Instagram, thousands of Java objects are constructed every second on their servers. Each API request creates new <code>User</code>, <code>Session</code>, and <code>Request</code> objects. Efficient constructors matter at scale — Instagram handles over 2 billion users.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

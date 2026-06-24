@@ -19,6 +19,8 @@
     can respond gracefully.
   </p>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> The most common exception in Java production systems is <code>NullPointerException</code> (NPE). Tony Hoare, who invented the null reference in 1965, called it his "billion-dollar mistake" in a 2009 talk. Null references have caused more bugs, crashes, and security vulnerabilities than almost any other single programming concept.</div>
+
   <h2>Common Exceptions You Will Encounter</h2>
   <ul>
     <li><code>NullPointerException</code> — calling a method on a <code>null</code> reference.</li>
@@ -82,6 +84,8 @@ This always runs.
     everything". This hides real bugs because you can no longer tell what went wrong. Always catch
     the most <em>specific</em> exception type you expect.
   </div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> In 2012, a bug in error handling code at Knight Capital Group caused a trading algorithm to lose $440 million in 45 minutes. The faulty exception handling went undetected in testing. This is why robust exception handling in financial software is not optional — it is mission-critical.</div>
 
   <h2>Checked vs Unchecked Exceptions</h2>
   <p>
@@ -158,6 +162,8 @@ public void withdraw(double amount) throws InsufficientFundsException {
     <code>e.getMessage()</code> returns in the catch block. Make your messages descriptive —
     they are your debugging lifeline.
   </div>
+
+  <div class="callout history">📜 <strong>History:</strong> Java's checked exceptions — exceptions you must declare with <code>throws</code> — were James Gosling's idea to force developers to handle errors explicitly. In hindsight, the Java community debates this choice: most modern languages (Kotlin, C#, Python) abandoned checked exceptions because developers often bypass them with empty <code>catch</code> blocks.</div>
 
   <div class="callout info">
     ℹ️ <strong>Stack trace reading:</strong> When an uncaught exception crashes your program,

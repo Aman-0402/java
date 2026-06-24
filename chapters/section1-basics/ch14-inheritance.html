@@ -146,17 +146,23 @@ public class Cat extends Animal {
     silently create a new, unrelated method instead.
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> Inheritance was one of the key ideas Alan Kay had when creating Smalltalk (1972) — the first truly object-oriented language. Kay wanted objects to "send messages" to each other and share behaviour through inheritance. Java refined these ideas 23 years later and brought them to mainstream programming.</div>
+
   <div class="callout warning">
     ⚠️ <strong>Common mistake:</strong> Java supports only <strong>single inheritance</strong> —
     a class can <code>extend</code> only one parent class. If you need behaviour from multiple sources,
     use interfaces (Chapter 17).
   </div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Java only supports single inheritance (one class can extend one parent) by design, to avoid the "Diamond Problem" from C++. In C++, if class D inherits from both B and C, and both inherit from A, it's ambiguous which version of A's methods D should use. Java sidesteps this entirely.</div>
+
   <div class="callout info">
     ℹ️ Every class in Java automatically extends <code>Object</code> (from <code>java.lang</code>),
     even if you don't write <code>extends</code>. That is why every object has methods like
     <code>toString()</code> and <code>equals()</code> available for free.
   </div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Android's entire UI framework is built on inheritance. <code>Button</code> extends <code>TextView</code> extends <code>View</code>. Every widget on every Android phone inherits from <code>View</code>. When you call <code>button.setVisibility(GONE)</code>, that method is defined in <code>View</code> — the grandparent class.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

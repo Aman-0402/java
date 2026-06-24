@@ -72,6 +72,8 @@
 
   <div class="callout tip">💡 Once a <code>return</code> statement executes, the method immediately stops. Any code after <code>return</code> in the same block is unreachable and will cause a compiler warning. Use this intentionally to exit a method early when needed.</div>
 
+  <div class="callout history">📜 <strong>History:</strong> The concept of "subroutines" — what we now call methods or functions — was invented by Alan Turing in 1945. He called them "abbreviated code definitions." They've been central to programming for over 80 years, predating almost every modern language feature.</div>
+
   <h2>Parameters and Arguments</h2>
   <p><em>Parameters</em> are the variable names listed inside the method's parentheses when you <em>define</em> it. <em>Arguments</em> are the actual values you pass when you <em>call</em> it. The terms are often used interchangeably, but the distinction helps when reading error messages.</p>
 
@@ -122,6 +124,8 @@
 }</code></pre>
 
   <div class="callout info">ℹ️ Overloading is different from having different method names. <code>addInts</code> and <code>addDoubles</code> would also work — but overloading with the same name <code>add</code> is cleaner and more intuitive for the caller.</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Every time you click "Like" on Instagram, a method called something like <code>likePost(userId, postId)</code> runs on Instagram's servers. That single method triggers cascading calls: update database, send notification, update feed ranking — all separate methods working together.</div>
 
   <h2>Static vs Instance Methods (Brief)</h2>
   <p>You have been writing <code>static</code> methods. A <code>static</code> method belongs to the <em>class itself</em> — you can call it without creating an object. An <em>instance</em> method (no <code>static</code> keyword) belongs to a specific object and can access that object's data. You will explore instance methods deeply in the Object-Oriented chapters. For now, just know:</p>
@@ -191,6 +195,8 @@ Rectangle 4.0 x 4.0
   Is square : true</code></pre>
 
   <div class="callout tip">💡 A good method does one thing and does it well. If you find yourself writing a method that does five different things, split it into five smaller methods. Smaller methods are easier to test, easier to understand, and easier to reuse.</div>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> The longest method ever found in production code had over 66,000 lines. It was discovered at a Fortune 500 company during a code audit. Methods should ideally be under 20 lines — this principle is called the "Single Responsibility Principle."</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

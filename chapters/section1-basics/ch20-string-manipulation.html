@@ -27,6 +27,8 @@ System.out.println(greeting);      // HELLO
     result back if you need it.
   </div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> In Java, Strings are immutable — once created, they cannot be changed. When you write <code>str = str + " world"</code>, Java creates a brand-new String object and discards the old one. This is why using <code>+=</code> in a loop to build a String is slow — it creates thousands of temporary objects. Always use <code>StringBuilder</code> in loops.</div>
+
   <h2>Essential String Methods</h2>
 
   <pre><code class="language-java">public class StringDemo {
@@ -114,6 +116,8 @@ for (int i = 0; i < 1000; i++) {
 }
 </code></pre>
 
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Google processes over 8.5 billion searches per day. Each search query is a String that gets parsed, tokenised, and analysed. String manipulation — splitting by spaces, lowercasing, removing punctuation — is at the very core of Google's search pipeline. Efficient string handling is not an academic exercise.</div>
+
   <h2>StringBuilder — Mutable String Building</h2>
   <p>
     <code>StringBuilder</code> is a <em>mutable</em> character buffer. You append to the same
@@ -172,6 +176,8 @@ System.out.println(blank.isBlank());   // true (Java 11+)
     build strings with placeholders — similar to <code>printf</code> in other languages:
     <code>String msg = String.format("Hello, %s! You are %d years old.", name, age);</code>
   </div>
+
+  <div class="callout history">📜 <strong>History:</strong> String immutability in Java was a deliberate security decision. If Strings were mutable, a database connection URL (a String) could be modified after security validation but before use — a classic TOCTOU (Time-of-Check to Time-of-Use) attack. Immutability prevents this entire class of security vulnerabilities.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>
