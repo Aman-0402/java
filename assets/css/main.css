@@ -409,6 +409,44 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
   border: none;
 }
 
+/* ── Code Explanation ── */
+.code-explanation {
+  background: #f4f8f0;
+  border-left: 4px solid #3a7d44;
+  border-radius: 0 6px 6px 0;
+  padding: 14px 18px;
+  margin: -4px 0 24px;
+}
+[data-theme="dark"] .code-explanation {
+  background: #0d1f12;
+  border-left-color: #4caf50;
+}
+.code-explanation h4 {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  color: #2d6a35;
+  margin: 0 0 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+[data-theme="dark"] .code-explanation h4 { color: #6fcf7f; }
+.code-explanation ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.code-explanation ul li {
+  margin-bottom: 6px;
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+.code-explanation ul li code {
+  background: rgba(0,0,0,0.07);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.88rem;
+}
+[data-theme="dark"] .code-explanation ul li code { background: rgba(255,255,255,0.1); }
+
 /* ── Practice Questions ── */
 .practice-section {
   background: #f0f4ff;
