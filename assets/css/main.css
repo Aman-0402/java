@@ -19,6 +19,12 @@
   --color-callout-warning-border: #cc7700;
   --color-callout-info-bg: #e8f0ff;
   --color-callout-info-border: #4466cc;
+  --color-callout-fact-bg: #f0f7ff;
+  --color-callout-fact-border: #0077cc;
+  --color-callout-history-bg: #f5f0fa;
+  --color-callout-history-border: #7c3aed;
+  --color-callout-real-world-bg: #edfaf3;
+  --color-callout-real-world-border: #059669;
   --color-exercise-bg: #eef5ee;
   --color-exercise-border: #2d6a4f;
   --color-code-bg: #1e1e2e;
@@ -355,6 +361,21 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
 .callout.info {
   background: var(--color-callout-info-bg);
   border-color: var(--color-callout-info-border);
+}
+
+.callout.fact {
+  background: var(--color-callout-fact-bg);
+  border-color: var(--color-callout-fact-border);
+}
+
+.callout.history {
+  background: var(--color-callout-history-bg);
+  border-color: var(--color-callout-history-border);
+}
+
+.callout.real-world {
+  background: var(--color-callout-real-world-bg);
+  border-color: var(--color-callout-real-world-border);
 }
 
 /* ── Exercise Box ── */

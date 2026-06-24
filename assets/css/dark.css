@@ -18,6 +18,12 @@ body[data-theme="dark"] {
   --color-callout-warning-border: #fab387;
   --color-callout-info-bg: #1a2040;
   --color-callout-info-border: #89b4fa;
+  --color-callout-fact-bg: #0d2040;
+  --color-callout-fact-border: #89b4fa;
+  --color-callout-history-bg: #1e1030;
+  --color-callout-history-border: #cba6f7;
+  --color-callout-real-world-bg: #0d2018;
+  --color-callout-real-world-border: #a6e3a1;
   --color-exercise-bg: #1a2a1a;
   --color-exercise-border: #a6e3a1;
   --color-code-bg: #11111b;
