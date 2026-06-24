@@ -165,4 +165,61 @@ if (x == 10) { ... }    // returns true or false</code></pre>
     <h3>✅ Try It</h3>
     <p>Write a program called <code>SeasonChecker.java</code>. Ask the user to type a month number (1-12). Use an <code>if-else if</code> chain to print the season: December, January, February = Winter; March, April, May = Spring; June, July, August = Summer; September, October, November = Autumn. Then rewrite the same logic using a switch expression. Compare both versions.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Write a program that reads a student's score (0–100) and prints their grade: A (90+), B (80–89), C (70–79), D (60–69), F (below 60).</li>
+      <li>Rewrite the same grade program using a switch statement (Java 14+ switch expression).</li>
+      <li>What is the difference between an <code>if-else if</code> chain and a <code>switch</code>? When is each preferred?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. What value does the <code>else</code> branch execute for?</p>
+      <ul>
+        <li>A) When the condition is true</li>
+        <li>B) When the condition is false</li>
+        <li>C) When the condition is null</li>
+        <li>D) Always</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) When the condition is false — <code>else</code> runs only when all preceding <code>if</code> / <code>else if</code> conditions are false.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What happens if you forget <code>break</code> in a switch case in Java?</p>
+      <ul>
+        <li>A) Compile error</li>
+        <li>B) The program crashes</li>
+        <li>C) Fall-through: execution continues into the next case</li>
+        <li>D) Nothing, break is optional</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Fall-through: execution continues into the next case — Without <code>break</code>, Java executes all subsequent cases until it hits a <code>break</code> or the end of the switch.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. Which operator is a shorthand for a simple if-else?</p>
+      <ul>
+        <li>A) &amp;&amp;</li>
+        <li>B) ::</li>
+        <li>C) ?:</li>
+        <li>D) ??</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) ?: — The ternary operator. <code>int abs = (x &lt; 0) ? -x : x;</code> replaces a 3-line if-else.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is the output of: <code>int x = 5; if (x &gt; 3) { System.out.print("A"); } if (x &gt; 4) { System.out.print("B"); }</code>?</p>
+      <ul>
+        <li>A) A</li>
+        <li>B) B</li>
+        <li>C) AB</li>
+        <li>D) Neither</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) AB — Both conditions are independent <code>if</code> statements (not <code>else if</code>), so both can execute.</p></details>
+    </div>
+  </div>
 </article>

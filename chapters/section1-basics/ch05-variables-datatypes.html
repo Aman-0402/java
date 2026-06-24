@@ -124,4 +124,61 @@ int 2fast;              // cannot start with a number</code></pre>
     <h3>✅ Try It</h3>
     <p>Write a program called <code>PersonProfile.java</code> that stores the following information about a person: their name (<code>String</code>), age (<code>int</code>), height in metres (<code>double</code>), first initial (<code>char</code>), and whether they are employed (<code>boolean</code>). Then print all five values using <code>System.out.println</code>. Try using <code>var</code> for at least two of the variables.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Declare variables to store: your name (String), your age (int), your GPA (double), and whether you're a student (boolean). Print all four.</li>
+      <li>What is the difference between <code>int</code> and <code>long</code>? When would you use <code>long</code> instead of <code>int</code>?</li>
+      <li>Try this: <code>int x = 2147483647; x = x + 1; System.out.println(x);</code> — What do you expect? What actually prints? Why?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. Which data type should you use to store the value <code>3.14159</code>?</p>
+      <ul>
+        <li>A) int</li>
+        <li>B) char</li>
+        <li>C) boolean</li>
+        <li>D) double</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ D) double — <code>double</code> stores 64-bit floating-point numbers. Use <code>float</code> for 32-bit (less precision).</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What is the default value of an uninitialized <code>int</code> field in a Java class?</p>
+      <ul>
+        <li>A) null</li>
+        <li>B) 1</li>
+        <li>C) 0</li>
+        <li>D) undefined</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) 0 — Java initializes numeric fields to 0, booleans to false, and objects to null by default.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What keyword makes a variable's value unchangeable after assignment?</p>
+      <ul>
+        <li>A) static</li>
+        <li>B) const</li>
+        <li>C) final</li>
+        <li>D) immutable</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) final — <code>final int MAX = 100;</code> creates a constant. Trying to reassign it causes a compile error.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. Which of these is NOT a valid Java variable name?</p>
+      <ul>
+        <li>A) myAge</li>
+        <li>B) _count</li>
+        <li>C) 2fast</li>
+        <li>D) firstName</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) 2fast — Variable names cannot start with a digit. They must start with a letter, <code>_</code>, or <code>$</code>.</p></details>
+    </div>
+  </div>
 </article>

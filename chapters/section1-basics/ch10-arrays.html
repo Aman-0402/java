@@ -139,4 +139,61 @@
     <h3>✅ Try It</h3>
     <p>Write a program called <code>StudentScores.java</code>. Create an array of 6 integer scores (make up values between 40 and 100). Using a loop, calculate and print: the total, the average, the highest score, and the lowest score. Bonus: also print how many students scored above the average.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Declare an integer array of size 5, fill it with values 10, 20, 30, 40, 50, then print each element using a for loop.</li>
+      <li>Write a program that finds the largest number in an array of integers.</li>
+      <li>What happens when you access <code>array[10]</code> on an array with length 5? What exception is thrown?</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. How do you get the length of an array named <code>nums</code>?</p>
+      <ul>
+        <li>A) nums.length()</li>
+        <li>B) nums.size()</li>
+        <li>C) nums.length</li>
+        <li>D) len(nums)</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) nums.length — Array length is a property (not a method) in Java. Note: no parentheses.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What is the index of the LAST element in an array of size 10?</p>
+      <ul>
+        <li>A) 10</li>
+        <li>B) 9</li>
+        <li>C) 1</li>
+        <li>D) 0</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) 9 — Arrays are 0-indexed. Size 10 → indices 0 through 9.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What exception is thrown when you access an invalid array index?</p>
+      <ul>
+        <li>A) NullPointerException</li>
+        <li>B) ArrayOutOfBoundsException</li>
+        <li>C) IndexOutOfBoundsException</li>
+        <li>D) ArrayIndexOutOfBoundsException</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ D) ArrayIndexOutOfBoundsException — Java throws this when you access index &lt; 0 or &gt;= array length.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. Which code correctly creates and initializes an int array?</p>
+      <ul>
+        <li>A) int[] arr = {1, 2, 3};</li>
+        <li>B) int arr[] = new int(3);</li>
+        <li>C) array int = [1,2,3];</li>
+        <li>D) int arr = new int[]{};</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ A) int[] arr = {1, 2, 3}; — Array initializer shorthand. Equivalent to: <code>int[] arr = new int[]{1,2,3};</code></p></details>
+    </div>
+  </div>
 </article>

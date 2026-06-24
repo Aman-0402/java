@@ -158,4 +158,61 @@ public class DoWhileDemo {
     <h3>✅ Try It</h3>
     <p>Write a program called <code>NumberGuess.java</code>. Pick a secret number (hardcode it as a variable, e.g. <code>int secret = 42</code>). Use a <code>while</code> loop and <code>Scanner</code> to keep asking the user to guess until they get it right. After each wrong guess, print "Too high!" or "Too low!" to help them. When they guess correctly, print how many attempts it took.</p>
   </div>
+
+  <div class="practice-section">
+    <h2>✏️ Practice Questions</h2>
+    <ol class="practice-questions">
+      <li>Write a <code>for</code> loop that prints the multiplication table for 7 (7×1 through 7×10).</li>
+      <li>Write a <code>while</code> loop that keeps asking the user to enter a positive number until they do.</li>
+      <li>What is an infinite loop? Write one intentionally, then explain how you would exit it.</li>
+    </ol>
+  </div>
+
+  <div class="mcq-section">
+    <h2>🧠 Multiple Choice Questions</h2>
+
+    <div class="mcq">
+      <p>1. Which loop is guaranteed to execute its body at least once?</p>
+      <ul>
+        <li>A) for loop</li>
+        <li>B) while loop</li>
+        <li>C) do-while loop</li>
+        <li>D) foreach loop</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) do-while loop — The condition is checked AFTER the body executes, so the body always runs at least once.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>2. What does <code>break</code> do inside a loop?</p>
+      <ul>
+        <li>A) Pauses the loop</li>
+        <li>B) Skips to the next iteration</li>
+        <li>C) Exits the loop immediately</li>
+        <li>D) Restarts the loop</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ C) Exits the loop immediately — <code>break</code> terminates the innermost loop and continues after it.</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>3. What does <code>continue</code> do inside a loop?</p>
+      <ul>
+        <li>A) Exits the loop</li>
+        <li>B) Skips the rest of the current iteration and goes to the next</li>
+        <li>C) Restarts the program</li>
+        <li>D) Pauses execution</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) Skips the rest of the current iteration and goes to the next — <code>continue</code> jumps to the loop's update expression (for) or condition check (while).</p></details>
+    </div>
+
+    <div class="mcq">
+      <p>4. What is the output of: <code>for (int i = 0; i &lt; 3; i++) { System.out.print(i + " "); }</code>?</p>
+      <ul>
+        <li>A) 1 2 3</li>
+        <li>B) 0 1 2</li>
+        <li>C) 0 1 2 3</li>
+        <li>D) 1 2</li>
+      </ul>
+      <details><summary>Show Answer</summary><p>✅ B) 0 1 2 — Loop starts at i=0, runs while i&lt;3 (i=0,1,2), increments after each iteration.</p></details>
+    </div>
+  </div>
 </article>
