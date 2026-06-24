@@ -351,6 +351,31 @@ body { font-family: var(--font-body); background: var(--color-bg); color: var(--
   border: none;
 }
 
+/* ── Comparison Table ── */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+
+.comparison-table th, .comparison-table td {
+  padding: 9px 14px;
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.comparison-table th {
+  background: var(--color-sidebar-bg);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.comparison-table tr:nth-child(even) td {
+  background: rgba(139,69,19,0.04);
+}
+
 /* ── Chapter Navigation (bottom) ── */
 .chapter-nav-bottom {
   display: flex;
