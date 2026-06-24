@@ -5,6 +5,8 @@
     <p class="chapter-intro">Graphs model anything with connections — cities and roads, social networks, web pages and links — and BFS and DFS are the two fundamental algorithms for exploring them.</p>
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> Graph theory was invented by Leonhard Euler in 1736 to solve the "Seven Bridges of Königsberg" problem — could you walk through a city crossing each bridge exactly once? Euler proved it was impossible and in doing so invented graph theory. 288 years later, every GPS, social network, and internet router uses his mathematical framework.</div>
+
   <h2>What Is a Graph?</h2>
   <p>
     Imagine a map of cities connected by roads. Each city is a point, and each road is a line between two points. That is a graph. More formally:
@@ -16,6 +18,8 @@
   <p>
     Graphs are the most general data structure you have studied so far. Trees are actually a special case of a graph — a tree is a connected graph with no cycles.
   </p>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Facebook's social graph has 3 billion nodes (users) and hundreds of billions of edges (friendships). The average distance between any two Facebook users is 3.57 degrees of separation — meaning you're connected to anyone on Earth through fewer than 4 mutual friends. Facebook computed this using distributed BFS across hundreds of servers.</div>
 
   <h2>Types of Graphs</h2>
   <table>
@@ -265,6 +269,8 @@ public class DFS {
   <p>
     Both BFS and DFS have the same time complexity — O(V + E) where V is the number of vertices and E is the number of edges — because each vertex and each edge is visited exactly once.
   </p>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Google Maps uses Dijkstra's algorithm (a graph shortest-path algorithm) to find the fastest route. Your city is a graph: intersections = vertices, roads = edges with weights (distance/time). When you ask for directions, Google searches this graph — typically across hundreds of thousands of nodes — and finds the optimal path in under a second.</div>
 
   <div class="callout tip">
     💡 <strong>Tip — Always Track Visited Vertices:</strong> In a graph with cycles (which is most real-world graphs), forgetting the <code>visited</code> set will cause infinite loops. Unlike a tree, a graph can have multiple paths to the same node — you must remember where you have already been.

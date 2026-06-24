@@ -5,6 +5,8 @@
     <p class="chapter-intro">A stack is a Last-In, First-Out (LIFO) data structure where you can only add or remove items from the top — like a stack of plates.</p>
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> The stack data structure was invented by Friedrich L. Bauer in 1957. He called it a "cellar" and used it to evaluate arithmetic expressions. In 1957, he was working on the ALGOL compiler — the first language to use a stack for function calls. Every modern CPU has a hardware stack built in.</div>
+
   <h2>The Plate Stack Analogy</h2>
   <p>Imagine a stack of plates in a cafeteria. You always place a new plate on top, and you always take from the top. You cannot grab a plate from the middle without removing all the plates above it first. This "last in, first out" behaviour is exactly how a stack data structure works.</p>
 
@@ -60,6 +62,8 @@ System.out.println("Empty? " + stack.isEmpty()); // false
 </code></pre>
 
   <div class="callout tip">💡 Always declare the variable as <code>Deque&lt;T&gt;</code> (the interface) rather than <code>ArrayDeque&lt;T&gt;</code> (the implementation). This makes it easy to swap implementations later and signals to readers that only stack operations are intended.</div>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Every time you call a method in Java, a new "stack frame" is pushed onto the JVM's call stack. This is why <code>StackOverflowError</code> happens with deep recursion — the stack runs out of space. The default JVM stack size is ~512KB, fitting roughly 5,000–10,000 method calls.</div>
 
   <h2>Use Cases for Stacks</h2>
   <ul>
@@ -135,6 +139,8 @@ public class BracketMatcher {
     }
 }
 </code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Undo/Redo in every text editor (VS Code, Word, Photoshop) uses two stacks: an undo stack and a redo stack. Every action you take gets pushed to the undo stack. When you press Ctrl+Z, the action is popped from undo and pushed to redo. You use this data structure dozens of times daily.</div>
 
   <div class="callout info">ℹ️ The bracket-matching problem is O(n) time and O(n) space (worst case all openers). It appears frequently in coding interviews and is a classic demonstration of why stacks exist.</div>
 

@@ -5,6 +5,8 @@
     <p class="chapter-intro">Binary search cuts a sorted array in half each time, finding any value in O(log n) steps instead of scanning every element.</p>
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> Binary search's concept dates back to 1946, described by John Mauchly (co-inventor of ENIAC, the first electronic computer). But the first bug-free implementation wasn't published until 1962 by D.H. Lehmer. The algorithm seemed simple but had a subtle integer overflow bug in <code>mid = (low + high) / 2</code> — which Java programmer Joshua Bloch discovered in Java's <code>Arrays.binarySearch()</code> in 2006 and fixed to <code>mid = low + (high - low) / 2</code>.</div>
+
   <h2>The Phone Book Analogy</h2>
   <p>
     Imagine you are looking for "Smith" in a phone book. You would <em>never</em> start at page one and read every name. Instead, you open the book in the middle. If the middle page shows "Miller", you know Smith is in the right half — so you discard the left half entirely and repeat on the remaining pages. That is <strong>binary search</strong>.
@@ -192,6 +194,8 @@ public class BuiltInBinarySearch {
     ⚠️ <strong>Common Mistake — Searching an Unsorted Array:</strong> Binary search gives silently wrong answers on unsorted data — it will not throw an exception or warn you. Always sort the array first with <code>Arrays.sort(arr)</code>. If you need to search an unsorted collection use linear search instead; binary search on unsorted data is worse than useless because you cannot trust the result.
   </div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Binary search is so efficient that searching 1 billion sorted items takes at most 30 comparisons (log₂(1,000,000,000) ≈ 30). A linear search of the same dataset would average 500 million comparisons. This difference is why sorted databases can answer queries in milliseconds.</div>
+
   <h2>Why O(log n)?</h2>
   <p>
     Each step halves the search space. Starting from <code>n</code> elements:
@@ -214,6 +218,8 @@ Examples:
   <p>
     A billion-element array, 30 comparisons. That is the power of logarithmic growth.
   </p>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Every database index uses binary search (or its cousin, B-tree search). When you search for a username on any website, the database performs a binary search on an indexed column. Without indexes (and binary search), every query would scan the entire table — millions of rows for a single lookup.</div>
 
   <div class="exercise">
     <h3>✅ Try It</h3>

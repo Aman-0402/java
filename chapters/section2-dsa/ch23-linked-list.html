@@ -5,6 +5,8 @@
     <p class="chapter-intro">A linked list is a chain of nodes where each node holds a value and a pointer to the next node, making insertions and deletions fast without shifting elements.</p>
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> Linked lists were invented at RAND Corporation in 1955 by Allen Newell, Cliff Shaw, and Herbert Simon while building an AI program called "Logic Theorist." It was the first program to prove mathematical theorems automatically. Linked lists were their solution for dynamic memory allocation.</div>
+
   <h2>The Train Carriages Analogy</h2>
   <p>Think of a linked list as a train. Each carriage (node) carries cargo (data) and is hooked to the next carriage. To find carriage 5, you must walk through carriages 1, 2, 3, 4 first — there is no shortcut. But adding or removing a carriage in the middle only requires unhooking a couple of connections, no matter how long the train is.</p>
 
@@ -160,6 +162,8 @@ After:  head → [10|●] → [30|null]
 
   <div class="callout tip">💡 Use a linked list when you need frequent insertions or deletions at the beginning or middle of a collection. Use an array (or ArrayList) when you need fast random access by index.</div>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Java's <code>LinkedList</code> class implements both <code>List</code> AND <code>Deque</code> interfaces — making it useful as a list, queue, or stack. But in practice, <code>ArrayList</code> outperforms <code>LinkedList</code> for most operations because modern CPUs are optimized for sequential memory access (arrays), not pointer-chasing (linked list nodes).</div>
+
   <h2>Java's Built-in LinkedList</h2>
   <p>Java provides <code>java.util.LinkedList</code> in the Collections framework. It is a doubly linked list (each node also has a <code>prev</code> pointer) and implements both <code>List</code> and <code>Deque</code>.</p>
 
@@ -173,6 +177,8 @@ System.out.println(list.get(0)); // access by index (O(n) internally)
 </code></pre>
 
   <div class="callout info">ℹ️ In practice, <code>ArrayList</code> outperforms <code>LinkedList</code> for most tasks because modern CPUs cache contiguous memory very efficiently. Prefer <code>ArrayList</code> unless you specifically need O(1) front insertions or are implementing a deque/queue.</div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Your browser's back/forward navigation is a doubly linked list. Each page you visit is a node. <code>back()</code> = <code>node.prev</code>, <code>forward()</code> = <code>node.next</code>. Chrome, Firefox, and Safari all use this data structure to manage your browsing history.</div>
 
   <div class="callout warning">⚠️ Never modify a linked list while iterating over it with a standard loop. Use an <code>Iterator</code> and its <code>remove()</code> method, or collect indices to delete afterward.</div>
 

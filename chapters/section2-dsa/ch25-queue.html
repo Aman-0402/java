@@ -5,6 +5,8 @@
     <p class="chapter-intro">A queue is a First-In, First-Out (FIFO) data structure where items are added at the back and removed from the front — just like a ticket counter line.</p>
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> Queue theory was mathematically formalized by Danish engineer A.K. Erlang in 1909 while working for the Copenhagen Telephone Exchange. He needed to calculate how many telephone operators were needed to handle calls without long wait times. "Erlang" is now a unit of phone traffic — and also a programming language named after him.</div>
+
   <h2>The Ticket Counter Analogy</h2>
   <p>Imagine a queue at a railway ticket counter. The first person to arrive is the first person to be served. New arrivals join at the back. Nobody cuts in line (ideally). This is exactly how a queue data structure behaves: <strong>first in, first out</strong>.</p>
 
@@ -58,6 +60,8 @@ System.out.println("Size: " + queue.size()); // 1
 </code></pre>
 
   <div class="callout tip">💡 Prefer <code>offer()</code> over <code>add()</code> and <code>poll()</code> over <code>remove()</code>. The <code>offer</code>/<code>poll</code>/<code>peek</code> methods return special values (<code>false</code> or <code>null</code>) on failure, while <code>add</code>/<code>remove</code> throw exceptions — the special-value versions are usually easier to work with in loops.</div>
+
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Queues are fundamental to operating systems. When you open 5 apps at once, the OS puts their requests in a queue. The CPU processes one request at a time (or a few in parallel on multi-core), and the queue ensures no request is lost and all are eventually processed.</div>
 
   <h2>Use Cases for Queues</h2>
   <ul>
@@ -154,6 +158,8 @@ System.out.println(pq.poll()); // 10 — smallest first
 System.out.println(pq.poll()); // 20
 System.out.println(pq.poll()); // 30
 </code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Uber's dispatch system uses a priority queue. When you request a ride, you're added to a queue. Nearby drivers receive requests from this queue. Priority is based on distance, surge pricing, and driver rating. Without queues, thousands of simultaneous requests would cause chaos.</div>
 
   <div class="callout info">ℹ️ Priority queues are widely used in Dijkstra's shortest path algorithm, hospital triage systems, and CPU task scheduling. They are covered in depth when you reach graph algorithms.</div>
 

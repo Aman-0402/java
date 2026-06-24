@@ -5,6 +5,8 @@
     <p class="chapter-intro">HashMap gives you O(1) average-case lookups by converting keys into array indices — understanding how it does this (and when it breaks down) makes you a far more effective Java developer.</p>
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> Hash functions were invented by Hans Peter Luhn at IBM in 1953. The idea of using a hash to index into an array (hash table) was published by H.P. Luhn in 1953 and later by Arnold Dumey. Java's <code>HashMap</code> (introduced in Java 2, 1998) is a refined implementation of this 70-year-old concept.</div>
+
   <h2>The Problem HashMap Solves</h2>
   <p>
     Suppose you want to look up a student's grade by their name. Using a plain array you would have to scan every element — O(n). A sorted array with binary search gives O(log n). But what if you could jump directly to the right answer in one step? That is what <code>HashMap</code> achieves: O(1) average-case lookup by converting the key into an array index.
@@ -105,6 +107,8 @@ Example with initial capacity = 4, load factor = 0.75:
     → New capacity = 16
 </pre>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> Java's <code>HashMap</code> has an interesting quirk: if many keys hash to the same bucket (collision), Java 8+ converts that bucket's linked list into a Red-Black Tree when it has more than 8 entries. This changes worst-case lookup from O(n) to O(log n) — a subtle optimization that most Java developers don't know about.</div>
+
   <div class="callout tip">
     💡 <strong>Tip — Pre-size Your HashMap:</strong> If you know you will insert roughly <em>n</em> entries, construct the map with <code>new HashMap&lt;&gt;(n / 0.75 + 1)</code> to avoid rehashing. Rehashing copies every entry — avoiding it is a free performance win for large maps.
   </div>
@@ -161,6 +165,8 @@ public class Student {
     }
 }
 </code></pre>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> DNS resolution (converting "google.com" to an IP address) uses a giant distributed hash table. Your computer caches DNS results in a local HashMap (<code>domain → IP</code>). When you type a URL, Java's <code>InetAddress.getByName()</code> checks this cache first — a HashMap lookup that takes nanoseconds before making a network request that takes milliseconds.</div>
 
   <div class="callout warning">
     ⚠️ <strong>Common Mistake — Mutable Keys:</strong> Never mutate an object while it is being used as a HashMap key. The hashCode changes when the object changes, so the map can no longer find the entry (it looks in the wrong bucket). Use immutable objects — like <code>String</code>, <code>Integer</code>, or records — as keys whenever possible.

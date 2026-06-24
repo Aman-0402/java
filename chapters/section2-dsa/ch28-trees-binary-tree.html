@@ -5,6 +5,8 @@
     <p class="chapter-intro">A tree is a hierarchical data structure where every node has at most one parent — understanding trees unlocks file systems, databases, compilers, and much more.</p>
   </div>
 
+  <div class="callout history">📜 <strong>History:</strong> Tree data structures were first formally described by Arthur Cayley in 1857 in mathematics. In computing, they appeared in 1960 with LISP's S-expressions (which are essentially trees). Binary Search Trees were analyzed by Hibbard in 1962. Today, trees are in virtually every piece of software you use.</div>
+
   <h2>What Is a Tree?</h2>
   <p>
     Think of a family tree. There is one person at the top — a great-grandparent — and they have children, who have children of their own, and so on. No child has two parents in the tree (it is not a social graph, it is a strict hierarchy). That is exactly how a tree data structure works.
@@ -233,9 +235,13 @@ In-order traversal of BST above:
 }
 </code></pre>
 
+  <div class="callout fact">🔍 <strong>Fun Fact:</strong> The HTML of every web page is stored as a tree called the DOM (Document Object Model). Your browser parses HTML into a tree of nodes (<code>&lt;html&gt;</code> → <code>&lt;body&gt;</code> → <code>&lt;div&gt;</code> → <code>&lt;p&gt;</code>). When JavaScript changes a webpage, it's modifying tree nodes. Java's XML parsers work the same way.</div>
+
   <div class="callout tip">
     💡 <strong>Tip — BST Gives You a Free Sort:</strong> If you insert <em>n</em> elements into a BST one at a time and then do an in-order traversal, you get them back in sorted order. This is called <em>Tree Sort</em> and runs in O(n log n) for a balanced tree — the same complexity as Merge Sort.
   </div>
+
+  <div class="callout real-world">🌍 <strong>Real World:</strong> Chess engines (like Stockfish) build a "game tree" where each node is a board position and each edge is a legal move. The engine searches this tree to find the best move. A chess game tree has roughly 10^120 possible positions — more than atoms in the observable universe. Algorithms like Alpha-Beta pruning prune this tree to make it searchable.</div>
 
   <div class="callout warning">
     ⚠️ <strong>Common Mistake — Unbalanced BSTs:</strong> If you insert elements in sorted order (e.g., 1, 2, 3, 4, 5), every node goes to the right child of the previous one. The BST degenerates into a linked list, and search becomes O(n) — no better than linear search. Real-world implementations use <em>self-balancing</em> trees like AVL trees or Red-Black trees (which Java's <code>TreeMap</code> uses) to keep height at O(log n) automatically.
