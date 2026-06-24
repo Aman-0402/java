@@ -1,1 +1,124 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 12: OOP — Classes and Objects</h1>
+    <p class="chapter-intro">Object-Oriented Programming lets you model real-world things as "objects" built from "blueprints" called classes.</p>
+  </div>
 
+  <h2>What Is OOP and Why Does It Exist?</h2>
+  <p>
+    Imagine you're building a housing estate. Before the first brick is laid, an architect draws a
+    <strong>blueprint</strong>. The blueprint describes everything a house will have — number of rooms,
+    door positions, window sizes. From that single blueprint you can build hundreds of identical houses,
+    each with their own address, colour, and furniture.
+  </p>
+  <p>
+    In Java, a <strong>class</strong> is the blueprint, and an <strong>object</strong> is one house built
+    from that blueprint. You define a class once, then create as many objects (instances) as you like.
+    Each object has its own copy of the data described in the class.
+  </p>
+
+  <h2>Declaring a Class</h2>
+  <p>
+    A class is declared with the <code>class</code> keyword. Inside the class you list the data it holds
+    (called <strong>fields</strong> or <strong>instance variables</strong>) and the actions it can perform
+    (called <strong>methods</strong>, covered in later chapters).
+  </p>
+
+  <pre><code class="language-java">// A blueprint that describes every Car
+public class Car {
+    // Fields — every Car object will have these three pieces of data
+    String make;
+    String model;
+    int    year;
+}
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Tip:</strong> By convention, class names start with an uppercase letter
+    (<code>Car</code>, not <code>car</code>). Each word is capitalised — this style is called
+    <em>PascalCase</em>.
+  </div>
+
+  <h2>Creating Objects with <code>new</code></h2>
+  <p>
+    The <code>new</code> keyword tells Java to build a fresh object in memory using the class as its
+    blueprint. The result is stored in a <strong>reference variable</strong> whose type is the class name.
+  </p>
+
+  <pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        // Create two Car objects from the same blueprint
+        Car car1 = new Car();
+        Car car2 = new Car();
+
+        // Give each object its own data using dot notation
+        car1.make  = "Toyota";
+        car1.model = "Corolla";
+        car1.year  = 2022;
+
+        car2.make  = "Honda";
+        car2.model = "Civic";
+        car2.year  = 2023;
+
+        // Read the data back
+        System.out.println(car1.make + " " + car1.model + " (" + car1.year + ")");
+        System.out.println(car2.make + " " + car2.model + " (" + car2.year + ")");
+    }
+}
+</code></pre>
+
+  <p>
+    <strong>Output:</strong>
+  </p>
+  <pre><code>Toyota Corolla (2022)
+Honda Civic (2023)
+</code></pre>
+
+  <h2>Dot Notation</h2>
+  <p>
+    You reach inside an object using a dot: <code>objectName.fieldName</code>. Think of it like an
+    address — <em>"the <code>make</code> that belongs to <code>car1</code>"</em>.
+  </p>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common mistake:</strong> Forgetting <code>new</code> and writing
+    <code>Car car1 = Car();</code> causes a compile error. The <code>new</code> keyword is what actually
+    allocates memory and creates the object.
+  </div>
+
+  <div class="callout info">
+    ℹ️ <strong>How many objects can you create?</strong> As many as your computer's memory allows. A
+    single class definition can be the blueprint for thousands of objects running in the same program.
+  </div>
+
+  <h2>Full Runnable Example</h2>
+  <pre><code class="language-java">// File: Car.java
+public class Car {
+    String make;
+    String model;
+    int    year;
+
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        myCar.make  = "Ford";
+        myCar.model = "Mustang";
+        myCar.year  = 1969;
+
+        System.out.println("Make  : " + myCar.make);
+        System.out.println("Model : " + myCar.model);
+        System.out.println("Year  : " + myCar.year);
+    }
+}
+</code></pre>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Create a class called <code>Book</code> with three fields: <code>title</code> (String),
+      <code>author</code> (String), and <code>pages</code> (int). In a <code>main</code> method,
+      create two <code>Book</code> objects, fill in real book details, and print each book's
+      information to the console.
+    </p>
+  </div>
+</article>

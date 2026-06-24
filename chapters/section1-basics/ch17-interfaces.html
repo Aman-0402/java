@@ -1,1 +1,191 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 17: Interfaces</h1>
+    <p class="chapter-intro">An interface is a contract — it specifies what methods a class must provide, without dictating how those methods work.</p>
+  </div>
 
+  <h2>What Is an Interface?</h2>
+  <p>
+    Imagine a job application form. The company doesn't care what university you attended or how you
+    learned your skills — they just need to know you can do certain things: "Can you write code?
+    Can you communicate in English? Can you work in a team?" That list of requirements is the
+    <strong>contract</strong>.
+  </p>
+  <p>
+    In Java, an <strong>interface</strong> is that contract. It lists method names and signatures
+    that a class promises to implement. Any class that signs the contract (uses <code>implements</code>)
+    is guaranteed to have all those methods.
+  </p>
+
+  <h2>Declaring an Interface</h2>
+  <p>
+    Use the <code>interface</code> keyword. Methods inside an interface are implicitly
+    <code>public abstract</code> — you don't need to write those keywords yourself.
+  </p>
+
+  <pre><code class="language-java">public interface Flyable {
+    void fly();        // implicitly public abstract
+    int getAltitude(); // every Flyable thing must be able to report altitude
+}
+</code></pre>
+
+  <h2>Implementing an Interface</h2>
+  <p>
+    A class "signs the contract" using the <code>implements</code> keyword. It must provide a body
+    for <em>every</em> method listed in the interface, or the compiler will refuse.
+  </p>
+
+  <pre><code class="language-java">public class Airplane implements Flyable {
+    private int altitude;
+
+    @Override
+    public void fly() {
+        altitude = 35000;
+        System.out.println("Airplane is flying at " + altitude + " feet.");
+    }
+
+    @Override
+    public int getAltitude() {
+        return altitude;
+    }
+}
+</code></pre>
+
+  <h2>Implementing Multiple Interfaces</h2>
+  <p>
+    This is where interfaces shine over abstract classes. Java classes can only
+    <code>extend</code> one parent, but they can <code>implement</code> as many interfaces as needed.
+    A <code>Duck</code>, for example, can both fly and swim:
+  </p>
+
+  <pre><code class="language-java">public interface Flyable {
+    void fly();
+}
+
+public interface Swimmable {
+    void swim();
+}
+
+// Duck signs BOTH contracts
+public class Duck implements Flyable, Swimmable {
+    private String name;
+
+    public Duck(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void fly() {
+        System.out.println(name + " flaps its wings and glides.");
+    }
+
+    @Override
+    public void swim() {
+        System.out.println(name + " paddles across the pond.");
+    }
+
+    public static void main(String[] args) {
+        Duck d = new Duck("Donald");
+        d.fly();
+        d.swim();
+
+        // Can also be referenced by either interface type
+        Flyable  f = new Duck("Daffy");
+        Swimmable s = new Duck("Scrooge");
+        f.fly();
+        s.swim();
+    }
+}
+</code></pre>
+
+  <p><strong>Output:</strong></p>
+  <pre><code>Donald flaps its wings and glides.
+Donald paddles across the pond.
+Daffy flaps its wings and glides.
+Scrooge paddles across the pond.
+</code></pre>
+
+  <h2>Default Methods (Java 8+)</h2>
+  <p>
+    Before Java 8, interfaces could only have abstract methods. Java 8 added <strong>default methods</strong>
+    — methods with a body inside the interface. This lets you add new behaviour to an interface without
+    breaking existing classes that already implement it.
+  </p>
+
+  <pre><code class="language-java">public interface Greetable {
+    String getName();
+
+    // Default method — classes get this for free, can override if needed
+    default void greet() {
+        System.out.println("Hello, I am " + getName() + "!");
+    }
+}
+
+public class Robot implements Greetable {
+    private String name;
+
+    public Robot(String name) { this.name = name; }
+
+    @Override
+    public String getName() { return name; }
+    // greet() is inherited from the interface for free
+}
+</code></pre>
+
+  <h2>Interface vs Abstract Class — When to Use Which</h2>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Interface</th>
+        <th>Abstract Class</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Multiple inheritance</td>
+        <td>✅ Yes (implement many)</td>
+        <td>❌ No (extend one only)</td>
+      </tr>
+      <tr>
+        <td>Fields</td>
+        <td>Constants only</td>
+        <td>Any fields</td>
+      </tr>
+      <tr>
+        <td>Constructors</td>
+        <td>❌ None</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>Use when</td>
+        <td>Defining a capability/role</td>
+        <td>Sharing base code among related classes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    💡 <strong>Tip:</strong> Favour interfaces over abstract classes when you are defining a
+    <em>capability</em> (something a class <em>can do</em>, like fly or serialize). Use abstract
+    classes when you want to share common <em>state</em> or implementation between closely related
+    classes.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common mistake:</strong> Forgetting to implement all methods of an interface. The
+    compiler will tell you exactly which methods are missing — read the error message carefully.
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Create two interfaces: <code>Printable</code> (with method <code>printDetails()</code>) and
+      <code>Saveable</code> (with method <code>save()</code>). Create a class <code>Document</code>
+      that implements both. <code>printDetails()</code> should print the document title, and
+      <code>save()</code> should print a message like <em>"Saving document: [title]"</em>. In
+      <code>main</code>, create a <code>Document</code> and call both methods.
+    </p>
+  </div>
+</article>

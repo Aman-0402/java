@@ -1,1 +1,162 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 15: Polymorphism</h1>
+    <p class="chapter-intro">Polymorphism means "many forms" — the same method call can produce different behaviour depending on which object actually receives it.</p>
+  </div>
 
+  <h2>The Real-World Idea</h2>
+  <p>
+    Imagine a universal TV remote. It has a single "volume up" button. Whether the TV is a Samsung,
+    a Sony, or an LG, pressing that button works correctly for each brand — each TV responds in
+    its own way to the same command. The remote doesn't need to know the brand; it just presses
+    the button.
+  </p>
+  <p>
+    That is polymorphism: one interface (the button), many forms of response (brand-specific logic).
+  </p>
+
+  <h2>Two Kinds of Polymorphism in Java</h2>
+
+  <h3>1. Compile-Time Polymorphism — Method Overloading</h3>
+  <p>
+    <strong>Method overloading</strong> means having multiple methods with the same name but different
+    parameter lists in the same class. Java decides which version to call at <em>compile time</em>
+    based on the arguments you pass.
+  </p>
+
+  <pre><code class="language-java">public class Calculator {
+    // Add two ints
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    // Add three ints
+    public int add(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    // Add two doubles
+    public double add(double a, double b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        System.out.println(calc.add(2, 3));         // 5
+        System.out.println(calc.add(1, 2, 3));      // 6
+        System.out.println(calc.add(1.5, 2.5));     // 4.0
+    }
+}
+</code></pre>
+
+  <h3>2. Runtime Polymorphism — Method Overriding</h3>
+  <p>
+    <strong>Method overriding</strong> (from Chapter 14) produces runtime polymorphism. Java decides
+    which version of an overridden method to run <em>at runtime</em>, based on the actual object
+    type — not the reference type.
+  </p>
+  <p>
+    The key insight: you can store a child object inside a parent-type reference variable:
+  </p>
+
+  <pre><code class="language-java">Animal a = new Dog();   // Dog IS-A Animal, so this is legal
+a.speak();              // calls Dog's speak(), not Animal's
+</code></pre>
+
+  <h2>Polymorphism in Practice — Shapes Example</h2>
+
+  <pre><code class="language-java">public class Shape {
+    public void draw() {
+        System.out.println("Drawing a generic shape.");
+    }
+}
+
+public class Circle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a circle ⬤");
+    }
+}
+
+public class Rectangle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a rectangle ▬");
+    }
+}
+
+public class Triangle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a triangle ▲");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Parent-type array holding different child objects
+        Shape[] shapes = {
+            new Circle(),
+            new Rectangle(),
+            new Triangle()
+        };
+
+        // One loop — three different behaviours
+        for (Shape s : shapes) {
+            s.draw();
+        }
+    }
+}
+</code></pre>
+
+  <p><strong>Output:</strong></p>
+  <pre><code>Drawing a circle ⬤
+Drawing a rectangle ▬
+Drawing a triangle ▲
+</code></pre>
+
+  <p>
+    The <code>for</code> loop calls <code>s.draw()</code> each iteration. Even though <code>s</code>
+    is typed as <code>Shape</code>, Java looks at the <em>actual</em> object (Circle, Rectangle,
+    Triangle) and calls the correct overridden version. This is called <strong>dynamic dispatch</strong>.
+  </p>
+
+  <h2>Why Is This Useful?</h2>
+  <p>
+    Polymorphism makes code flexible and extensible. The loop above never needs to change even if you
+    add a <code>Pentagon</code> class later — just add it to the array and the loop handles it
+    automatically. You write code against the parent type (<code>Shape</code>) and plug in any
+    child at runtime.
+  </p>
+
+  <div class="callout tip">
+    💡 <strong>Tip:</strong> Polymorphism is the mechanism that makes Java frameworks and libraries
+    so powerful. When a method accepts a <code>List</code> parameter, it works with
+    <code>ArrayList</code>, <code>LinkedList</code>, or any other <code>List</code> implementation
+    automatically.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common mistake:</strong> Confusing overloading (same class, different parameters —
+    compile-time) with overriding (parent vs child, same signature — runtime). They are different
+    mechanisms despite similar-sounding names.
+  </div>
+
+  <div class="callout info">
+    ℹ️ When you use a parent-type reference to hold a child object, you can only call methods
+    that are defined on the parent type. To access child-specific methods, you need to <em>cast</em>:
+    <code>((Circle) s).getRadius()</code>. Use casting sparingly.
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Create a parent class <code>Employee</code> with a method <code>calculateBonus()</code> that
+      returns 500. Create two subclasses: <code>Manager</code> (bonus 2000) and
+      <code>Developer</code> (bonus 1200), each overriding <code>calculateBonus()</code>. In
+      <code>main</code>, create an array of type <code>Employee[]</code> holding one of each, then
+      loop through and print each employee's bonus using <code>calculateBonus()</code>.
+    </p>
+  </div>
+</article>

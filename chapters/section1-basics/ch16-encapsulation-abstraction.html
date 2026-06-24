@@ -1,1 +1,197 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 16: Encapsulation and Abstraction</h1>
+    <p class="chapter-intro">Encapsulation hides the data inside an object; abstraction hides the complexity of how something works — together they make code safer and easier to use.</p>
+  </div>
 
+  <h2>Encapsulation — Protecting Your Data</h2>
+  <p>
+    Think of a capsule medicine tablet. The drug inside is protected by an outer shell. You interact
+    with the tablet by swallowing it — you never directly touch the drug inside. The shell controls
+    how and when the drug is released.
+  </p>
+  <p>
+    In Java, <strong>encapsulation</strong> means keeping an object's fields <code>private</code>
+    so outside code cannot change them directly. Instead, you provide controlled access through
+    <code>public</code> getter and setter methods.
+  </p>
+
+  <h2>Why Private Fields Matter</h2>
+  <p>
+    Without encapsulation anyone can write:
+  </p>
+  <pre><code class="language-java">Person p = new Person();
+p.age = -50;    // Invalid age — no protection!
+</code></pre>
+  <p>
+    With encapsulation the setter can reject bad values:
+  </p>
+  <pre><code class="language-java">public void setAge(int age) {
+    if (age >= 0 && age <= 150) {
+        this.age = age;
+    } else {
+        System.out.println("Invalid age!");
+    }
+}
+</code></pre>
+
+  <h2>Getters and Setters</h2>
+  <p>
+    The naming convention is <code>getFieldName()</code> for reading and <code>setFieldName(value)</code>
+    for writing. For boolean fields, the getter is named <code>isFieldName()</code>.
+  </p>
+
+  <pre><code class="language-java">public class BankAccount {
+    private String owner;
+    private double balance;
+
+    public BankAccount(String owner, double initialBalance) {
+        this.owner   = owner;
+        this.balance = initialBalance;
+    }
+
+    // Getter — read-only access to owner
+    public String getOwner() {
+        return owner;
+    }
+
+    // Getter for balance
+    public double getBalance() {
+        return balance;
+    }
+
+    // No direct setter for balance — use controlled methods instead
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+        } else {
+            System.out.println("Insufficient funds or invalid amount.");
+        }
+    }
+
+    public static void main(String[] args) {
+        BankAccount acc = new BankAccount("Alice", 1000.0);
+        acc.deposit(500.0);
+        acc.withdraw(200.0);
+        System.out.println(acc.getOwner() + "'s balance: $" + acc.getBalance());
+        // acc.balance = 999999;  // compile error — private!
+    }
+}
+</code></pre>
+
+  <p><strong>Output:</strong></p>
+  <pre><code>Alice's balance: $1300.0
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Tip:</strong> Make all fields <code>private</code> by default. Only expose what is
+    truly needed through getters and setters. This gives you the freedom to change the internal
+    implementation later without breaking any code that uses your class.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common mistake:</strong> Making everything <code>public</code> "to keep it simple".
+    This removes all protection and makes your code fragile — any part of the program can corrupt
+    your object's data.
+  </div>
+
+  <h2>Abstraction — Hiding Complexity</h2>
+  <p>
+    When you drive a car, you press the accelerator. You do not need to know the fuel injection
+    sequence, combustion timing, or transmission ratios. The car's design <em>abstracts</em> away
+    those details — you get a simple interface (pedal, wheel, brake) that hides the engine's
+    complexity.
+  </p>
+  <p>
+    In Java, <strong>abstraction</strong> is achieved with <strong>abstract classes</strong> and
+    <strong>interfaces</strong>. An abstract class defines <em>what</em> something must do, without
+    specifying <em>how</em>.
+  </p>
+
+  <h2>Abstract Classes and Methods</h2>
+  <p>
+    An <code>abstract</code> method has no body — just a declaration. Concrete subclasses
+    <em>must</em> provide the body. A class with at least one abstract method must itself be declared
+    <code>abstract</code>, and you cannot instantiate it directly.
+  </p>
+
+  <pre><code class="language-java">// Abstract class — cannot be instantiated directly
+public abstract class Shape {
+    // Abstract method — no body, subclass must implement
+    public abstract double area();
+
+    // Concrete method — available to all subclasses
+    public void printArea() {
+        System.out.println("Area: " + area());
+    }
+}
+
+public class Circle extends Shape {
+    double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+public class Rectangle extends Shape {
+    double width, height;
+
+    public Rectangle(double width, double height) {
+        this.width  = width;
+        this.height = height;
+    }
+
+    @Override
+    public double area() {
+        return width * height;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Shape c = new Circle(5);
+        Shape r = new Rectangle(4, 6);
+
+        c.printArea();   // Area: 78.53981633974483
+        r.printArea();   // Area: 24.0
+    }
+}
+</code></pre>
+
+  <h2>Encapsulation vs Abstraction — The Difference</h2>
+  <p>
+    These two concepts are often confused. Here is the key distinction:
+  </p>
+  <ul>
+    <li><strong>Encapsulation</strong> = hiding the <em>data</em> (using <code>private</code> + getters/setters). The concern is <em>who</em> can access the data.</li>
+    <li><strong>Abstraction</strong> = hiding the <em>implementation</em> (using abstract classes or interfaces). The concern is <em>what</em> details the user needs to see.</li>
+  </ul>
+
+  <div class="callout info">
+    ℹ️ You cannot create an object of an abstract class with <code>new Shape()</code>. An abstract
+    class is meant to be a template — you always instantiate one of its concrete subclasses.
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Create an abstract class <code>Animal</code> with an abstract method <code>sound()</code> and
+      a concrete method <code>describe()</code> that prints <em>"I am a [className] and I say: [sound]"</em>.
+      Create two subclasses <code>Dog</code> and <code>Cow</code>, each implementing <code>sound()</code>
+      to return their appropriate sound. In <code>main</code>, call <code>describe()</code> on both.
+    </p>
+  </div>
+</article>

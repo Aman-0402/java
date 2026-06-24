@@ -1,1 +1,144 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 13: Constructors</h1>
+    <p class="chapter-intro">A constructor is a special method that runs automatically the moment an object is created, letting you set it up with initial data right away.</p>
+  </div>
 
+  <h2>The Problem Without Constructors</h2>
+  <p>
+    In the last chapter you created a <code>Car</code> object and then set each field individually:
+  </p>
+  <pre><code class="language-java">Car car1 = new Car();
+car1.make  = "Toyota";
+car1.model = "Corolla";
+car1.year  = 2022;
+</code></pre>
+  <p>
+    That is four separate lines just to get a usable car. If you forgot to set a field, the car would
+    have <code>null</code> for its make — a recipe for bugs. A <strong>constructor</strong> solves this
+    by letting you supply the data at the very moment you call <code>new</code>.
+  </p>
+
+  <h2>What Is a Constructor?</h2>
+  <p>
+    Think of a constructor like a factory order form. When you submit the form (call <code>new</code>),
+    the factory already knows every detail and produces a fully configured product. No follow-up steps
+    needed.
+  </p>
+  <p>
+    Technically, a constructor is a special method that:
+  </p>
+  <ul>
+    <li>Has <strong>exactly the same name</strong> as the class.</li>
+    <li>Has <strong>no return type</strong> — not even <code>void</code>.</li>
+    <li>Runs automatically whenever you write <code>new ClassName(...)</code>.</li>
+  </ul>
+
+  <h2>Default Constructor</h2>
+  <p>
+    If you write no constructor at all, Java silently provides a free <strong>default constructor</strong>
+    that takes no arguments and does nothing. That is why <code>new Car()</code> worked in Chapter 12
+    even though we never wrote a constructor.
+  </p>
+
+  <div class="callout info">
+    ℹ️ The moment you write <em>any</em> constructor yourself, Java's free default constructor
+    disappears. If you still want a no-argument constructor alongside your custom one, you must add it
+    explicitly.
+  </div>
+
+  <h2>Parameterized Constructor</h2>
+  <p>
+    A parameterized constructor accepts arguments and uses them to initialise the object's fields:
+  </p>
+
+  <pre><code class="language-java">public class Person {
+    String name;
+    int    age;
+
+    // Parameterized constructor
+    public Person(String name, int age) {
+        this.name = name;   // 'this.name' = field; 'name' = parameter
+        this.age  = age;
+    }
+}
+</code></pre>
+
+  <h2>The <code>this</code> Keyword</h2>
+  <p>
+    When a parameter has the same name as a field, Java needs a way to tell them apart.
+    <code>this.name</code> means <em>"the field that belongs to this object"</em>, while plain
+    <code>name</code> means the parameter. <code>this</code> is simply a reference to the current
+    object instance.
+  </p>
+
+  <div class="callout tip">
+    💡 <strong>Tip:</strong> Using the same name for both the parameter and the field (like
+    <code>name</code> above) is standard Java style. Always prefix the field assignment with
+    <code>this.</code> inside a constructor — it prevents subtle mix-up bugs.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common mistake:</strong> Writing <code>name = name;</code> without <code>this</code>
+    assigns the parameter to itself and leaves the field unchanged — a silent bug that the compiler
+    will not catch.
+  </div>
+
+  <h2>Constructor Overloading</h2>
+  <p>
+    You can have multiple constructors in the same class as long as each has a different parameter list.
+    Java picks the right one based on what you pass to <code>new</code>.
+  </p>
+
+  <pre><code class="language-java">public class Person {
+    String name;
+    int    age;
+
+    // No-arg constructor
+    public Person() {
+        this.name = "Unknown";
+        this.age  = 0;
+    }
+
+    // Name only
+    public Person(String name) {
+        this.name = name;
+        this.age  = 0;
+    }
+
+    // Name and age
+    public Person(String name, int age) {
+        this.name = name;
+        this.age  = age;
+    }
+
+    public static void main(String[] args) {
+        Person p1 = new Person();
+        Person p2 = new Person("Alice");
+        Person p3 = new Person("Bob", 30);
+
+        System.out.println(p1.name + " — " + p1.age);
+        System.out.println(p2.name + " — " + p2.age);
+        System.out.println(p3.name + " — " + p3.age);
+    }
+}
+</code></pre>
+
+  <p><strong>Output:</strong></p>
+  <pre><code>Unknown — 0
+Alice — 0
+Bob — 30
+</code></pre>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Create a class called <code>Laptop</code> with fields <code>brand</code> (String),
+      <code>ramGB</code> (int), and <code>price</code> (double). Write two constructors: one that
+      accepts all three values, and one that accepts only <code>brand</code> with default values of
+      8 GB RAM and a price of 999.99. In <code>main</code>, create one laptop with each constructor
+      and print all three fields for both.
+    </p>
+  </div>
+</article>

@@ -1,1 +1,180 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 18: Exception Handling</h1>
+    <p class="chapter-intro">Exceptions are runtime errors that would crash your program — exception handling lets you catch them gracefully and keep the program running.</p>
+  </div>
 
+  <h2>What Is an Exception?</h2>
+  <p>
+    Imagine you're following a recipe and step 3 says "add two eggs". You open the fridge and find
+    no eggs. The recipe can't continue as written. You have a choice: crash (throw the recipe book
+    across the kitchen) or handle it gracefully (substitute a different ingredient, or ask someone
+    to buy eggs).
+  </p>
+  <p>
+    In Java, an <strong>exception</strong> is an unexpected event that happens while a program is
+    running — a file that doesn't exist, a number divided by zero, or invalid user input.
+    Without exception handling, Java stops the program and prints a stack trace. With it, you
+    can respond gracefully.
+  </p>
+
+  <h2>Common Exceptions You Will Encounter</h2>
+  <ul>
+    <li><code>NullPointerException</code> — calling a method on a <code>null</code> reference.</li>
+    <li><code>ArrayIndexOutOfBoundsException</code> — accessing an array index that doesn't exist.</li>
+    <li><code>NumberFormatException</code> — converting a non-numeric String (e.g. <code>"abc"</code>) to an integer.</li>
+    <li><code>ArithmeticException</code> — dividing an integer by zero.</li>
+    <li><code>ClassCastException</code> — casting an object to an incompatible type.</li>
+  </ul>
+
+  <h2>try-catch-finally</h2>
+  <p>
+    Wrap risky code in a <code>try</code> block. If an exception occurs, Java jumps to the matching
+    <code>catch</code> block. The <code>finally</code> block (optional) always runs, whether or not
+    an exception occurred — useful for cleanup like closing files.
+  </p>
+
+  <pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        try {
+            int result = 10 / 0;   // ArithmeticException!
+            System.out.println(result);
+        } catch (ArithmeticException e) {
+            System.out.println("Cannot divide by zero: " + e.getMessage());
+        } finally {
+            System.out.println("This always runs.");
+        }
+    }
+}
+</code></pre>
+
+  <p><strong>Output:</strong></p>
+  <pre><code>Cannot divide by zero: / by zero
+This always runs.
+</code></pre>
+
+  <h2>Catching Multiple Exception Types</h2>
+  <p>
+    You can stack multiple <code>catch</code> blocks, or combine them in one block using
+    the pipe <code>|</code> operator (Java 7+):
+  </p>
+
+  <pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String input = "hello";
+
+        try {
+            int number = Integer.parseInt(input);   // NumberFormatException
+            int[] arr  = new int[5];
+            arr[10]    = number;                    // ArrayIndexOutOfBoundsException
+        } catch (NumberFormatException e) {
+            System.out.println("Not a valid number: " + e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array index out of bounds: " + e.getMessage());
+        }
+    }
+}
+</code></pre>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common mistake:</strong> Catching the broad <code>Exception</code> class to "handle
+    everything". This hides real bugs because you can no longer tell what went wrong. Always catch
+    the most <em>specific</em> exception type you expect.
+  </div>
+
+  <h2>Checked vs Unchecked Exceptions</h2>
+  <p>
+    Java has two categories of exceptions:
+  </p>
+  <ul>
+    <li>
+      <strong>Checked exceptions</strong> — the compiler forces you to handle them (use
+      <code>try-catch</code> or declare <code>throws</code>). Example: <code>IOException</code>
+      when reading a file.
+    </li>
+    <li>
+      <strong>Unchecked exceptions</strong> — subclasses of <code>RuntimeException</code>. The
+      compiler does not force handling. Example: <code>NullPointerException</code>,
+      <code>ArithmeticException</code>.
+    </li>
+  </ul>
+
+  <h2><code>throw</code> and <code>throws</code></h2>
+  <p>
+    Use <code>throw</code> to manually trigger an exception. Use <code>throws</code> in a method
+    signature to tell callers that this method might throw a checked exception they must handle.
+  </p>
+
+  <pre><code class="language-java">public class AgeValidator {
+    // 'throws' warns callers this method can throw
+    public static void validateAge(int age) throws IllegalArgumentException {
+        if (age < 0 || age > 150) {
+            throw new IllegalArgumentException("Invalid age: " + age);
+        }
+        System.out.println("Age " + age + " is valid.");
+    }
+
+    public static void main(String[] args) {
+        try {
+            validateAge(25);    // OK
+            validateAge(-5);    // throws exception
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+</code></pre>
+
+  <p><strong>Output:</strong></p>
+  <pre><code>Age 25 is valid.
+Error: Invalid age: -5
+</code></pre>
+
+  <h2>Custom Exceptions (Brief)</h2>
+  <p>
+    You can create your own exception type by extending <code>Exception</code> (checked) or
+    <code>RuntimeException</code> (unchecked):
+  </p>
+
+  <pre><code class="language-java">// Custom checked exception
+public class InsufficientFundsException extends Exception {
+    public InsufficientFundsException(double amount) {
+        super("Insufficient funds. Short by: $" + amount);
+    }
+}
+
+// Usage
+public void withdraw(double amount) throws InsufficientFundsException {
+    if (amount > balance) {
+        throw new InsufficientFundsException(amount - balance);
+    }
+    balance -= amount;
+}
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Tip:</strong> The exception message passed to <code>super()</code> is what
+    <code>e.getMessage()</code> returns in the catch block. Make your messages descriptive —
+    they are your debugging lifeline.
+  </div>
+
+  <div class="callout info">
+    ℹ️ <strong>Stack trace reading:</strong> When an uncaught exception crashes your program,
+    Java prints a stack trace. Read it from top to bottom — the top line shows the exception type
+    and message; the lines below show which methods were called to get there. The first line
+    mentioning <em>your</em> class is usually where the bug lives.
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Write a method <code>divide(int a, int b)</code> that throws an
+      <code>ArithmeticException</code> with a helpful message if <code>b</code> is zero, otherwise
+      returns the result. In <code>main</code>, call it three times: once with valid numbers, once
+      with zero as the divisor, and once where you convert a user-input String
+      (<code>"abc"</code>) to an int using <code>Integer.parseInt()</code>. Catch each exception
+      separately with a descriptive message.
+    </p>
+  </div>
+</article>

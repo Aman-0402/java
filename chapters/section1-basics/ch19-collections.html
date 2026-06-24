@@ -1,1 +1,180 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 19: Collections</h1>
+    <p class="chapter-intro">The Java Collections Framework gives you ready-made, flexible data structures — dynamic lists, key-value stores, and unique-value sets — so you rarely need to manage raw arrays.</p>
+  </div>
 
+  <h2>Why Not Just Use Arrays?</h2>
+  <p>
+    Arrays are fast and simple, but they have a critical limitation: their size is fixed when you
+    create them. If you declare <code>int[] scores = new int[5];</code> and then a sixth student
+    joins, you're stuck. You'd have to create a bigger array and copy everything over manually.
+  </p>
+  <p>
+    The <strong>Java Collections Framework</strong> solves this. It provides classes that grow and
+    shrink automatically, search efficiently, and come with dozens of built-in utility methods.
+  </p>
+
+  <h2>Generics — Telling a Collection What Type to Hold</h2>
+  <p>
+    Collections use <strong>generics</strong>, written as <code>&lt;TypeName&gt;</code>, to specify
+    what type of data they store. This gives you compile-time type safety — you can't accidentally
+    add an integer to a list of strings.
+  </p>
+  <pre><code class="language-java">ArrayList&lt;String&gt; names = new ArrayList&lt;&gt;();  // holds only Strings
+ArrayList&lt;Integer&gt; scores = new ArrayList&lt;&gt;(); // holds only Integers
+</code></pre>
+
+  <h2>ArrayList — A Dynamic Array</h2>
+  <p>
+    <code>ArrayList</code> is the most commonly used collection. Think of it as a numbered list that
+    can grow and shrink — like a shopping list where you can always add more items.
+  </p>
+
+  <pre><code class="language-java">import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList&lt;String&gt; fruits = new ArrayList&lt;&gt;();
+
+        // Adding elements
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Cherry");
+        fruits.add("Apple");   // duplicates allowed
+
+        System.out.println("Size: " + fruits.size());       // 4
+        System.out.println("First: " + fruits.get(0));      // Apple
+        System.out.println("Contains Banana: " + fruits.contains("Banana")); // true
+
+        // Remove by value
+        fruits.remove("Banana");
+
+        // Iterate with for-each
+        for (String fruit : fruits) {
+            System.out.println(fruit);
+        }
+    }
+}
+</code></pre>
+
+  <p><strong>Output:</strong></p>
+  <pre><code>Size: 4
+First: Apple
+Contains Banana: true
+Apple
+Cherry
+Apple
+</code></pre>
+
+  <h2>HashMap — Key-Value Pairs</h2>
+  <p>
+    A <code>HashMap</code> is like a dictionary: every entry has a <em>key</em> (the word) and a
+    <em>value</em> (the definition). Keys must be unique — looking up a key gives you its value
+    instantly, no matter how many entries exist.
+  </p>
+
+  <pre><code class="language-java">import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+    public static void main(String[] args) {
+        HashMap&lt;String, Integer&gt; scores = new HashMap&lt;&gt;();
+
+        scores.put("Alice", 95);
+        scores.put("Bob",   87);
+        scores.put("Carol", 91);
+
+        // Get a value by key
+        System.out.println("Alice's score: " + scores.get("Alice"));
+
+        // Check if key exists
+        System.out.println("Has Dave? " + scores.containsKey("Dave"));
+
+        // Iterate over all entries
+        for (Map.Entry&lt;String, Integer&gt; entry : scores.entrySet()) {
+            System.out.println(entry.getKey() + " → " + entry.getValue());
+        }
+    }
+}
+</code></pre>
+
+  <p><strong>Output:</strong></p>
+  <pre><code>Alice's score: 95
+Has Dave? false
+Alice → 95
+Bob → 87
+Carol → 91
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Tip:</strong> Use <code>entrySet()</code> to loop through a <code>HashMap</code>
+    when you need both the key and the value. Use <code>keySet()</code> when you only need keys,
+    and <code>values()</code> when you only need values.
+  </div>
+
+  <h2>HashSet — Unique Values Only</h2>
+  <p>
+    A <code>HashSet</code> is like a bag that automatically rejects duplicates. If you try to add
+    the same item twice, the second add is silently ignored. Order is not guaranteed.
+  </p>
+
+  <pre><code class="language-java">import java.util.HashSet;
+
+public class Main {
+    public static void main(String[] args) {
+        HashSet&lt;String&gt; tags = new HashSet&lt;&gt;();
+
+        tags.add("java");
+        tags.add("programming");
+        tags.add("java");    // duplicate — ignored
+        tags.add("oop");
+
+        System.out.println("Unique tags: " + tags.size());  // 3
+        System.out.println(tags);   // order may vary
+        System.out.println("Has 'java'? " + tags.contains("java")); // true
+    }
+}
+</code></pre>
+
+  <h2>LinkedList — Brief Overview</h2>
+  <p>
+    A <code>LinkedList</code> also implements the <code>List</code> interface (like
+    <code>ArrayList</code>) but stores elements as chained nodes. It is faster for frequent
+    insertions and deletions at the beginning or middle, but slower for random access by index.
+    For most beginner use cases, <code>ArrayList</code> is the better default.
+  </p>
+
+  <h2>When to Use Which Collection</h2>
+  <ul>
+    <li><strong>ArrayList</strong> — ordered list, duplicates OK, fast access by index. Default list choice.</li>
+    <li><strong>HashMap</strong> — fast lookup by a unique key. Use for counts, mappings, caches.</li>
+    <li><strong>HashSet</strong> — need unique values only, order doesn't matter. Use for membership testing.</li>
+    <li><strong>LinkedList</strong> — frequent inserts/deletes at list ends. Rare in typical code.</li>
+  </ul>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common mistake:</strong> Using <code>int</code> instead of <code>Integer</code> as
+    a generic type. Generics require <em>wrapper types</em> (capitalized): <code>Integer</code>,
+    <code>Double</code>, <code>Boolean</code> — not the primitives <code>int</code>,
+    <code>double</code>, <code>boolean</code>.
+  </div>
+
+  <div class="callout info">
+    ℹ️ Always import from <code>java.util.*</code> (or the specific class like
+    <code>java.util.ArrayList</code>). The Collections Framework lives in that package. Your IDE
+    will suggest the import automatically.
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Write a program that asks the user to enter 5 country names (use a loop and
+      <code>Scanner</code>). Store them in an <code>ArrayList&lt;String&gt;</code>. Then:
+      (1) print the full list, (2) print how many countries were entered, (3) use a
+      <code>HashSet</code> to print only the unique countries (in case they entered duplicates),
+      and (4) print how many were unique.
+    </p>
+  </div>
+</article>

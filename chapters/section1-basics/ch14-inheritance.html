@@ -1,1 +1,171 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 14: Inheritance</h1>
+    <p class="chapter-intro">Inheritance lets one class automatically gain all the fields and methods of another, so you can build specialised classes without rewriting shared code.</p>
+  </div>
 
+  <h2>The "Is-A" Relationship</h2>
+  <p>
+    Think about animals. A <em>dog</em> is an animal. A <em>cat</em> is an animal. Every animal
+    breathes and eats. Rather than adding breathing and eating to both the <code>Dog</code> class and
+    the <code>Cat</code> class separately, you can put those behaviours in a single
+    <code>Animal</code> class and let <code>Dog</code> and <code>Cat</code> <strong>inherit</strong>
+    them automatically.
+  </p>
+  <p>
+    This is called the <strong>is-a relationship</strong>: a dog <em>is a</em> (kind of) animal, so
+    <code>Dog</code> can inherit from <code>Animal</code>.
+  </p>
+
+  <h2>The <code>extends</code> Keyword</h2>
+  <p>
+    In Java, inheritance is declared with the <code>extends</code> keyword. The class that is
+    inherited from is called the <strong>parent</strong> (or superclass), and the class that inherits
+    is called the <strong>child</strong> (or subclass).
+  </p>
+
+  <pre><code class="language-java">// Parent class
+public class Animal {
+    String name;
+
+    public void eat() {
+        System.out.println(name + " is eating.");
+    }
+
+    public void breathe() {
+        System.out.println(name + " is breathing.");
+    }
+}
+
+// Child class — inherits everything from Animal
+public class Dog extends Animal {
+    String breed;
+
+    public void bark() {
+        System.out.println(name + " says: Woof!");
+    }
+}
+</code></pre>
+
+  <p>
+    <code>Dog</code> now has <code>name</code>, <code>eat()</code>, <code>breathe()</code>, and
+    <code>bark()</code> — even though only <code>bark()</code> was written in <code>Dog</code>.
+  </p>
+
+  <h2>Calling the Parent Constructor with <code>super()</code></h2>
+  <p>
+    When you define a constructor in a child class, you often need to call the parent's constructor
+    first to set up the inherited fields. You do this with <code>super()</code>, which must be the
+    <strong>first line</strong> in the child constructor.
+  </p>
+
+  <pre><code class="language-java">public class Animal {
+    String name;
+
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    public void eat() {
+        System.out.println(name + " is eating.");
+    }
+}
+
+public class Dog extends Animal {
+    String breed;
+
+    public Dog(String name, String breed) {
+        super(name);          // calls Animal(String name) first
+        this.breed = breed;
+    }
+
+    public void bark() {
+        System.out.println(name + " (" + breed + ") says: Woof!");
+    }
+
+    public static void main(String[] args) {
+        Dog d = new Dog("Rex", "Labrador");
+        d.eat();    // inherited from Animal
+        d.bark();   // defined in Dog
+    }
+}
+</code></pre>
+
+  <p><strong>Output:</strong></p>
+  <pre><code>Rex is eating.
+Rex (Labrador) says: Woof!
+</code></pre>
+
+  <h2>Overriding a Parent Method with <code>@Override</code></h2>
+  <p>
+    Sometimes the child class wants to <em>replace</em> the parent's version of a method with its
+    own. This is called <strong>method overriding</strong>. Place <code>@Override</code> above the
+    method to tell Java (and readers) that this is intentional.
+  </p>
+
+  <pre><code class="language-java">public class Animal {
+    public void speak() {
+        System.out.println("...");
+    }
+}
+
+public class Dog extends Animal {
+    @Override
+    public void speak() {
+        System.out.println("Woof!");
+    }
+}
+
+public class Cat extends Animal {
+    @Override
+    public void speak() {
+        System.out.println("Meow!");
+    }
+}
+</code></pre>
+
+  <h2>Calling the Parent Method with <code>super.method()</code></h2>
+  <p>
+    If you override a method but still want to run the parent's version inside it, use
+    <code>super.methodName()</code>:
+  </p>
+
+  <pre><code class="language-java">public class Dog extends Animal {
+    @Override
+    public void speak() {
+        super.speak();           // prints "..."
+        System.out.println("Woof!");
+    }
+}
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Tip:</strong> Always add <code>@Override</code> when you intend to override a method.
+    If you misspell the method name, the annotation causes a compile error — without it, Java would
+    silently create a new, unrelated method instead.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common mistake:</strong> Java supports only <strong>single inheritance</strong> —
+    a class can <code>extend</code> only one parent class. If you need behaviour from multiple sources,
+    use interfaces (Chapter 17).
+  </div>
+
+  <div class="callout info">
+    ℹ️ Every class in Java automatically extends <code>Object</code> (from <code>java.lang</code>),
+    even if you don't write <code>extends</code>. That is why every object has methods like
+    <code>toString()</code> and <code>equals()</code> available for free.
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Create a parent class <code>Vehicle</code> with a field <code>speed</code> (int) and a method
+      <code>move()</code> that prints <em>"Vehicle is moving at X km/h"</em>. Then create two child
+      classes: <code>Bicycle</code> and <code>Car</code>. Each should call <code>super(speed)</code>
+      in its constructor and override <code>move()</code> to print a more specific message (e.g.,
+      <em>"Bicycle is pedalling at X km/h"</em>). Create one of each and call <code>move()</code>.
+    </p>
+  </div>
+</article>

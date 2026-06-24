@@ -1,1 +1,189 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📗 Section 1 — Java Basics</span>
+    <h1>Chapter 20: String Manipulation</h1>
+    <p class="chapter-intro">Strings are immutable sequences of characters in Java — understanding their methods and the StringBuilder alternative makes you far more effective with text processing.</p>
+  </div>
 
+  <h2>Strings Are Immutable</h2>
+  <p>
+    Imagine writing on a sticky note. Once you write something, you can't erase it — you can only
+    throw it away and write a new note. Java <code>String</code> objects work the same way:
+    <strong>once created, the content cannot change</strong>. Any operation that seems to modify a
+    string actually creates a brand-new string and returns it.
+  </p>
+
+  <pre><code class="language-java">String greeting = "Hello";
+greeting.toUpperCase();           // returns "HELLO" but greeting is UNCHANGED
+System.out.println(greeting);     // still prints: Hello
+
+greeting = greeting.toUpperCase(); // NOW greeting points to the new string
+System.out.println(greeting);      // HELLO
+</code></pre>
+
+  <div class="callout warning">
+    ⚠️ <strong>Common mistake:</strong> Calling a String method and ignoring the return value.
+    String methods never modify the original — they always return a new string. Always assign the
+    result back if you need it.
+  </div>
+
+  <h2>Essential String Methods</h2>
+
+  <pre><code class="language-java">public class StringDemo {
+    public static void main(String[] args) {
+        String s = "  Hello, World!  ";
+
+        // Length
+        System.out.println(s.length());          // 18 (spaces count)
+
+        // Trim whitespace
+        String trimmed = s.trim();
+        System.out.println(trimmed);             // "Hello, World!"
+
+        // Case conversion
+        System.out.println(trimmed.toUpperCase()); // HELLO, WORLD!
+        System.out.println(trimmed.toLowerCase()); // hello, world!
+
+        // Character at index (0-based)
+        System.out.println(trimmed.charAt(0));   // H
+
+        // Substring
+        System.out.println(trimmed.substring(7));     // World!
+        System.out.println(trimmed.substring(7, 12)); // World
+
+        // Find index of a character or substring (-1 if not found)
+        System.out.println(trimmed.indexOf("o"));    // 4 (first 'o')
+        System.out.println(trimmed.lastIndexOf("o")); // 8
+
+        // Check if contains a sequence
+        System.out.println(trimmed.contains("World")); // true
+
+        // Replace
+        System.out.println(trimmed.replace("World", "Java")); // Hello, Java!
+
+        // Split into array
+        String csv = "Alice,Bob,Carol";
+        String[] names = csv.split(",");
+        for (String name : names) {
+            System.out.println(name);  // Alice / Bob / Carol
+        }
+
+        // Check start/end
+        System.out.println(trimmed.startsWith("Hello")); // true
+        System.out.println(trimmed.endsWith("!"));       // true
+
+        // Convert to char array
+        char[] chars = "Java".toCharArray();
+        System.out.println(chars[0]); // J
+    }
+}
+</code></pre>
+
+  <h2>equals() vs == for Strings</h2>
+  <p>
+    This is one of the most common Java traps. The <code>==</code> operator checks whether two
+    variables point to the <em>exact same object in memory</em>. The <code>.equals()</code> method
+    checks whether two strings contain the <em>same sequence of characters</em>.
+  </p>
+
+  <pre><code class="language-java">String a = new String("hello");
+String b = new String("hello");
+
+System.out.println(a == b);       // false — different objects in memory
+System.out.println(a.equals(b));  // true  — same characters
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Tip:</strong> Always use <code>.equals()</code> (or <code>.equalsIgnoreCase()</code>)
+    to compare string content. Reserve <code>==</code> for primitives like <code>int</code> and
+    <code>boolean</code>. When comparing to a known literal, put the literal first to avoid a
+    <code>NullPointerException</code>: <code>"hello".equals(userInput)</code>.
+  </div>
+
+  <h2>String Concatenation and the + Operator</h2>
+  <p>
+    You can join strings with <code>+</code>. This is easy to read, but has a hidden cost: because
+    strings are immutable, each <code>+</code> inside a loop creates a new String object and
+    discards the old one. With thousands of iterations, this produces a lot of garbage.
+  </p>
+
+  <pre><code class="language-java">// Inefficient — creates 1000 intermediate String objects
+String result = "";
+for (int i = 0; i < 1000; i++) {
+    result += "a";   // each += allocates a new String
+}
+</code></pre>
+
+  <h2>StringBuilder — Mutable String Building</h2>
+  <p>
+    <code>StringBuilder</code> is a <em>mutable</em> character buffer. You append to the same
+    object without creating new String objects every time. For building strings in loops, always
+    prefer <code>StringBuilder</code>.
+  </p>
+
+  <pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        // Efficient — one object, append in place
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 1; i <= 5; i++) {
+            sb.append("Item ").append(i).append("\n");
+        }
+
+        sb.insert(0, "--- List ---\n");  // insert at position 0
+        sb.delete(0, 13);                // delete "--- List ---\n"
+        sb.reverse();                    // reverse the whole content
+
+        System.out.println(sb.toString());  // convert back to String when done
+
+        // Common StringBuilder methods
+        StringBuilder name = new StringBuilder("Hello");
+        name.append(", World");
+        name.replace(0, 5, "Goodbye");
+        System.out.println(name);           // Goodbye, World
+        System.out.println(name.length());  // 13
+    }
+}
+</code></pre>
+
+  <h2>Useful String Conversions</h2>
+  <pre><code class="language-java">// int to String
+int num = 42;
+String s1 = String.valueOf(num);    // "42"
+String s2 = Integer.toString(num);  // "42"
+String s3 = "" + num;               // "42" (quick but inefficient)
+
+// String to int
+String text = "123";
+int parsed = Integer.parseInt(text);  // 123
+
+// String to double
+double d = Double.parseDouble("3.14"); // 3.14
+
+// Check if empty or blank
+String empty = "";
+System.out.println(empty.isEmpty());   // true
+String blank = "   ";
+System.out.println(blank.isBlank());   // true (Java 11+)
+</code></pre>
+
+  <div class="callout info">
+    ℹ️ <code>String.format()</code> (or the newer <code>formatted()</code> in Java 15+) lets you
+    build strings with placeholders — similar to <code>printf</code> in other languages:
+    <code>String msg = String.format("Hello, %s! You are %d years old.", name, age);</code>
+  </div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Write a method <code>analyzeText(String text)</code> that prints:
+      (1) the original text,
+      (2) the text in UPPERCASE,
+      (3) the number of characters (excluding leading/trailing spaces — use <code>trim()</code>),
+      (4) whether the text contains the word <em>"Java"</em> (case-insensitive — convert to
+      lowercase before checking),
+      (5) the text with all spaces replaced by underscores.
+      Call it in <code>main</code> with at least two different strings.
+    </p>
+  </div>
+</article>
