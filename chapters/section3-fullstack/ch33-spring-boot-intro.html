@@ -1,1 +1,152 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📙 Section 3 — Java Full Stack</span>
+    <h1>Chapter 33: Introduction to Spring Boot</h1>
+    <p class="chapter-intro">Learn what Spring Boot is, how it auto-configures a Java server for you, and how to create your first REST endpoint in under 10 lines of code.</p>
+  </div>
 
+  <h2>What is Spring Boot?</h2>
+  <p>Before Spring Boot, setting up a Java web server required writing hundreds of lines of XML configuration. You had to configure servlets, map URLs, set up connection pools, and assemble dozens of components by hand. It could take days just to get a "Hello World" running.</p>
+  <p>Spring Boot flips this around with one principle: <strong>convention over configuration</strong>. Instead of asking you to configure everything, Spring Boot makes sensible decisions for you by default. You only need to override a setting when the default does not fit your needs.</p>
+  <p>Think of it like a brand-new smartphone. Out of the box it already has a default ringtone, default wallpaper, and default apps. You can change any of them — but you do not have to before you can make your first call.</p>
+
+  <h2>The Main Class: @SpringBootApplication</h2>
+  <p>Every Spring Boot project has one main class. When you generated your project from Spring Initializr it was created for you:</p>
+
+<pre><code class="language-java">package com.example.todoapi;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication   // Magic annotation — explained below
+public class TodoApiApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TodoApiApplication.class, args);
+    }
+}
+</code></pre>
+
+  <p>The <code>@SpringBootApplication</code> annotation is actually a shortcut for three annotations combined:</p>
+  <ul>
+    <li><code>@SpringBootConfiguration</code> — marks this class as a configuration source.</li>
+    <li><code>@EnableAutoConfiguration</code> — tells Spring Boot to automatically configure libraries based on what is on the classpath. If it sees Spring Web on the classpath it sets up a web server automatically.</li>
+    <li><code>@ComponentScan</code> — tells Spring to scan this package and all sub-packages for classes annotated with <code>@Component</code>, <code>@Service</code>, <code>@Repository</code>, <code>@Controller</code>, etc., and register them as Spring-managed beans.</li>
+  </ul>
+
+  <div class="callout info">
+    ℹ️ <strong>What is a Bean?</strong> In Spring, a "bean" is simply an object that Spring creates and manages for you. Instead of writing <code>new MyService()</code>, you annotate a class and Spring creates and injects it wherever it is needed. This is called <strong>Dependency Injection</strong> and it is one of Spring's core ideas.
+  </div>
+
+  <h2>How Auto-Configuration Works</h2>
+  <p>When your app starts, Spring Boot looks at which libraries are on the classpath and configures itself accordingly:</p>
+  <ul>
+    <li>Found <code>spring-boot-starter-web</code>? Start an embedded Tomcat server on port 8080.</li>
+    <li>Found <code>spring-boot-starter-data-jpa</code> and <code>h2</code>? Set up a database connection and create tables automatically.</li>
+    <li>Found <code>spring-security</code>? Lock down all endpoints with a login page by default.</li>
+  </ul>
+  <p>You never had to write code to set up Tomcat. It just happened. That is auto-configuration.</p>
+
+  <h2>Your First REST Controller</h2>
+  <p>A <strong>controller</strong> is a class that handles incoming HTTP requests and sends back responses. In Spring Boot, you create one by annotating a class with <code>@RestController</code>.</p>
+  <p>Create a new file at <code>src/main/java/com/example/todoapi/HelloController.java</code>:</p>
+
+<pre><code class="language-java">package com.example.todoapi;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController   // Marks this class as a REST controller; every method returns data, not a view
+public class HelloController {
+
+    @GetMapping("/hello")   // Map HTTP GET requests to /hello to this method
+    public String hello() {
+        return "Hello, Spring Boot!";
+    }
+}
+</code></pre>
+
+  <p>That is all you need. Spring Boot will:</p>
+  <ol>
+    <li>Detect the <code>@RestController</code> annotation during component scanning.</li>
+    <li>Register <code>/hello</code> as a valid URL on your running server.</li>
+    <li>When a GET request arrives at <code>/hello</code>, call the <code>hello()</code> method and send its return value as the HTTP response body.</li>
+  </ol>
+
+  <h2>Running the App</h2>
+
+<pre><code class="language-bash"># From your project root directory
+mvn spring-boot:run
+</code></pre>
+
+  <p>Watch the console output. You will see Spring Boot's banner and eventually:</p>
+
+<pre><code class="language-bash">Started TodoApiApplication in 2.345 seconds (process running for 2.678)
+</code></pre>
+
+  <p>Your server is now running on port 8080.</p>
+
+  <h2>Testing Your Endpoint</h2>
+  <p>You can test the endpoint in three ways:</p>
+
+  <p><strong>Option 1 — Browser:</strong> Open <code>http://localhost:8080/hello</code>. You will see the text <code>Hello, Spring Boot!</code> on the page.</p>
+
+  <p><strong>Option 2 — curl:</strong></p>
+<pre><code class="language-bash">curl http://localhost:8080/hello
+# Output: Hello, Spring Boot!
+</code></pre>
+
+  <p><strong>Option 3 — VS Code REST Client or Postman:</strong> Send a GET request to <code>http://localhost:8080/hello</code>.</p>
+
+  <h2>Configuring the Server with application.properties</h2>
+  <p>The file <code>src/main/resources/application.properties</code> is where all Spring Boot configuration lives. Here are the most common settings:</p>
+
+<pre><code class="language-properties"># Change the port (default is 8080)
+server.port=8080
+
+# Application name (used in logs and Spring Cloud)
+spring.application.name=todo-api
+
+# Show SQL queries in the console (useful during development)
+spring.jpa.show-sql=true
+
+# H2 in-memory database (we add more settings in Chapter 35)
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+# Enable the H2 web console at /h2-console
+spring.h2.console.enabled=true
+</code></pre>
+
+  <div class="callout tip">
+    💡 <strong>Change the port if 8080 is busy.</strong> If another application is already using port 8080, add <code>server.port=9090</code> (or any free port) to <code>application.properties</code> and restart. No code changes needed.
+  </div>
+
+  <div class="callout warning">
+    ⚠️ <strong>@RestController vs @Controller.</strong> <code>@RestController</code> automatically converts your return value to JSON (or plain text) and writes it directly to the HTTP response. <code>@Controller</code> is for server-side rendered HTML views (like Thymeleaf templates). For a REST API, always use <code>@RestController</code>.
+  </div>
+
+  <h2>Adding a JSON Response</h2>
+  <p>Returning a plain String is fine for testing, but real APIs return JSON. Spring Boot automatically converts a Java object to JSON using the Jackson library (included with <code>spring-boot-starter-web</code>). Just return a Java object from your method:</p>
+
+<pre><code class="language-java">@GetMapping("/info")
+public Map&lt;String, String&gt; info() {
+    Map&lt;String, String&gt; response = new HashMap&lt;&gt;();
+    response.put("app", "Todo API");
+    response.put("version", "1.0");
+    return response;   // Spring Boot converts this to: {"app":"Todo API","version":"1.0"}
+}
+</code></pre>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Add two endpoints to your <code>HelloController</code>:</p>
+    <ol>
+      <li>GET <code>/hello</code> — returns the plain text string <code>"Hello, Spring Boot!"</code></li>
+      <li>GET <code>/info</code> — returns a <code>Map</code> with keys <code>"app"</code> and <code>"version"</code></li>
+    </ol>
+    <p>Run the app with <code>mvn spring-boot:run</code> and test both endpoints in your browser. Then change the port to <code>9090</code> in <code>application.properties</code>, restart, and confirm both endpoints work at the new port.</p>
+  </div>
+</article>

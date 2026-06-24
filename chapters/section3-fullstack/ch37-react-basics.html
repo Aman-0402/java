@@ -1,1 +1,261 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📙 Section 3 — Java Full Stack</span>
+    <h1>Chapter 37: React Basics</h1>
+    <p class="chapter-intro">Learn what React is, how to set up a React project, and the core concepts — components, JSX, props, useState, and useEffect — that let you build dynamic user interfaces powered by your Spring Boot API.</p>
+  </div>
 
+  <h2>What Is React?</h2>
+  <p>
+    React is a JavaScript library for building user interfaces. Developed by Facebook, it changed the way developers
+    think about UIs by introducing a simple idea: <strong>the UI is a function of state</strong>.
+  </p>
+  <p>
+    Instead of manually updating the DOM (the browser's internal representation of your page) every time data changes,
+    you describe <em>what the UI should look like</em> for a given state, and React figures out the minimum DOM changes needed.
+    Think of it like this:
+  </p>
+  <ul>
+    <li><strong>Old way:</strong> Manually call <code>document.getElementById('name').innerText = 'Alice'</code> — like writing raw SQL.</li>
+    <li><strong>React way:</strong> Declare <code>&lt;p&gt;{name}&lt;/p&gt;</code> and update the variable — like using JPA with auto-generated queries.</li>
+  </ul>
+
+  <h2>Why Use React with Spring Boot?</h2>
+  <p>
+    Spring Boot is excellent at serving data as JSON via REST APIs. React is excellent at consuming that JSON
+    and displaying it beautifully. They are a perfect split: Spring Boot owns the <em>backend</em> (data, business logic, security),
+    React owns the <em>frontend</em> (user interface, interactions, routing). This is called a
+    <strong>decoupled full-stack architecture</strong>.
+  </p>
+
+  <h2>Setting Up a React App</h2>
+  <p>You need Node.js installed (download from <a href="https://nodejs.org">nodejs.org</a>). Then create a project:</p>
+
+  <pre><code class="language-bash"># Option 1: Create React App (classic, beginner-friendly)
+npx create-react-app my-app
+cd my-app
+npm start
+
+# Option 2: Vite (faster, modern — recommended)
+npm create vite@latest my-app -- --template react
+cd my-app
+npm install
+npm run dev</code></pre>
+
+  <p>
+    Either option opens a browser at <code>http://localhost:3000</code> (CRA) or <code>http://localhost:5173</code> (Vite)
+    with a starter React app. Your Spring Boot backend will run separately on port 8080.
+  </p>
+
+  <div class="callout tip">💡 <strong>Tip:</strong> Use Vite for new projects. It starts in under a second and hot-reloads instantly. Create React App is older and slower, but you'll see it in many tutorials.</div>
+
+  <h2>JSX — HTML Inside JavaScript</h2>
+  <p>
+    React uses <strong>JSX</strong> (JavaScript XML) — a syntax that lets you write what looks like HTML directly inside
+    JavaScript functions. It gets transformed into regular JavaScript by a build tool (Babel or esbuild).
+  </p>
+  <pre><code class="language-javascript">// This is JSX — looks like HTML, but it's JavaScript
+function Greeting() {
+  const name = "Java Developer";
+  return (
+    &lt;div className="greeting"&gt;
+      &lt;h1&gt;Hello, {name}!&lt;/h1&gt;
+      &lt;p&gt;Welcome to React.&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+  <p>Two key JSX rules to remember:</p>
+  <ul>
+    <li>Use <code>className</code> instead of <code>class</code> (because <code>class</code> is a reserved word in JavaScript).</li>
+    <li>Every JSX expression must return a <strong>single root element</strong>. Wrap siblings in a <code>&lt;div&gt;</code> or an empty <code>&lt;&gt;...&lt;/&gt;</code> fragment.</li>
+  </ul>
+
+  <div class="callout warning">⚠️ <strong>JSX is not HTML.</strong> <code>class</code> becomes <code>className</code>, <code>for</code> becomes <code>htmlFor</code>, and all tags must be self-closing where HTML allows it: <code>&lt;img /&gt;</code>, <code>&lt;input /&gt;</code>, <code>&lt;br /&gt;</code>. Forgetting these causes cryptic errors.</div>
+
+  <h2>Functional Components</h2>
+  <p>
+    A React component is just a JavaScript function that returns JSX. Think of it like a Java method that
+    returns a UI fragment. Components start with a <strong>capital letter</strong> — this is how React distinguishes
+    them from plain HTML tags.
+  </p>
+  <pre><code class="language-javascript">// CourseCard.jsx — a reusable component
+function CourseCard() {
+  return (
+    &lt;div className="card"&gt;
+      &lt;h2&gt;Spring Boot REST APIs&lt;/h2&gt;
+      &lt;p&gt;Learn to build REST APIs with Java.&lt;/p&gt;
+      &lt;button&gt;Enroll&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default CourseCard;</code></pre>
+
+  <pre><code class="language-javascript">// App.jsx — uses the CourseCard component
+import CourseCard from './CourseCard';
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Our Courses&lt;/h1&gt;
+      &lt;CourseCard /&gt;
+      &lt;CourseCard /&gt;
+      &lt;CourseCard /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+  <h2>Props — Passing Data to Components</h2>
+  <p>
+    Right now <code>CourseCard</code> always shows the same hardcoded data. Props let you pass data <em>into</em> a component,
+    just like passing arguments to a Java method. The receiving component accesses them via a <code>props</code> object
+    (or with destructuring).
+  </p>
+  <pre><code class="language-javascript">// CourseCard.jsx — accepts props
+function CourseCard({ title, description, instructor }) {
+  return (
+    &lt;div className="card"&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;p&gt;{description}&lt;/p&gt;
+      &lt;small&gt;By {instructor}&lt;/small&gt;
+      &lt;button&gt;Enroll&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default CourseCard;</code></pre>
+
+  <pre><code class="language-javascript">// App.jsx — passes props to CourseCard
+import CourseCard from './CourseCard';
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;CourseCard
+        title="Spring Boot REST APIs"
+        description="Build backends with Java."
+        instructor="Alice"
+      /&gt;
+      &lt;CourseCard
+        title="React for Beginners"
+        description="Build UIs with React."
+        instructor="Bob"
+      /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+  <div class="callout tip">💡 <strong>Tip:</strong> Props flow <em>downward</em> — from parent to child. A child component never modifies its own props. If you need data to flow up, you pass a callback function as a prop.</div>
+
+  <h2>useState — Local State</h2>
+  <p>
+    State is data that can change over time and when it changes, React <em>re-renders</em> the component automatically.
+    The <code>useState</code> hook gives a component its own private variable that React watches.
+  </p>
+  <p>Think of it like a Java instance variable that, when changed, automatically refreshes the screen.</p>
+  <pre><code class="language-javascript">import { useState } from 'react';
+
+function Counter() {
+  // useState(0) returns [currentValue, setterFunction]
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div className="counter"&gt;
+      &lt;h2&gt;Count: {count}&lt;/h2&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;+1&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(count - 1)}&gt;-1&lt;/button&gt;
+      &lt;button onClick={() =&gt; setCount(0)}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+
+  <p>The pattern is always the same:</p>
+  <pre><code class="language-javascript">const [stateName, setStateName] = useState(initialValue);</code></pre>
+
+  <div class="callout warning">⚠️ <strong>Never mutate state directly.</strong> Always use the setter function. Writing <code>count = count + 1</code> will NOT trigger a re-render. You must write <code>setCount(count + 1)</code>. This is one of the most common React mistakes for beginners.</div>
+
+  <h2>useEffect — Side Effects and API Calls</h2>
+  <p>
+    <code>useEffect</code> runs code after the component renders. It's where you do things that interact with the
+    outside world — like fetching data from your Spring Boot API, setting up a timer, or subscribing to an event.
+  </p>
+  <p>Think of it like a Spring Boot <code>@PostConstruct</code> method — code that runs automatically after setup.</p>
+  <pre><code class="language-javascript">import { useState, useEffect } from 'react';
+
+function CourseList() {
+  const [courses, setCourses] = useState([]);      // start with empty array
+  const [loading, setLoading] = useState(true);    // track loading state
+
+  useEffect(() =&gt; {
+    // This runs AFTER the component first renders
+    fetch('http://localhost:8080/api/courses')
+      .then(response =&gt; response.json())
+      .then(data =&gt; {
+        setCourses(data);
+        setLoading(false);
+      });
+  }, []);  // empty array means "run once on mount"
+
+  if (loading) return &lt;p&gt;Loading courses...&lt;/p&gt;;
+
+  return (
+    &lt;ul&gt;
+      {courses.map(course =&gt; (
+        &lt;li key={course.id}&gt;{course.title}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+
+  <p>The second argument to <code>useEffect</code> — the <strong>dependency array</strong> — controls when the effect re-runs:</p>
+  <ul>
+    <li><code>[]</code> — run once when the component mounts (like <code>@PostConstruct</code>)</li>
+    <li><code>[userId]</code> — re-run whenever <code>userId</code> changes</li>
+    <li><em>no array</em> — run after every render (usually not what you want)</li>
+  </ul>
+
+  <h2>Full Counter App Example</h2>
+  <p>Here is a complete, minimal React app combining everything above:</p>
+  <pre><code class="language-javascript">// App.jsx
+import { useState } from 'react';
+import './App.css';
+
+function Counter({ label }) {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div className="counter-card"&gt;
+      &lt;h2&gt;{label}&lt;/h2&gt;
+      &lt;p className="count-display"&gt;{count}&lt;/p&gt;
+      &lt;div className="buttons"&gt;
+        &lt;button onClick={() =&gt; setCount(count - 1)}&gt;−&lt;/button&gt;
+        &lt;button onClick={() =&gt; setCount(0)}&gt;Reset&lt;/button&gt;
+        &lt;button onClick={() =&gt; setCount(count + 1)}&gt;+&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;div className="app"&gt;
+      &lt;h1&gt;My Counters&lt;/h1&gt;
+      &lt;Counter label="Java Chapters Read" /&gt;
+      &lt;Counter label="Spring Boot APIs Built" /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>Create a Vite React app and build the Counter example above. Then extend it:</p>
+    <ol>
+      <li>Add a <code>step</code> prop to <code>Counter</code> — instead of always incrementing by 1, increment by the step value. Call it as <code>&lt;Counter label="..." step={5} /&gt;</code>.</li>
+      <li>Add a <code>&lt;p&gt;</code> that shows "Positive", "Negative", or "Zero" based on the current count value (use a ternary or an <code>if</code> inside the component).</li>
+      <li>Use <code>useEffect</code> to log the count to the browser console every time it changes. (Hint: put <code>count</code> in the dependency array.)</li>
+    </ol>
+  </div>
+</article>

@@ -1,1 +1,261 @@
+<article class="chapter-content">
+  <div class="chapter-meta">
+    <span class="section-tag">📙 Section 3 — Java Full Stack</span>
+    <h1>Chapter 36: HTML &amp; CSS for Java Developers</h1>
+    <p class="chapter-intro">Learn the building blocks of web pages — HTML for structure and CSS for style — so you can understand what React produces and how browsers render your data.</p>
+  </div>
 
+  <h2>What Is HTML? (Think: The Skeleton)</h2>
+  <p>
+    In Java, you separate concerns: your <strong>model</strong> holds data, your <strong>service</strong> holds logic, and your
+    <strong>controller</strong> sends responses. HTML is the <em>structure layer</em> of the web — it defines what elements exist on
+    the page, like a skeleton. It has no logic. It just says: "there is a heading here, a paragraph there, a button over there."
+  </p>
+  <p>Think of it this way:</p>
+  <ul>
+    <li><strong>Java</strong> = the logic (what happens)</li>
+    <li><strong>HTML</strong> = the structure (what exists)</li>
+    <li><strong>CSS</strong> = the style (how it looks)</li>
+    <li><strong>JavaScript</strong> = the behavior (what it does when you interact)</li>
+  </ul>
+
+  <h2>HTML Tags and Attributes</h2>
+  <p>
+    HTML is made of <strong>tags</strong> — keywords wrapped in angle brackets. Most tags come in pairs: an opening tag
+    <code>&lt;tag&gt;</code> and a closing tag <code>&lt;/tag&gt;</code>. Think of them like Java method calls that wrap content.
+  </p>
+  <pre><code class="language-html">&lt;!-- Basic HTML structure --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, Java Developer!&lt;/h1&gt;
+    &lt;p&gt;This is a paragraph.&lt;/p&gt;
+    &lt;a href="https://example.com"&gt;Click me&lt;/a&gt;
+    &lt;img src="logo.png" alt="My Logo"&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <p>
+    <strong>Attributes</strong> are like method parameters — they give extra information to a tag.
+    <code>href</code> on an <code>&lt;a&gt;</code> tag says "where to go", just like passing a URL argument to a method.
+  </p>
+
+  <h2>Common HTML Tags</h2>
+  <table>
+    <thead>
+      <tr><th>Tag</th><th>Purpose</th><th>Java Analogy</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>&lt;h1&gt;–&lt;h6&gt;</code></td><td>Headings (biggest to smallest)</td><td>Section titles in Javadoc</td></tr>
+      <tr><td><code>&lt;p&gt;</code></td><td>Paragraph of text</td><td>A <code>System.out.println()</code> block</td></tr>
+      <tr><td><code>&lt;div&gt;</code></td><td>Generic container/box</td><td>A plain <code>Object</code> wrapper</td></tr>
+      <tr><td><code>&lt;span&gt;</code></td><td>Inline container</td><td>A wrapper around a single field</td></tr>
+      <tr><td><code>&lt;ul&gt;/&lt;li&gt;</code></td><td>Unordered list / list item</td><td><code>List&lt;String&gt;</code> rendered</td></tr>
+      <tr><td><code>&lt;input&gt;</code></td><td>User input field</td><td>Reading from <code>Scanner</code></td></tr>
+      <tr><td><code>&lt;button&gt;</code></td><td>Clickable button</td><td>Calling a method on click</td></tr>
+      <tr><td><code>&lt;form&gt;</code></td><td>Group of inputs</td><td>A DTO sent to a controller</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Nesting — HTML Elements Inside Each Other</h2>
+  <p>
+    HTML elements can be nested inside each other, just like objects can contain other objects in Java.
+    The outer element is the <em>parent</em>; the inner elements are <em>children</em>.
+    Proper indentation is critical for readability.
+  </p>
+  <pre><code class="language-html">&lt;!-- A card with nested elements --&gt;
+&lt;div class="card"&gt;
+  &lt;img src="course.jpg" alt="Course Image"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h2&gt;Spring Boot Mastery&lt;/h2&gt;
+    &lt;p&gt;Learn REST APIs from scratch.&lt;/p&gt;
+    &lt;button&gt;Enroll Now&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+  <div class="callout warning">⚠️ <strong>Never cross-nest tags.</strong> <code>&lt;div&gt;&lt;p&gt;&lt;/div&gt;&lt;/p&gt;</code> is invalid — always close the innermost tag first. Browsers may silently "fix" it but React will throw an error.</div>
+
+  <h2>CSS — Making It Look Good</h2>
+  <p>
+    CSS (Cascading Style Sheets) applies visual styles to HTML elements. You target elements using <strong>selectors</strong> and
+    then set <strong>properties</strong>. Think of a selector like a query and a property like setting a field on an object.
+  </p>
+  <pre><code class="language-css">/* Select all h1 tags */
+h1 {
+  color: navy;
+  font-size: 2rem;
+}
+
+/* Select elements with class="card" */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 16px;
+}
+
+/* Select the element with id="main-title" */
+#main-title {
+  text-align: center;
+}</code></pre>
+
+  <h2>The CSS Box Model</h2>
+  <p>
+    Every HTML element is a rectangular <strong>box</strong>. Understanding the box model is fundamental.
+    Each box has four layers from inside to outside:
+  </p>
+  <pre><code class="language-text">+----------------------------------+
+|           MARGIN                 |  ← space outside the border
+|  +----------------------------+  |
+|  |         BORDER             |  |  ← visible border line
+|  |  +----------------------+  |  |
+|  |  |       PADDING        |  |  |  ← space inside the border
+|  |  |  +----------------+  |  |  |
+|  |  |  |    CONTENT     |  |  |  |  ← actual text/image
+|  |  |  +----------------+  |  |  |
+|  |  +----------------------+  |  |
+|  +----------------------------+  |
++----------------------------------+</code></pre>
+
+  <pre><code class="language-css">.card {
+  margin: 16px;       /* outer space — pushes other elements away */
+  border: 1px solid #ccc;
+  padding: 16px;      /* inner space — breathes inside the border */
+  width: 300px;       /* content width */
+}</code></pre>
+
+  <div class="callout tip">💡 <strong>Tip:</strong> Use <code>box-sizing: border-box</code> globally (<code>* { box-sizing: border-box; }</code>) so that padding is included in the declared width. Otherwise a 300px card with 16px padding will actually be 332px wide — a common gotcha.</div>
+
+  <h2>Flexbox — Laying Things Out</h2>
+  <p>
+    Before Flexbox, aligning elements side-by-side was painful. Flexbox makes it simple: you tell the <em>parent</em>
+    to be a flex container, and its <em>children</em> automatically line up. Think of it like
+    <code>HBox</code> and <code>VBox</code> in JavaFX, but for the web.
+  </p>
+  <pre><code class="language-text">Parent (display: flex)
+┌─────────────────────────────────────┐
+│  [Child 1]  [Child 2]  [Child 3]    │  ← row (default direction)
+└─────────────────────────────────────┘
+
+With flex-direction: column:
+┌────────────┐
+│  [Child 1] │
+│  [Child 2] │
+│  [Child 3] │
+└────────────┘</code></pre>
+
+  <pre><code class="language-css">/* Make the nav bar lay out items in a row */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* push items to both ends */
+  align-items: center;            /* vertically center them */
+  padding: 12px 24px;
+  background-color: #1e3a5f;
+}
+
+/* Center a card on the page */
+.page {
+  display: flex;
+  justify-content: center;   /* horizontal center */
+  align-items: center;       /* vertical center */
+  min-height: 100vh;
+}</code></pre>
+
+  <h2>Putting It Together — A Styled Card</h2>
+  <p>Here is a complete minimal example: a styled course card in plain HTML and CSS. This is exactly the kind of UI that React will build programmatically.</p>
+
+  <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Course Card&lt;/title&gt;
+  &lt;style&gt;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 320px;
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card-body h2 {
+      font-size: 1.2rem;
+      color: #1e3a5f;
+      margin-bottom: 8px;
+    }
+
+    .card-body p {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #1e3a5f;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .btn:hover {
+      background: #2a5298;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="card"&gt;
+    &lt;img src="https://via.placeholder.com/320x180" alt="Course Thumbnail"&gt;
+    &lt;div class="card-body"&gt;
+      &lt;h2&gt;Spring Boot REST APIs&lt;/h2&gt;
+      &lt;p&gt;Master backend development with Java and Spring Boot from the ground up.&lt;/p&gt;
+      &lt;button class="btn"&gt;Enroll Now&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <div class="callout tip">💡 <strong>Tip:</strong> You rarely write raw HTML like this when using React — React components generate this HTML for you. But understanding what the browser receives helps you debug layout and styling issues much faster.</div>
+
+  <div class="exercise">
+    <h3>✅ Try It</h3>
+    <p>
+      Create a file called <code>card.html</code> on your desktop. Copy the styled card example above into it.
+      Open it in your browser. Then:
+    </p>
+    <ol>
+      <li>Change the card background color to <code>#fffde7</code> (a soft yellow).</li>
+      <li>Add a second card next to the first by wrapping both cards in a <code>&lt;div class="card-row"&gt;</code> and giving that div <code>display: flex; gap: 20px;</code>.</li>
+      <li>Inspect the card in your browser's DevTools (right-click → Inspect) and look at the box model diagram in the Styles panel.</li>
+    </ol>
+  </div>
+</article>
